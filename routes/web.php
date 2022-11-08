@@ -106,6 +106,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/export_jurnal', 'JurnalController@export_jurnal')->name('export_jurnal');
 	//chart routes
 	Route::get('/monthly-chart-data', 'ChartController@getMonthlyProfitData');
+	//kas bank routes
+	Route::get('penerimaan_kas', 'BankController@penerimaan')->name('penerimaan_kas');
+	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
+	Route::get('/coa_data', 'BankController@getdatacoa');
+	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
 });
 
 

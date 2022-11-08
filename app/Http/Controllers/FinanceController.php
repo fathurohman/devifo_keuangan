@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Client;
 use App\Model\job_order;
+use App\Model\jurnal_penjualan_bank;
 use App\Model\SalesOrder;
 use App\Model\Settings;
 use Carbon\Carbon;
@@ -57,7 +58,7 @@ class FinanceController extends BaseController
         return view('finance.detail_invoice', compact('settings', 'sales_data', 'tipe_cetak', 'date'));
     }
 
-    
+
 
     function convertNumber($number)
     {
@@ -258,7 +259,7 @@ class FinanceController extends BaseController
     }
 
     public function order_row($tipe, $month, $year)
-    {   
+    {
         // inv_date sebelumnya crated_at
 
         $jml_by_month = SalesOrder::whereMonth('inv_date', $month)->whereYear('inv_date', $year)
@@ -313,7 +314,7 @@ class FinanceController extends BaseController
         $month = Carbon::createFromFormat('Y-m-d', $now)->format('m');
 
 
-       
+
         // $order_month = $jml_by_month + 1;
         if ($sales_order->printed == '1') {
             $order_month = $sales_order->order_row;
@@ -426,6 +427,117 @@ class FinanceController extends BaseController
     public function pembukuan($id)
     {
         SalesOrder::where('id', $id)->update(['booked' => '1']);
+        $sales = SalesOrder::where([
+            ['id', '=', $id],
+            ['booked', '=', '1'],
+        ])->first();
+        $sum_idr = 0;
+        $sum_usd = 0;
+        $id = $sales->id;
+        $j_bank_penjualan = jurnal_penjualan_bank::where('sales_order_id', $id)->get();
+        if ($j_bank_penjualan->isEmpty()) {
+            if (empty($sales->vat)) {
+                $pajak = 0;
+            } else {
+                $pajak = $sales->vat;
+            }
+            $tanggal_inv = $sales->inv_date;
+            // $date_inv = date('d-F-Y', strtotime($tanggal_inv));
+            $no_inv = $sales->nomor_invoice;
+            $ptng = sprintf('%03d', $no_inv);
+            $sub_string = substr($no_inv, strpos($no_inv, "/") + 1);
+            $trans_no = "$ptng/$sub_string";
+            $description = $sales->job_orders->order_id;
+            $selling = SalesOrder::find($id)->sellings;
+            foreach ($selling as $y) {
+                $curr = $y->curr;
+                $sub_total = $y->sub_total;
+                if ($curr == 'IDR') {
+                    $sum_usd = 0;
+                    $sum_idr += $sub_total;
+                } elseif ($curr == 'USD') {
+                    $sum_idr = 0;
+                    $sum_usd += $sub_total;
+                } else {
+                    $sum_idr = 0;
+                    $sum_usd = 0;
+                }
+                $customer = $y->name;
+            }
+            if ($sales->tipe == 'I') {
+                $vat = $pajak / 100;
+                $pph = $sum_idr * (2 / 100);
+                $total_pajak = $sum_idr * $vat;
+                $total_charge = $sum_idr + $total_pajak;
+                $with_pajak = $total_charge - $pph;
+                $no_faktur = "-";
+                $pph = array(
+                    'sales_order_id' => $id,
+                    'trans_date' => $tanggal_inv,
+                    'Customer' => $customer,
+                    'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                    'description' => "A/R $description $trans_no ($description)",
+                    'coa_id' => '87',
+                    'debit' => $pph,
+                    'credit' => '0',
+                    'ending_balance' => $pph,
+                    'inv_us' => $sum_usd,
+                    'kurs_idr' => '0',
+                    'bs_pl' => 'BS',
+                    'no_faktur' => $no_faktur,
+                );
+                $penjualan = array(
+                    'sales_order_id' => $id,
+                    'trans_date' => $tanggal_inv,
+                    'Customer' => $customer,
+                    'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                    'description' => "A/R $description $trans_no ($description)",
+                    'coa_id' => '14',
+                    'debit' => $with_pajak,
+                    'credit' => '0',
+                    'ending_balance' => $with_pajak,
+                    'inv_us' => $sum_usd,
+                    'kurs_idr' => '0',
+                    'no_faktur' => $no_faktur,
+                    'bs_pl' => 'PL',
+                );
+            } else {
+                $vat = 0;
+                $pph = 0;
+                $total_charge = $sum_idr;
+                $no_faktur = "DEBIT NOTE";
+                $pph = NULL;
+            }
+            $piutang = array(
+                'sales_order_id' => $id,
+                'trans_date' => $tanggal_inv,
+                'Customer' => $customer,
+                'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                'description' => "A/R $description $trans_no ($description)",
+                'coa_id' => '38',
+                'debit' => '0',
+                'credit' => $total_charge,
+                'ending_balance' => $total_charge,
+                'inv_us' => $sum_usd,
+                'kurs_idr' => '0',
+                'no_faktur' => $no_faktur,
+                'bs_pl' => 'BS',
+            );
+            // echo var_dump($pph) . "<br>";
+
+            // echo var_dump($piutang) . "<br>";
+
+            // dd($penjualan);
+            jurnal_penjualan_bank::insert($piutang);
+            if (!empty($penjualan)) {
+                jurnal_penjualan_bank::insert($penjualan);
+            }
+            if (!empty($pph)) {
+                jurnal_penjualan_bank::insert($pph);
+            }
+        } else {
+            return 'data available';
+        }
         return redirect()->back();
     }
 }

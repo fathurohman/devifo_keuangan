@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Model\Jurnal;
 use App\Model\JurnalPenjualan;
 use App\Model\SalesOrder;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -24,7 +25,7 @@ class JPenjualanExport implements FromView, ShouldAutoSize, WithStrictNullCompar
      */
     public function view(): View
     {
-        $penjualan = JurnalPenjualan::whereBetween('trans_date', [$this->start, $this->end])->get();
+        $penjualan = Jurnal::whereBetween('Trans_Date', [$this->start, $this->end])->get();
         return view('jurnal.jurnal_penjualan_excel', [
             'data_penjualan' => $penjualan,
             // 'date_inv' => $date_inv,

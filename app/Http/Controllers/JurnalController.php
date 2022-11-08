@@ -90,6 +90,7 @@ class JurnalController extends Controller
                         'ending_balance' => $total_pajak,
                         'inv_us' => $sum_usd,
                         'kurs_idr' => '0',
+                        'bs_pl' => 'BS',
                         'no_faktur' => $no_faktur,
                         // 'status_bayar' => $status_bayar,
                         // 'tgl_pay' => $tgl_pay,
@@ -114,6 +115,7 @@ class JurnalController extends Controller
                     'inv_us' => $sum_usd,
                     'kurs_idr' => '0',
                     'no_faktur' => $no_faktur,
+                    'bs_pl' => 'BS',
                     // 'status_bayar' => $status_bayar,
                     // 'tgl_pay' => $tgl_pay,
                 );
@@ -130,6 +132,7 @@ class JurnalController extends Controller
                     'inv_us' => $sum_usd,
                     'kurs_idr' => '0',
                     'no_faktur' => $no_faktur,
+                    'bs_pl' => 'PL',
                     // 'status_bayar' => $status_bayar,
                     // 'tgl_pay' => $tgl_pay,
                 );

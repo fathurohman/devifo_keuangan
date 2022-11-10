@@ -98,14 +98,9 @@ $("#input-kurs-idr").keyup(function () {
      var cloned = clone.replace(/[A-Za-z$ ,-]/g, "");
      $('#input-kurs-idr-real').val(cloned);
      var amount = $('#input-amount-real').val();
-     var coa = $('#coa-field-id').val();
-     if (coa == '15') {
-          $('#input-total').val(cloned);
-     }
-     else {
-          var total = cloned * amount;
-          $('#input-total').val(total);
-     }
+     // var coa = $('#coa-field-id').val();
+     var total = cloned * amount;
+     $('#input-total').val(total);
 });
 
 $('#status_coa_id').on('change', function (e) {

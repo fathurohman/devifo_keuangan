@@ -82,6 +82,8 @@ class BankController extends Controller
         $jurnal->description = $request->memo;
         $jurnal->coa_id = $request->coa_id;
         $jurnal->debit = $request->amount;
+        $jurnal->ending_balance = $request->total;
+        $jurnal->kurs_rupiah = $request->kurs_idr;
         $jurnal->bs_pl = 'BS';
         $jurnal->save();
         if (!empty($request->account_id[0])) {

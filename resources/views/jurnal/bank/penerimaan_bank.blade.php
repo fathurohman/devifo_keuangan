@@ -136,7 +136,7 @@
                                             for="input-kurs_idr">{{ __('Kurs IDR') }}</label>
                                         <input type="text" id="input-kurs-idr"
                                             class="form-control form-control-alternative"
-                                            placeholder="{{ __('kurs_idr') }}" required>
+                                            placeholder="{{ __('kurs_idr') }}" value="0" readonly required>
                                         <input type="text" name="kurs_idr" id="input-kurs-idr-real"
                                             class="form-control form-control-alternative" hidden>
                                     </div>
@@ -148,9 +148,9 @@
                                         <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
                                         <input type="text" id="input-total"
                                             class="form-control form-control-alternative"
-                                            placeholder="{{ __('total') }}" readonly>
-                                        <input type="text" name="total" id="input-total-real"
-                                            class="form-control form-control-alternative" hidden>
+                                            placeholder="{{ __('total') }}" name="total" readonly>
+                                        {{-- <input type="text" id="input-total-real"
+                                            class="form-control form-control-alternative" hidden> --}}
                                     </div>
                                 </div>
                             </div>
@@ -261,6 +261,11 @@
                             $('#input-no_coa').val(data.kd_aktiva);
                             $('#coa-field').val(data.jns_trans);
                             $('#coa-field-id').val(data.id);
+                            if (data.id == '15') {
+                                $('#input-kurs-idr').attr("readonly", false);
+                            } else {
+                                $('#input-kurs-idr').attr("readonly", true);
+                            }
                             // console.log(data);
                             // For debugging purposes you can add : console.log(data); to see the output of your request
                         });

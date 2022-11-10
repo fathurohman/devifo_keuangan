@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
 	Route::get('/coa_data', 'BankController@getdatacoa');
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
+	Route::post('/store/coa', 'BankController@store')->name('store.coa');
 });
 
 

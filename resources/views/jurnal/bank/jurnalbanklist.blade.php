@@ -11,8 +11,8 @@
                 <div class="table-responsive">
                     <table style="width: 100%" id="coa" class="table align-items-center table-flush">
                         <thead class="thead-light">
-                            <th>Clients Name</th>
-                            <th>NPWP</th>
+                            <th>No Account</th>
+                            <th>Jenis Transaksi</th>
                             <th>Action</th>
                         </thead>
                     </table>

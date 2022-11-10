@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\COA;
-use App\Model\jurnal_penjualan_bank;
+use App\Model\jurnal_bank_child;
+use App\Model\jurnal_bank;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
@@ -12,50 +13,15 @@ use Response;
 
 class BankController extends Controller
 {
-    function numberToRomanRepresentation($number)
-    {
-        $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
-        $returnValue = '';
-        while ($number > 0) {
-            foreach ($map as $roman => $int) {
-                if ($number >= $int) {
-                    $number -= $int;
-                    $returnValue .= $roman;
-                    break;
-                }
-            }
-        }
-        return $returnValue;
-    }
 
     public function penerimaan()
     {
-        $year = Carbon::now()->format('y');
-        $month = Carbon::now()->format('m');
-        $tahun = Carbon::now()->format('Y');
-        $jml_by_month = jurnal_penjualan_bank::whereMonth('created_at', $month)->whereYear('created_at', $tahun)->count();
-        $urutan = jurnal_penjualan_bank::select('order_row')->whereMonth('created_at', $month)->whereYear('created_at', $tahun)->get();
-        $results = array();
-        foreach ($urutan as $query) {
-            $order_row = $query->order_row;
-            array_push($results, $order_row);
-        }
-        if (empty($results)) {
-            $max = 0;
-        } else {
-            $max = max($results);
-        }
-        if ($jml_by_month == '0') {
-            $order_month = '1';
-        } else {
-            //ini ambil nilai max di kolom
-            $order_month = $max + 1;
-        }
-        $sprint_order = sprintf('%03d', $order_month);
-        // SGM/BCA IDR/IX/22/002
-        $roman = $this->numberToRomanRepresentation($month);
-        $order_id = "SGM/BCA IDR/$roman/$year/$sprint_order";
-        return view('jurnal.bank.penerimaan_bank', compact('order_id'));
+        return view('jurnal.bank.penerimaan_bank');
+    }
+
+    public function pengeluaran()
+    {
+        return view('jurnal.bank.pengeluaran_bank');
     }
 
     public function listcoa()
@@ -94,5 +60,47 @@ class BankController extends Controller
             $results[] = ['id' => $query->id, 'value' => $query->jns_trans, 'kode' => $query->kd_aktiva];
         }
         return Response::json($results);
+    }
+
+    public function store(Request $request)
+    {
+        $i = 0;
+        $status = $request->status_coa_id;
+        $now = Carbon::parse($request->Date)->format('Y-m-d');
+        $jurnal = new jurnal_bank;
+        if ($status == 'pengeluaran') {
+            $jurnal->cheque_no = $request->cheque_no;
+            $jurnal->payee = $request->payee;
+            $dk = 'K';
+            $jurnal->dk = $dk;
+        } else {
+            $dk = 'D';
+            $jurnal->dk = $dk;
+        }
+        $jurnal->trans_date = $now;
+        $jurnal->inv_no = $request->voucher_no;
+        $jurnal->description = $request->memo;
+        $jurnal->coa_id = $request->coa_id;
+        $jurnal->debit = $request->amount;
+        $jurnal->bs_pl = 'BS';
+        $jurnal->save();
+        if (!empty($request->account_id[0])) {
+            foreach ($request->account_id as $a => $v) {
+                $details_b = array(
+                    'jurnal_bank_id' => $jurnal->id,
+                    'trans_date' => $now,
+                    'inv_no' => $request->voucher_no,
+                    'description' => $request->memo[$a],
+                    'coa_id' => $v,
+                    'debit' => $request->amount_c[$a],
+                    'project' => $request->project[$a],
+                    'dk' => $dk,
+                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                );
+                jurnal_bank_child::insert($details_b);
+                $i++;
+            }
+        }
     }
 }

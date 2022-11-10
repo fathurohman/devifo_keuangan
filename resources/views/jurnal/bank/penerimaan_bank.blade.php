@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="#" autocomplete="off" id="form-order">
+                        <form method="post" action="{{ route('store.coa') }}" autocomplete="off" id="form-order">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Fill this form') }}</h6>
 
@@ -29,6 +29,21 @@
                                     </button>
                                 </div>
                             @endif
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group{{ $errors->has('status_coa') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label"
+                                            for="input-status_coa">{{ __('status_coa') }}</label>
+                                        <select name="status_coa_id" id="status_coa_id"
+                                            class="form-control form-control-alternative{{ $errors->has('status_coa') ? ' is-invalid' : '' }}"
+                                            aria-label="status_coa:">
+                                            <option selected>Open this select menu</option>
+                                            <option value="penerimaan">Penerimaan</option>
+                                            <option value="pengeluaran">Pengeluaran</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group{{ $errors->has('no_coa') ? ' has-danger' : '' }}">
@@ -65,8 +80,15 @@
                                         <label class="form-control-label"
                                             for="input-voucher_no">{{ __('voucher_no') }}</label>
                                         <input type="text" name="voucher_no" id="input-voucher_no"
-                                            class="form-control form-control-alternative{{ $errors->has('voucher_no') ? ' is-invalid' : '' }}"
-                                            value="{{ $order_id }}" readonly>
+                                            class="form-control form-control-alternative{{ $errors->has('voucher_no') ? ' is-invalid' : '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div style="display:none" id="cheque" class="form-group">
+                                        <label class="form-control-label"
+                                            for="input-cheque_no">{{ __('cheque_no') }}</label>
+                                        <input type="text" name="cheque_no" id="input-cheque_no"
+                                            class="form-control form-control-alternative">
                                     </div>
                                 </div>
                             </div>
@@ -91,12 +113,44 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div style="display:none" id="payee" class="col-lg-8 col-md-8 col-sm-12">
+                                    <label class="form-control-label" for="input-payee">{{ __('payee') }}</label>
+                                    <textarea name="payee" class="form-control" id="payee" rows="3" placeholder="Catatan tambahan..."></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-amount">{{ __('amount') }}</label>
-                                        <input type="text" name="amount" id="input-amount"
-                                            class="form-control form-control-alternative" placeholder="{{ __('amount') }}"
-                                            required>
+                                        <input type="text" id="input-amount"
+                                            class="form-control form-control-alternative"
+                                            placeholder="{{ __('amount') }}" required>
+                                        <input type="text" name="amount" id="input-amount-real"
+                                            class="form-control form-control-alternative"
+                                            placeholder="{{ __('amount') }}" hidden>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label"
+                                            for="input-kurs_idr">{{ __('Kurs IDR') }}</label>
+                                        <input type="text" id="input-kurs-idr"
+                                            class="form-control form-control-alternative"
+                                            placeholder="{{ __('kurs_idr') }}" required>
+                                        <input type="text" name="kurs_idr" id="input-kurs-idr-real"
+                                            class="form-control form-control-alternative" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
+                                        <input type="text" id="input-total"
+                                            class="form-control form-control-alternative"
+                                            placeholder="{{ __('total') }}" readonly>
+                                        <input type="text" name="total" id="input-total-real"
+                                            class="form-control form-control-alternative" hidden>
                                     </div>
                                 </div>
                             </div>
@@ -121,15 +175,19 @@
                                                     </td>
                                                     <td><input class="form-control autosuggest ui-widget" type="text"
                                                             id="account_name" name="account_name[]">
-                                                        <input class="form-control" type="text" id="account_id"
-                                                            name="account_id[]" hidden>
+                                                        <input class="form-control account_id" type="text"
+                                                            id="account_id" name="account_id[]" hidden>
                                                     </td>
-                                                    <td><input class="form-control amount" step="any" type="number"
-                                                            id="amount" name="amount[]"></td>
+                                                    <td><input class="form-control amount_c" type="text"
+                                                            id="amount_c">
+                                                        <input class="form-control amount_real" type="text"
+                                                            id="amount_real" name="amount_c[]" hidden>
+                                                    </td>
                                                     <td><input class="form-control memo" type="text" id="memo"
-                                                            name="memo[]">
+                                                            name="memo_c[]">
                                                     </td>
-                                                    <td><input class="form-control department" id="department">
+                                                    <td><input class="form-control department" id="department"
+                                                            name="department[]">
                                                     </td>
                                                     <td><input type="text" id="project" class="form-control project"
                                                             name="project[]">
@@ -181,6 +239,7 @@
                         // $('#selectnip').val(ui.item.value);
                         tr.find('.account_no').val(ui.item.kode);
                         tr.find('.autosuggest').val(ui.item.value);
+                        tr.find('.account_id').val(ui.item.id);
                     }
                 })
             })

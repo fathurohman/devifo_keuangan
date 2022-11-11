@@ -58,6 +58,8 @@ class BankController extends Controller
         $term = $request->term;
         $queries = DB::table('jns_akun')
             ->where('jns_trans', 'LIKE', '%' . $term . '%')
+            ->where('laba_rugi', '1')
+            ->orWhere('neraca', '1')
             // ->where('rtk', '1')
             ->get();
         $results = array();
@@ -71,6 +73,17 @@ class BankController extends Controller
     {
         $i = 0;
         $status = $request->status_coa_id;
+        $coa_id = $request->coa_id;
+        $coa = COA::find($coa_id);
+        $neraca = $coa->neraca;
+        $laba_rugi = $coa->laba_rugi;
+        if ($neraca == '1') {
+            $bs_pl = 'BS';
+        } elseif ($laba_rugi == '1') {
+            $bs_pl = 'PL';
+        } else {
+            $bs_pl = 'unk';
+        }
         $now = Carbon::parse($request->Date)->format('Y-m-d');
         $jurnal = new jurnal_bank;
         if ($status == 'pengeluaran') {
@@ -85,14 +98,24 @@ class BankController extends Controller
         $jurnal->trans_date = $now;
         $jurnal->inv_no = $request->voucher_no;
         $jurnal->description = $request->memo;
-        $jurnal->coa_id = $request->coa_id;
+        $jurnal->coa_id = $coa_id;
         $jurnal->debit = $request->amount;
         $jurnal->ending_balance = $request->total;
         $jurnal->kurs_rupiah = $request->kurs_idr;
-        $jurnal->bs_pl = 'BS';
+        $jurnal->bs_pl = $bs_pl;
         $jurnal->save();
         if (!empty($request->account_id[0])) {
             foreach ($request->account_id as $a => $v) {
+                $acc = COA::find($v);
+                $neraca = $acc->neraca;
+                $laba_rugi = $acc->laba_rugi;
+                if ($neraca == '1') {
+                    $bs_pl = 'BS';
+                } elseif ($laba_rugi == '1') {
+                    $bs_pl = 'PL';
+                } else {
+                    $bs_pl = 'unk';
+                }
                 $details_b = array(
                     'jurnal_bank_id' => $jurnal->id,
                     'trans_date' => $now,
@@ -100,8 +123,10 @@ class BankController extends Controller
                     'description' => $request->memo[$a],
                     'coa_id' => $v,
                     'debit' => $request->amount_c[$a],
+                    'ending_balance' => $request->amount_c[$a],
                     'project' => $request->project[$a],
                     'dk' => $dk,
+                    'bs_pl' => $bs_pl,
                     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
                     'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
                 );
@@ -147,6 +172,4 @@ class BankController extends Controller
         $data = jurnal_bank_child::where('jurnal_bank_id', $id)->get();
         return view('jurnal.bank.child_jb', compact('data'));
     }
-
-
 }

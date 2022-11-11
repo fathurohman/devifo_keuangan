@@ -114,7 +114,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/jurnal_bank_child/{id}', 'BankController@showChildJurnalBank');
 
 	Route::get('penerimaan_kas', 'BankController@penerimaan')->name('penerimaan_kas');
+
+    Route::get('pettycash', 'BankController@index_pettycash')->name('pettycash');
+    Route::get('create_pettycash', 'BankController@create_pettycash')->name('create_pettycash');
+    Route::post('/store/pettycash', 'BankController@store_pettycash')->name('store.pettycash');
+    Route::get('/listpettycash', 'BankController@listpettycash')->name('listpettycash');
+    Route::get('/pettycash_detail/{id}', 'BankController@showDetailPettyCash');
+
 	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
+    Route::get('/listcoa/pemasukan', 'BankController@listcoa_pemasukan')->name('listcoa.pemasukan');
+    Route::get('/listcoa/pengeluaran', 'BankController@listcoa_pengeluaran')->name('listcoa.pengeluaran');
+
 	Route::get('/coa_data', 'BankController@getdatacoa');
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
 	Route::post('/store/coa', 'BankController@store')->name('store.coa');

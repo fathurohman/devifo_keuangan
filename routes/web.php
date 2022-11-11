@@ -107,6 +107,12 @@ Route::group(['middleware' => 'auth'], function () {
 	//chart routes
 	Route::get('/monthly-chart-data', 'ChartController@getMonthlyProfitData');
 	//kas bank routes
+    Route::get('jurnal_bank', 'BankController@index')->name('jurnal_bank');
+    Route::get('listjurnalbank', 'BankController@listjurnalbank')->name('listjurnalbank');
+
+    Route::get('/jurnal_bank_detail/{id}', 'BankController@showDetailJurnalBank');
+    Route::get('/jurnal_bank_child/{id}', 'BankController@showChildJurnalBank');
+
 	Route::get('penerimaan_kas', 'BankController@penerimaan')->name('penerimaan_kas');
 	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
 	Route::get('/coa_data', 'BankController@getdatacoa');

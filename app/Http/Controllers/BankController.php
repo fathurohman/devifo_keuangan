@@ -14,6 +14,11 @@ use Response;
 class BankController extends Controller
 {
 
+    public function index()
+    {
+        return view('jurnal.bank.jurnal_bank');
+    }
+
     public function penerimaan()
     {
         return view('jurnal.bank.penerimaan_bank');
@@ -104,5 +109,44 @@ class BankController extends Controller
                 $i++;
             }
         }
+
+        return redirect(route('jurnal_bank'));
     }
+
+
+    public function listjurnalbank()
+    {
+
+        $query = jurnal_bank::all();
+        return Datatables::of(
+            $query
+        )->editColumn('trans_date', function ($row) {
+            return $row->trans_date;
+        })->editColumn('inv_no', function ($row) {
+            return $row->inv_no;
+        })->editColumn('cheque_no', function ($row) {
+            return $row->cheque_no;
+        })->editColumn('coa', function ($row) {
+            return $row->coa->jns_trans;
+        })->addColumn('More', function ($row) {
+            $data = [
+                'id' => $row->id
+            ];
+            return view('jurnal.bank.dt_bank.act_more', compact('data'));
+        })->rawColumns(['More'])->toJson();
+    }
+
+    public function showDetailJurnalBank($id)
+    {
+        $data = jurnal_bank::where('id', $id)->get();
+        return view('jurnal.bank.details_jb', compact('data'));
+    }
+
+    public function showChildJurnalBank($id)
+    {
+        $data = jurnal_bank_child::where('jurnal_bank_id', $id)->get();
+        return view('jurnal.bank.child_jb', compact('data'));
+    }
+
+
 }

@@ -228,6 +228,25 @@
                         </div>
                     </li>
                 @endcan
+
+                <li class="nav-bank {{ $activePage == 'Jurnal Bank' ? ' active' : '' }}">
+                    <a class="nav-link collapsed" href="#navbar-crud-bank" data-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="navbar-crud-bank">
+                        <i class="ni ni-paper-diploma"></i>
+                        <span class="nav-link-text">{{ __('Bank') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-crud-bank">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('jurnal_bank') }}">
+                                    {{ __('Jurnal Bank') }}
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
             <!-- Divider -->
             <hr class="my-3">

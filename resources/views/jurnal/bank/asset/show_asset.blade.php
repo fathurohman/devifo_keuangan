@@ -28,9 +28,9 @@
                             <table id="myTable" class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Trans Date</th>
                                         <th scope="col">Inv No</th>
-
+                                        <th scope="col">Barang</th>
                                         <th scope="col">COA</th>
                                         <th scope="col">More</th>
 
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    @include('jurnal.bank.pettycash.modal.modal_pettycash')
+    @include('jurnal.bank.asset.modal.modal_asset')
 @endsection
 @push('js')
     <script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>
@@ -61,20 +61,24 @@
             drawCallback: function(settings) {
                 $(".details").click(function(e) {
                     $currID = $(this).attr("data-id");
-                    $.get("pettycash_detail/" + $currID, function(data) {
+                    $.get("asset_detail/" + $currID, function(data) {
                         $('#data_details').html(data);
                     });
                 });
 
             },
-            ajax: '{!! route('listpettycash') !!}',
+            ajax: '{!! route('listasset') !!}',
             columns: [{
-                    data: 'date',
-                    name: 'date'
+                    data: 'trans_date',
+                    name: 'trans_date'
                 },
                 {
-                    data: 'inv_no',
-                    name: 'inv_no'
+                    data: 'trans_no',
+                    name: 'trans_no'
+                },
+                {
+                    data: 'nama_barang',
+                    name: 'nama_barang'
                 },
                 {
                     data: 'coa',

@@ -98,7 +98,7 @@
                     </li>
                     @endcan @can('admin.crud-vendor-client', Auth::user())
                     <li
-                        class="nav-vc {{ $activePage == 'vendor' || $activePage == 'client' || $activePage == 'items' || $activePage == 'BOL' ? ' active' : '' }}">
+                        class="nav-vc {{ $activePage == 'vendor' || $activePage == 'client' || $activePage == 'items' || $activePage == 'BOL' || $activePage == 'barang' ? ' active' : '' }}">
                         <a class="nav-link collapsed" href="#navbar-crud-vendor" data-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="navbar-crud-vendor">
                             <i class="ni ni-collection"></i>
@@ -118,6 +118,9 @@
                                     </a>
                                     <a class="nav-link" href="{{ route('bol.index') }}">
                                         {{ __('Bill Of Lading') }}
+                                    </a>
+                                    <a class="nav-link" href="{{ route('barang.index') }}">
+                                        {{ __('Nama Barang') }}
                                     </a>
                                 </li>
                             </ul>

@@ -65,6 +65,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//vendor client routes
 	Route::resource('client', 'ClientController');
 	Route::resource('vendor_data', 'VendorController');
+    // barang routes
+    Route::resource('barang', 'BarangController');
 	Route::get('/vendor_detail/{id}', 'VendorController@showTracking');
 	Route::get('/client_detail/{id}', 'ClientController@showTracking');
 	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
@@ -116,21 +118,28 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('penerimaan_kas', 'BankController@penerimaan')->name('penerimaan_kas');
 
     //pettycash
-    Route::get('pettycash', 'BankController@index_pettycash')->name('pettycash');
-    Route::get('create_pettycash', 'BankController@create_pettycash')->name('create_pettycash');
-    Route::post('/store/pettycash', 'BankController@store_pettycash')->name('store.pettycash');
-    Route::get('/listpettycash', 'BankController@listpettycash')->name('listpettycash');
-    Route::get('/pettycash_detail/{id}', 'BankController@showDetailPettyCash');
+    Route::get('pettycash', 'PettycashController@index_pettycash')->name('pettycash');
+    Route::get('create_pettycash', 'PettycashController@create_pettycash')->name('create_pettycash');
+    Route::post('/store/pettycash', 'PettycashController@store_pettycash')->name('store.pettycash');
+    Route::get('/listpettycash', 'PettycashController@listpettycash')->name('listpettycash');
+    Route::get('/pettycash_detail/{id}', 'PettycashController@showDetailPettyCash');
 
 	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
     Route::get('/listcoa/pemasukan', 'BankController@listcoa_pemasukan')->name('listcoa.pemasukan');
     Route::get('/listcoa/pengeluaran', 'BankController@listcoa_pengeluaran')->name('listcoa.pengeluaran');
 
     //assets
-    Route::get('asset', 'BankController@index_assets')->name('asset');
-    Route::get('create_asset', 'BankController@create_assets')->name('create_asset');
+    Route::get('asset', 'AssetController@index_assets')->name('asset');
+    Route::get('create_asset', 'AssetController@create_assets')->name('create_asset');
+    Route::post('/store/asset', 'AssetController@store_asset')->name('store.asset');
+    Route::get('/listasset', 'AssetController@listasset')->name('listasset');
+    Route::get('/asset_detail/{id}', 'AssetController@showDetailAsset');
+    Route::get('/listnamabarang', 'AssetController@listnamabarang')->name('listnamabarang');
+    Route::get('/data_barang', 'AssetController@getdatabarang');
+
 
 	Route::get('/coa_data', 'BankController@getdatacoa');
+
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
 	Route::post('/store/coa', 'BankController@store')->name('store.coa');
 });

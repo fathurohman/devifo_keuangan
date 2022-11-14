@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('store.coa') }}" autocomplete="off" id="form-order">
+                        <form method="post" action="{{ route('store.asset') }}" autocomplete="off" id="form-order">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Fill this form') }}</h6>
 
@@ -31,15 +31,15 @@
                             @endif
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-group{{ $errors->has('status_coa') ? ' has-danger' : '' }}">
+                                    <div class="form-group{{ $errors->has('coa') ? ' has-danger' : '' }}">
                                         <label class="form-control-label"
-                                            for="input-status_coa">{{ __('status_coa') }}</label>
-                                        <select name="status_coa_id" id="status_coa_id"
+                                            for="input-status_coa">{{ __('coa') }}</label>
+                                        <select name="coa_id" id="coa_id"
                                             class="form-control form-control-alternative{{ $errors->has('status_coa') ? ' is-invalid' : '' }}"
-                                            aria-label="status_coa:">
-                                            <option selected>Open this select menu</option>
-                                            <option value="penerimaan">Penerimaan</option>
-                                            <option value="pengeluaran">Pengeluaran</option>
+                                            aria-label="status_coa:" required>
+                                            <option value="" selected>Open this select menu</option>
+                                            <option value="90">Biaya Dibayar Dimuka - Fasilitas Gedung</option>
+                                            <option value="109">Aktiva Jakarta - Peralatan Kerja</option>
                                         </select>
                                     </div>
                                 </div>
@@ -58,33 +58,33 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-group{{ $errors->has('no_coa') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-no_coa">{{ __('no_coa') }}</label>
-                                        <input type="text" name="no_coa" id="input-no_coa"
-                                            class="form-control form-control-alternative{{ $errors->has('no_coa') ? ' is-invalid' : '' }}"
-                                            placeholder="{{ __('no_coa') }}" required readonly>
-                                        @if ($errors->has('no_coa'))
+                                {{-- <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group{{ $errors->has('id_barang') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label">{{ __('id_barang') }}</label>
+                                        <input type="text" name="id_barang" id="input-id_barang"
+                                            class="form-control form-control-alternative{{ $errors->has('id_barang') ? ' is-invalid' : '' }}"
+                                            placeholder="{{ __('id_barang') }}"  readonly>
+                                        @if ($errors->has('id_barang'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('no_coa') }}</strong>
+                                                <strong>{{ $errors->first('id_barang') }}</strong>
                                             </span>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-control-label" for="input-coa">{{ __('coa') }}</label>
+                                    <label class="form-control-label" for="input-coa">{{ __('Barang') }}</label>
                                     <div class="input-group">
-                                        <input id="coa-field" type="text" class="form-control" placeholder="coa"
-                                            aria-label="coa" aria-describedby="basic-addon2">
+                                        <input id="name_barang" name="name_barang" type="text" class="form-control" placeholder="nama barang"
+                                            aria-label="coa" aria-describedby="basic-addon2" readonly>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#coaList">
+                                                data-target="#barangList">
                                                 Find
                                             </button>
                                         </div>
+                                        <input name="id_barang" id="id_barang" hidden>
                                     </div>
-                                    <input id="coa-field-id" type="text" class="form-control" placeholder="coa"
-                                        name="coa_id" hidden>
+
                                 </div>
                             </div>
 
@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    @include('jurnal.bank.jurnalbanklist')
+    @include('jurnal.bank.asset.nama_baranglist')
     @include('layouts.footers.auth')
 @endsection
 @push('js')
@@ -161,40 +161,31 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#coa').DataTable({
+            $('#barang').DataTable({
                 processing: true,
                 serverSide: true,
                 drawCallback: function(settings) {
-                    $('.infoU').click(function() {
+                    $('.pilihbarang').click(function() {
                         $currID = $(this).attr("data-id");
-                        $('#input-no_coa').val('');
-                        $('#coa-field').val('');
-                        $('#coa-field-id').val('');
+                        $('#input-id_barang').val('');
+                        $('#name_barang').val('');
+                        $('#id_barang').val('');
                         // alert($currID);
-                        $.get('/coa_data?pid=' + $currID, function(data) {
-                            $('#input-no_coa').val(data.kd_aktiva);
-                            $('#coa-field').val(data.jns_trans);
-                            $('#coa-field-id').val(data.id);
-                            if (data.id == '15') {
-                                $('#input-kurs-idr').attr("readonly", false);
-                            } else {
-                                $('#input-kurs-idr').attr("readonly", true);
-                            }
-                            // console.log(data);
-                            // For debugging purposes you can add : console.log(data); to see the output of your request
+                        $.get('/data_barang?pid=' + $currID, function(data) {
+                            $('#input-id_barang').val(data.id);
+                            $('#name_barang').val(data.nama_barang);
+                            $('#id_barang').val(data.id);
+
+
                         });
-                        $('#coaList').modal('toggle');
+                        $('#barangList').modal('toggle');
                         // $('#coa-field').val($currID);
                     });
                 },
-                ajax: '{!! route('listcoa') !!}',
+                ajax: '{!! route('listnamabarang') !!}',
                 columns: [{
-                        data: 'kd_aktiva',
-                        name: 'kd_aktiva'
-                    },
-                    {
-                        data: 'jns_trans',
-                        name: 'jns_trans'
+                        data: 'nama_barang',
+                        name: 'nama_barang'
                     },
                     {
                         data: 'Action',

@@ -33,7 +33,7 @@ class BankController extends Controller
 
     public function listcoa()
     {
-        $query = COA::where('pemasukan', '1')->where('pengeluaran', '1');
+        $query = COA::where('bank' , '1');
         return Datatables::of(
             $query
         )->editColumn('kd_aktiva', function ($row) {
@@ -300,4 +300,19 @@ class BankController extends Controller
         $data = pettycash::where('id', $id)->get();
         return view('jurnal.bank.pettycash.details_pettycash', compact('data'));
     }
+
+
+    public function index_assets()
+    {
+        return view('jurnal.bank.asset.show_asset');
+    }
+
+    public function create_assets()
+    {
+
+        $data = nama_cash::where('aktif', 'Y')->get();
+        return view('jurnal.bank.asset.create_asset',compact('data'));
+    }
+
+
 }

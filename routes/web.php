@@ -115,6 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('penerimaan_kas', 'BankController@penerimaan')->name('penerimaan_kas');
 
+    //pettycash
     Route::get('pettycash', 'BankController@index_pettycash')->name('pettycash');
     Route::get('create_pettycash', 'BankController@create_pettycash')->name('create_pettycash');
     Route::post('/store/pettycash', 'BankController@store_pettycash')->name('store.pettycash');
@@ -124,6 +125,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
     Route::get('/listcoa/pemasukan', 'BankController@listcoa_pemasukan')->name('listcoa.pemasukan');
     Route::get('/listcoa/pengeluaran', 'BankController@listcoa_pengeluaran')->name('listcoa.pengeluaran');
+
+    //assets
+    Route::get('asset', 'BankController@index_assets')->name('asset');
+    Route::get('create_asset', 'BankController@create_assets')->name('create_asset');
 
 	Route::get('/coa_data', 'BankController@getdatacoa');
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');

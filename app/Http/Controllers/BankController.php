@@ -208,8 +208,6 @@ class BankController extends Controller
         $data = jurnal_bank_child::where('jurnal_bank_id', $id)->get();
         return view('jurnal.bank.child_jb', compact('data'));
     }
-<<<<<<< Updated upstream
-=======
 
     public function index_pettycash()
     {
@@ -220,7 +218,7 @@ class BankController extends Controller
     {
 
         $data = nama_cash::where('aktif', 'Y')->get();
-        return view('jurnal.bank.pettycash.create_pettycash',compact('data'));
+        return view('jurnal.bank.pettycash.create_pettycash', compact('data'));
     }
 
     public function store_pettycash(Request $request)
@@ -230,10 +228,10 @@ class BankController extends Controller
         $tahun = Carbon::parse($request->Date)->format('y');
         $bulan = Carbon::parse($request->Date)->format('m');
 
-        $query = pettycash::whereMonth('created_at' , $bulan)->count();
+        $query = pettycash::whereMonth('created_at', $bulan)->count();
         $urutan = $query + 1;
 
-        $invoice = "SGM/KAS/".$bulan."/".$tahun."/".$urutan;
+        $invoice = "SGM/KAS/" . $bulan . "/" . $tahun . "/" . $urutan;
 
         $data = new pettycash;
         $data->date = $now;
@@ -243,16 +241,15 @@ class BankController extends Controller
         $data->ending_balance = $request->total;
         $data->bs_pl = 'PL';
 
-        if($request->status_coa == 'pemasukan'){
+        if ($request->status_coa == 'pemasukan') {
             $data->dk = 'D';
             $data->untuk_kas = $request->untuk_kas;
             $data->coa_id = $request->coa_id_pemasukan;
-        }
-        elseif($request->status_coa == 'pengeluaran'){
+        } elseif ($request->status_coa == 'pengeluaran') {
             $data->dk = 'K';
             $data->dari_kas = $request->dari_kas;
             $data->coa_id = $request->coa_id_pengeluaran;
-        }else{
+        } else {
             $data->dk = '-';
             $data->dari_kas = '-';
             $data->coa_id = '-';
@@ -303,8 +300,4 @@ class BankController extends Controller
         $data = pettycash::where('id', $id)->get();
         return view('jurnal.bank.pettycash.details_pettycash', compact('data'));
     }
-
-
-
->>>>>>> Stashed changes
 }

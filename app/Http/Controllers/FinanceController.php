@@ -424,6 +424,19 @@ class FinanceController extends BaseController
         return redirect()->back();
     }
 
+    public function data_sum_buying($id)
+    {
+        return DB::select('SELECT buying_orders.curr AS curr, sum(buying_orders.sub_total ) AS sub_total,
+        buying_orders.name AS customers, sales_orders.inv_date as inv_date,
+				sales_orders.nomor_invoice AS nomor_invoice, sales_orders.job_order_id,
+				buying_orders.sales_order_id as sales_id
+        FROM sales_orders
+        INNER JOIN buying_orders ON sales_orders.id=buying_orders.sales_order_id
+		where sales_orders.booked = 1 and sales_orders.id = "' . $id . '"
+		GROUP BY buying_orders.curr,buying_orders.name, sales_orders.inv_date, sales_orders.nomor_invoice,
+        sales_orders.job_order_id,buying_orders.sales_order_id');
+    }
+
     public function pembukuan($id)
     {
         SalesOrder::where('id', $id)->update(['booked' => '1']);

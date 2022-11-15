@@ -18,16 +18,16 @@
     <tbody>
         @foreach ($data_penjualan as $x)
             <tr>
-                <td>{{ date('d-F-Y', strtotime($x->Trans_Date)) }}</td>
-                <td>{{ $x->bulan }}</td>
-                <td>{{ $x->sumber_jurnal }}</td>
+                <td>{{ date('d-F-Y', strtotime($x->trans_date)) }}</td>
+                <td>{{ date('F', strtotime($x->Trans_Date)) }}</td>
+                <td>{{ 'PENJUALAN' }}</td>
                 <td>{{ $x->Customer }}</td>
-                <td>{{ $x->Trans_No }}</td>
-                <td>{{ $x->Description }}</td>
-                <td>{{ $x->Chart_Of_Account }}</td>
+                <td>{{ $x->inv_No }}</td>
+                <td>{{ $x->description }}</td>
+                <td>{{ $x->coa->jns_trans }}</td>
                 <td>{{ $x->bs_pl }}</td>
-                <td>{{ number_format($x->Debit, 2) }}</td>
-                <td>{{ number_format($x->Credit, 2) }}</td>
+                <td>{{ number_format($x->debit, 2) }}</td>
+                <td>{{ number_format($x->credit, 2) }}</td>
                 <td>{{ number_format($x->ending_balance, 2) }}</td>
                 <td>{{ $x->inv_us }}</td>
                 <td>{{ $x->kurs_idr }}</td>

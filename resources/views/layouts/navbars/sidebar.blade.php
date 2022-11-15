@@ -235,7 +235,7 @@
                 <li class="nav-bank {{ $activePage == 'Jurnal Bank' || $activePage == 'PettyCash' || $activePage == 'Asset' ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-crud-bank" data-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="navbar-crud-bank">
-                        <i class="ni ni-paper-diploma"></i>
+                        <i class="ni ni-money-coins"></i>
                         <span class="nav-link-text">{{ __('Bank') }}</span>
                     </a>
 

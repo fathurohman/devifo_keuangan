@@ -102,4 +102,121 @@ class AssetController extends Controller
         $data = Asset::where('id', $id)->get();
         return view('jurnal.bank.asset.detail_asset', compact('data'));
     }
+
+
+    public function create_asset_penyusutan()
+    {
+        // $price =  2950000 ;
+        // $current_mount = 39;
+        // $depresiasai_mount = (25/100)/12;
+
+        // $hitung_depresiasai_mount = $depresiasai_mount * $current_mount;
+        // echo $hitung_depresiasai_mount;
+        // if($hitung_depresiasai_mount >= 1.0){
+        //     echo 'lebih dari 100%';
+        // }else{
+        //     echo 'kurang dari 100%';
+        //     $currentpriceafterdepresiasi = $price - ($price * $hitung_depresiasai_mount);
+
+        //     echo $currentpriceafterdepresiasi;
+        // }
+
+        // dd($depresiasai_mount);
+
+        // $ambil_data = Asset::all();
+
+        // foreach($ambil_data as $data){
+        //     $barang = $data->barang->nama_barang;
+        //     $barang_id = $data->barang_id;
+        //     $elektronik = $data->barang->elektronik;
+
+        //         $data_barang = nama_barang::where('elektronik' , $elektronik)->get();
+        //         foreach($data_barang as $x){
+        //             $b = $x->elektronik;
+        //         }
+
+        //             if($data->barang->elektronik){
+
+        //                 if($data->coa_id == '109' || $data->coa_id == '90'){
+
+        //                     echo " EKSEKUSI ".$data->barang->nama_barang." ".$data->trans_date;
+
+        //                 }else{
+        //                     echo " | tidak di eksekusi | ";
+        //                 }
+
+
+        //             }else{
+
+        //                 echo " | INI NULL | ".$b." ";
+        //             }
+
+
+        // }
+
+
+
+
+
+        // $data = nama_barang::where('aktif', 'Y')->get();
+        // return view('jurnal.bank.asset.assets_penyusutan',compact('data'));
+    }
+
+    public function store_penyusutan(Request $request)
+    {
+        $data = new Asset;
+
+        $now = Carbon::parse($request->Date)->format('Y-m-d');
+        $tahun = Carbon::parse($request->Date)->format('y');
+        $bulan = Carbon::parse($request->Date)->format('m');
+
+        //perhitungan
+        $price = $request->amount;
+        $sekarang = Carbon::now()->format('Y-m-d');
+
+        $s  = date_create($now);
+        $d  = date_create($sekarang);
+
+        $selisih_bulan = date_diff($s,$d);
+
+        $current_mount = $selisih_bulan->m;
+        $depresiasai_mount = (25/100)/12;
+
+        $hitung_depresiasai_mount = $depresiasai_mount * $current_mount;
+
+        if($hitung_depresiasai_mount >= 1.0){
+            $currentpriceafterdepresiasi = '-';
+        }else{
+            $currentpriceafterdepresiasi = $price - ($price * $hitung_depresiasai_mount);
+        }
+
+
+        $data->trans_date = $now;
+        $data->coa_id = '390';
+        $data->bulan = $bulan;
+        $data->sumber = 'ASSET';
+        $data->barang_id = $request->id_barang;
+        $data->debit = $currentpriceafterdepresiasi;
+        $data->ending_balance = $currentpriceafterdepresiasi;
+        $data->bs_pl = 'PL';
+
+        $data->save();
+
+        $details_b = array(
+            'trans_date' => $now,
+            'coa_id' => 124,
+            'bulan' => $bulan,
+            'sumber' => 'ASSET',
+            'barang_id' => '',
+            'credit' => $currentpriceafterdepresiasi,
+            'ending_balance' => $currentpriceafterdepresiasi,
+            'bs_pl' => 'BS',
+
+
+        );
+        Asset::insert($details_b);
+
+        return redirect(route('asset'));
+    }
+
 }

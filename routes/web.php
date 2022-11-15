@@ -125,16 +125,21 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/pettycash_detail/{id}', 'PettycashController@showDetailPettyCash');
 
 	Route::get('/listcoa', 'BankController@listcoa')->name('listcoa');
-	Route::get('/listcoa/pemasukan', 'BankController@listcoa_pemasukan')->name('listcoa.pemasukan');
-	Route::get('/listcoa/pengeluaran', 'BankController@listcoa_pengeluaran')->name('listcoa.pengeluaran');
-	//assets
-	Route::get('asset', 'AssetController@index_assets')->name('asset');
-	Route::get('create_asset', 'AssetController@create_assets')->name('create_asset');
-	Route::post('/store/asset', 'AssetController@store_asset')->name('store.asset');
-	Route::get('/listasset', 'AssetController@listasset')->name('listasset');
-	Route::get('/asset_detail/{id}', 'AssetController@showDetailAsset');
-	Route::get('/listnamabarang', 'AssetController@listnamabarang')->name('listnamabarang');
-	Route::get('/data_barang', 'AssetController@getdatabarang');
+    Route::get('/listcoa/pemasukan', 'BankController@listcoa_pemasukan')->name('listcoa.pemasukan');
+    Route::get('/listcoa/pengeluaran', 'BankController@listcoa_pengeluaran')->name('listcoa.pengeluaran');
+
+    //assets
+    Route::get('asset', 'AssetController@index_assets')->name('asset');
+    Route::get('create_asset', 'AssetController@create_assets')->name('create_asset');
+    Route::post('/store/asset', 'AssetController@store_asset')->name('store.asset');
+    Route::get('/listasset', 'AssetController@listasset')->name('listasset');
+    Route::get('/asset_detail/{id}', 'AssetController@showDetailAsset');
+    Route::get('/listnamabarang', 'AssetController@listnamabarang')->name('listnamabarang');
+    Route::get('/data_barang', 'AssetController@getdatabarang');
+
+    Route::get('create_asset_penyusutan', 'AssetController@create_asset_penyusutan')->name('create_asset_penyusutan');
+    Route::post('/store/asset_penyusutan', 'AssetController@store_penyusutan')->name('store_penyusutan');
+
 
 	//profloss routes
 	Route::get('/profloss', 'ProfitLossController@prof_loss')->name('prof_loss');

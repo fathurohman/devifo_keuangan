@@ -13,6 +13,7 @@ use App\Model\Asset;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Auth;
 use Response;
 
 class PettycashController extends Controller
@@ -48,6 +49,7 @@ class PettycashController extends Controller
         $data->debit = $request->amount;
         $data->ending_balance = $request->total;
         $data->bs_pl = 'PL';
+        $data->created_by = Auth::user()->id;
 
         if ($request->status_coa == 'pemasukan') {
             $data->dk = 'D';
@@ -73,7 +75,8 @@ class PettycashController extends Controller
             'ending_balance' => $request->total,
             'bs_pl' => 'BS',
             'coa_id' => 7,
-            'dk' => 'K'
+            'dk' => 'K',
+            'created_by' => 'ROBOT'
 
         );
         pettycash::insert($details_b);
@@ -86,7 +89,7 @@ class PettycashController extends Controller
     public function listpettycash()
     {
 
-        $query = pettycash::all();
+        $query = pettycash::where('created_by', '<>' , 'ROBOT');
         return Datatables::of(
             $query
         )->editColumn('date', function ($row) {

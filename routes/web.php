@@ -147,6 +147,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
 	Route::post('/store/coa', 'BankController@store')->name('store.coa');
+
+
+    Route::get('/skomak', 'FinanceController@skomak')->name('finance.skomak');
+
 });
 
 

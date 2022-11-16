@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Response;
+use Auth;
 
 class AssetController extends Controller
 {
@@ -32,7 +33,7 @@ class AssetController extends Controller
     public function listasset()
     {
 
-        $query = Asset::all();
+        $query = Asset::where('created_by', '<>' , 'ROBOT');
         return Datatables::of(
             $query
         )->editColumn('trans_date', function ($row) {
@@ -62,12 +63,14 @@ class AssetController extends Controller
         $data->trans_date = $now;
         $data->coa_id = $request->coa_id;
         $data->bulan = $bulan;
+        $data->trans_no = $request->voucher_no;
         $data->sumber = 'ASSET';
         $data->barang_id = $request->id_barang;
         $data->description = $request->memo;
         $data->debit = $request->amount;
         $data->ending_balance = $request->total;
         $data->bs_pl = 'BS';
+        $data->created_by = Auth::user()->id;
 
         $data->save();
 

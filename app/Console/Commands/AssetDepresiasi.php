@@ -96,6 +96,7 @@ class AssetDepresiasi extends Command
 
                                     $post->trans_date = $now;
                                     $post->induk_id = $data->id;
+                                    $post->trans_no = $data->trans_no;
                                     $post->coa_id = '390';
                                     $post->bulan = $bulan;
                                     $post->sumber = 'ASSET';
@@ -103,12 +104,14 @@ class AssetDepresiasi extends Command
                                     $post->debit = $currentpriceafterdepresiasi;
                                     $post->ending_balance = $currentpriceafterdepresiasi;
                                     $post->bs_pl = 'PL';
+                                    $post->created_by = 'ROBOT';
 
                                     $post->save();
 
                                     $details_b = array(
                                         'trans_date' => $now,
                                         'induk_id' => $data->id,
+                                        'trans_no' => $data->trans_no,
                                         'coa_id' => '124',
                                         'bulan' => $bulan,
                                         'sumber' => 'ASSET',
@@ -116,6 +119,7 @@ class AssetDepresiasi extends Command
                                         'credit' => $currentpriceafterdepresiasi,
                                         'ending_balance' => $currentpriceafterdepresiasi,
                                         'bs_pl' => 'BS',
+                                        'created_by' => 'ROBOT'
                                     );
 
                                     Asset::insert($details_b);

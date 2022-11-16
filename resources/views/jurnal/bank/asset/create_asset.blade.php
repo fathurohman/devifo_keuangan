@@ -58,19 +58,14 @@
 
                             </div>
                             <div class="row">
-                                {{-- <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-group{{ $errors->has('id_barang') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label">{{ __('id_barang') }}</label>
-                                        <input type="text" name="id_barang" id="input-id_barang"
-                                            class="form-control form-control-alternative{{ $errors->has('id_barang') ? ' is-invalid' : '' }}"
-                                            placeholder="{{ __('id_barang') }}"  readonly>
-                                        @if ($errors->has('id_barang'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('id_barang') }}</strong>
-                                            </span>
-                                        @endif
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group{{ $errors->has('voucher_no') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label"
+                                            for="input-voucher_no">{{ __('voucher_no') }}</label>
+                                        <input type="text" name="voucher_no" id="input-voucher_no"
+                                            class="form-control form-control-alternative{{ $errors->has('voucher_no') ? ' is-invalid' : '' }}">
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <label class="form-control-label" for="input-coa">{{ __('Barang') }}</label>
                                     <div class="input-group">

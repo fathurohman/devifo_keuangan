@@ -448,6 +448,7 @@ class FinanceController extends BaseController
         ])->first();
         $sum_idr = 0;
         $sum_usd = 0;
+        $sum_usd_total = 0;
         $id = $sales->id;
         if (empty($sales->vat)) {
             $pajak = 0;
@@ -568,7 +569,8 @@ class FinanceController extends BaseController
                     $sum_idr += $sub_total;
                 } elseif ($curr == 'USD') {
                     $sum_idr = 0;
-                    $sum_usd += $sub_total;
+                    $sum_usd_total += $sub_total;
+                    $sum_usd = $this->skomak($sum_usd_total);
                 } else {
                     $sum_idr = 0;
                     $sum_usd = 0;
@@ -619,21 +621,40 @@ class FinanceController extends BaseController
                 $no_faktur = "DEBIT NOTE";
                 $pph = NULL;
             }
-            $piutang = array(
-                'sales_order_id' => $id,
-                'trans_date' => $tanggal_inv,
-                'Customer' => $customer,
-                'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
-                'description' => "A/R $description $trans_no ($description)",
-                'coa_id' => '38',
-                'debit' => '0',
-                'credit' => $total_charge,
-                'ending_balance' => $total_charge,
-                'inv_us' => $sum_usd,
-                'kurs_idr' => '0',
-                'no_faktur' => $no_faktur,
-                'bs_pl' => 'BS',
-            );
+            if($curr == 'IDR'){
+                $piutang = array(
+                    'sales_order_id' => $id,
+                    'trans_date' => $tanggal_inv,
+                    'Customer' => $customer,
+                    'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                    'description' => "A/R $description $trans_no ($description)",
+                    'coa_id' => '38',
+                    'debit' => '0',
+                    'credit' => $total_charge,
+                    'ending_balance' => $total_charge,
+                    'inv_us' => $sum_usd,
+                    'kurs_idr' => '0',
+                    'no_faktur' => $no_faktur,
+                    'bs_pl' => 'BS',
+                );
+            }else{
+                $piutang = array(
+                    'sales_order_id' => $id,
+                    'trans_date' => $tanggal_inv,
+                    'Customer' => $customer,
+                    'inv_No' => 'SGM/BCA USD/IX/xx/xx',
+                    'description' => "A/R $description $trans_no ($description)",
+                    'coa_id' => '38',
+                    'debit' => '0',
+                    'credit' => $sum_usd,
+                    'ending_balance' => $sum_usd,
+                    'inv_us' => $sum_usd,
+                    'kurs_idr' => '0',
+                    'no_faktur' => $no_faktur,
+                    'bs_pl' => 'BS',
+                );
+            }
+
             // echo var_dump($pph) . "<br>";
 
             // echo var_dump($piutang) . "<br>";
@@ -650,5 +671,32 @@ class FinanceController extends BaseController
             return 'data available';
         }
         return redirect()->back();
+    }
+
+
+    public function skomak($usd)
+    {
+            // Fetching JSON
+            $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
+            $response_json = file_get_contents($req_url);
+
+            // Continuing if we got a result
+            if(false !== $response_json) {
+
+                // Try/catch for json_decode operation
+                try {
+
+                // Decoding
+                $response_object = json_decode($response_json);
+
+                // YOUR APPLICATION CODE HERE, e.g.
+                $base_price = $usd; // Your price in USD
+                $IDR_price = round(($base_price * $response_object->rates->IDR), 2);
+                return $IDR_price;
+                }
+                catch(Exception $e) {
+                    return 'error';
+                }
+            }
     }
 }

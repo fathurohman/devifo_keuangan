@@ -22,25 +22,26 @@ class ProfitLossController extends Controller
         return $data_jual;
     }
 
-    public function hp_penjualan()
+    public function hapok()
     {
-        $sum_jual = 0;
-        $penjualan = Jurnal::where('Chart_Of_Account', 'Penjualan')->get();
-        foreach ($penjualan as $x) {
+        $sum_hapok = 0;
+        $hapok = Jurnal::where('Chart_Of_Account', 'Harga Pokok Penjualan')->get();
+        foreach ($hapok as $x) {
             $ending_balance = $x->ending_balance;
-            $sum_jual += $ending_balance;
+            $sum_hapok += $ending_balance;
         }
-        $data_jual = array(
-            'Nama' => 'PENJUALAN',
-            'total_penjualan' => $sum_jual,
+        $data_hapok = array(
+            'Nama' => 'Harga Pokok Penjualan',
+            'total_penjualan' => $sum_hapok,
         );
-        return $data_jual;
+        return $data_hapok;
     }
 
     public function prof_loss()
     {
         $penjualan = $this->penjualan();
-        dd($penjualan);
+        $hapok = $this->hp_penjualan();
+        dd($hapok);
         return view('jurnal.profloss.profloss', compact('penjualan'));
     }
 }

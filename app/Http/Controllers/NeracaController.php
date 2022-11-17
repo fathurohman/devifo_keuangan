@@ -202,14 +202,243 @@ class NeracaController extends Controller
         return $jumlah_cash;
     }
 
-    //-----------------------Total aktiva-----------------------------------------------
-
     public function total_aktiva()
     {
         $peralatan_kerja = $this->peralatan_kerja();
         $jumlah_aktiva_tetap = $this->jumlah_aktiva_tetap();
         $jumlah_cash = ($peralatan_kerja['total_peralatan_kerja'] + $jumlah_aktiva_tetap);
         return $jumlah_cash;
+    }
+    //-----------------------Total aktiva-----------------------------------------------
+    public function hutang_afiliasi()
+    {
+        $sum_hutang_afiliasi = 0;
+        $hutang_afiliasi = Jurnal::where('Chart_Of_Account', 'HUTANG AFILIASI')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_afiliasi as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_afiliasi += $ending_balance;
+        }
+        $data_hutang_afiliasi = array(
+            'Nama' => 'HUTANG AFILIASI',
+            'total_hutang_afiliasi' => $sum_hutang_afiliasi,
+        );
+        return $data_hutang_afiliasi;
+    }
+
+    public function afiliasi_fedora()
+    {
+        $sum_afiliasi_fedora = 0;
+        $afiliasi_fedora = Jurnal::where('Chart_Of_Account', 'Hutang Afiliasi - Fedora')->where('bs_pl', 'BS')->get();
+        foreach ($afiliasi_fedora as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_afiliasi_fedora += $ending_balance;
+        }
+        $data_afiliasi_fedora = array(
+            'Nama' => 'Hutang Afiliasi - Fedora',
+            'total_afiliasi_fedora' => $sum_afiliasi_fedora,
+        );
+        return $data_afiliasi_fedora;
+    }
+
+    public function hutang_dagang()
+    {
+        $sum_hutang_dagang = 0;
+        $hutang_dagang = Jurnal::where('Chart_Of_Account', 'Hutang Dagang - IDR')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_dagang as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_dagang += $ending_balance;
+        }
+        $data_hutang_dagang = array(
+            'Nama' => 'Hutang Dagang - IDR',
+            'total_hutang_dagang' => $sum_hutang_dagang,
+        );
+        return $data_hutang_dagang;
+    }
+
+    public function hutang_ketiga()
+    {
+        $sum_hutang_ketiga = 0;
+        $hutang_ketiga = Jurnal::where('Chart_Of_Account', 'HUTANG PIHAK KETIGA')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_ketiga as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_ketiga += $ending_balance;
+        }
+        $data_hutang_ketiga = array(
+            'Nama' => 'HUTANG PIHAK KETIGA',
+            'total_hutang_ketiga' => $sum_hutang_ketiga,
+        );
+        return $data_hutang_ketiga;
+    }
+
+    public function hutang_pph_21()
+    {
+        $sum_hutang_pph_21 = 0;
+        $hutang_pph_21 = Jurnal::where('Chart_Of_Account', 'Hutang Pajak - PPh 21')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_pph_21 as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_pph_21 += $ending_balance;
+        }
+        $data_hutang_pph_21 = array(
+            'Nama' => 'Hutang Pajak - PPh 21',
+            'total_hutang_pph_21' => $sum_hutang_pph_21,
+        );
+        return $data_hutang_pph_21;
+    }
+
+    public function hutang_pph_23()
+    {
+        $sum_hutang_pph_23 = 0;
+        $hutang_pph_23 = Jurnal::where('Chart_Of_Account', 'Hutang Pajak - PPh 23')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_pph_23 as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_pph_23 += $ending_balance;
+        }
+        $data_hutang_pph_23 = array(
+            'Nama' => 'Hutang Pajak - PPh 23',
+            'total_hutang_pph_23' => $sum_hutang_pph_23,
+        );
+        return $data_hutang_pph_23;
+    }
+
+    public function hutang_pph_4()
+    {
+        $sum_hutang_pph_4 = 0;
+        $hutang_pph_4 = Jurnal::where('Chart_Of_Account', 'Hutang Pajak - PPh 4')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_pph_4 as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_pph_4 += $ending_balance;
+        }
+        $data_hutang_pph_4 = array(
+            'Nama' => 'Hutang Pajak - PPh 4',
+            'total_hutang_pph_4' => $sum_hutang_pph_4,
+        );
+        return $data_hutang_pph_4;
+    }
+
+    public function hutang_ppn_kurbay()
+    {
+        $sum_hutang_ppn_kurbay = 0;
+        $hutang_ppn_kurbay = Jurnal::where('Chart_Of_Account', 'Hutang Pajak - PPN Kurang Bayar')->where('bs_pl', 'BS')->get();
+        foreach ($hutang_ppn_kurbay as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_hutang_ppn_kurbay += $ending_balance;
+        }
+        $data_hutang_ppn_kurbay = array(
+            'Nama' => 'Hutang Pajak - PPN Kurang Bayar',
+            'total_hutang_ppn_kurbay' => $sum_hutang_ppn_kurbay,
+        );
+        return $data_hutang_ppn_kurbay;
+    }
+
+    public function dp_penjualan()
+    {
+        $dp_penjualan = 0;
+        $dp_penjualan = Jurnal::where('Chart_Of_Account', 'Uang Muka Penjualan - IDR')->where('bs_pl', 'BS')->get();
+        foreach ($dp_penjualan as $x) {
+            $ending_balance = $x->ending_balance;
+            $dp_penjualan += $ending_balance;
+        }
+        $dp_penjualan = array(
+            'Nama' => 'Uang Muka Penjualan - IDR',
+            'dp_penjualan' => $dp_penjualan,
+        );
+        return $dp_penjualan;
+    }
+
+    public function dp_setoran_modal()
+    {
+        $dp_setoran_modal = 0;
+        $dp_setoran_modal = Jurnal::where('Chart_Of_Account', 'Modal Disetor')->where('bs_pl', 'BS')->get();
+        foreach ($dp_setoran_modal as $x) {
+            $ending_balance = $x->ending_balance;
+            $dp_setoran_modal += $ending_balance;
+        }
+        $dp_setoran_modal = array(
+            'Nama' => 'Modal Disetor',
+            'dp_setoran_modal' => $dp_setoran_modal,
+        );
+        return $dp_setoran_modal;
+    }
+
+    public function jumlah_kewajiban_lancar()
+    {
+        $hutang_afiliasi = $this->hutang_afiliasi();
+        $afiliasi_fedora = $this->afiliasi_fedora();
+        $hutang_dagang = $this->hutang_dagang();
+        $hutang_ketiga = $this->hutang_ketiga();
+        $hutang_pph_21 = $this->hutang_pph_21();
+        $hutang_pph_23 = $this->hutang_pph_23();
+        $hutang_pph_4 = $this->hutang_pph_4();
+        $hutang_ppn_kurbay = $this->hutang_ppn_kurbay();
+        $dp_penjualan = $this->dp_penjualan();
+        $dp_setoran_modal = $this->dp_setoran_modal();
+        $jumlah_cash = ($hutang_afiliasi['total_hutang_afiliasi'] + $afiliasi_fedora['total_afiliasi_fedora'] + $hutang_dagang['total_hutang_dagang']
+            + $hutang_ketiga['total_hutang_ketiga'] + $hutang_pph_21['total_hutang_pph_21'] + $hutang_pph_23['total_hutang_pph_23'] +
+            +$hutang_pph_4['total_hutang_pph_4'] + $hutang_ppn_kurbay['total_hutang_ppn_kurbay'] + $dp_penjualan['dp_penjualan']
+                + $dp_setoran_modal['dp_setoran_modal']);
+        return $jumlah_cash;
+    }
+    //ekuitas
+    public function modal_disetor()
+    {
+        $modal_disetor = 0;
+        $modal_disetor = Jurnal::where('Chart_Of_Account', 'Modal Disetor')->where('bs_pl', 'BS')->get();
+        foreach ($modal_disetor as $x) {
+            $ending_balance = $x->ending_balance;
+            $modal_disetor += $ending_balance;
+        }
+        $modal_disetor = array(
+            'Nama' => 'Modal Disetor',
+            'modal_disetor' => $modal_disetor,
+        );
+        return $modal_disetor;
+    }
+
+    public function laba_ditahan()
+    {
+        $laba_ditahan = 0;
+        $laba_ditahan = Jurnal::where('Chart_Of_Account', 'Laba Ditahan')->where('bs_pl', 'BS')->get();
+        foreach ($laba_ditahan as $x) {
+            $ending_balance = $x->ending_balance;
+            $laba_ditahan += $ending_balance;
+        }
+        $laba_ditahan = array(
+            'Nama' => 'Laba Ditahan',
+            'laba_ditahan' => $laba_ditahan,
+        );
+        return $laba_ditahan;
+    }
+
+    public function cadangan_dividen()
+    {
+        $cadangan_dividen = 0;
+        $cadangan_dividen = Jurnal::where('Chart_Of_Account', 'Cadangan Deviden')->where('bs_pl', 'BS')->get();
+        foreach ($cadangan_dividen as $x) {
+            $ending_balance = $x->ending_balance;
+            $cadangan_dividen += $ending_balance;
+        }
+        $cadangan_dividen = array(
+            'Nama' => 'Cadangan Deviden',
+            'cadangan_dividen' => $cadangan_dividen,
+        );
+        return $cadangan_dividen;
+    }
+
+    public function jumlah_ekuitas()
+    {
+        $modal_disetor = $this->modal_disetor();
+        $laba_ditahan = $this->laba_ditahan();
+        $cadangan_dividen = $this->cadangan_dividen();
+        $jumlah_cash = ($modal_disetor['modal_disetor'] + $laba_ditahan['laba_ditahan'] + $cadangan_dividen['cadangan_dividen']);
+        return $jumlah_cash;
+    }
+
+    public function kewajiban_ekuitas()
+    {
+        $jumlah_ekuitas = $this->jumlah_ekuitas();
+        $jumlah_kewajiban_lancar = $this->jumlah_kewajiban_lancar();
+        $jumlah_kewajibab_ekuitas = $jumlah_ekuitas + $jumlah_kewajiban_lancar;
+        return $jumlah_kewajibab_ekuitas;
     }
 
 

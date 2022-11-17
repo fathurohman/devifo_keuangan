@@ -427,14 +427,6 @@ class ProfitLossController extends Controller
         return $data_lskl;
     }
 
-
-
-
-
-
-
-
-
     public function prof_loss()
     {
         $penjualan = $this->penjualan();
@@ -470,8 +462,7 @@ class ProfitLossController extends Controller
 
         $laba_kotor = (($penjualan['total_penjualan'] + $hapok['total_hapok']) - $potong_beli['total_pot_beli']);
         $jumlah_beban_operasi = (
-            (
-                $badmumum_bp_pph21['total_bp_pph21'] +
+            ($badmumum_bp_pph21['total_bp_pph21'] +
                 $badmumum_bp_pph23['total_bp_pph23'] +
                 $badmumum_bp_pph4['total_bp_pph4'] +
                 $badmumum_dapur['total_dapur'] +
@@ -501,39 +492,39 @@ class ProfitLossController extends Controller
 
         // dd($jumlah_beban_operasi);
 
-        return view('jurnal.profloss.profloss',
-        compact(
-            'laba_kotor',
-            'jumlah_beban_operasi',
-            'penjualan',
-            'hapok',
-            'potong_beli',
-            'badumum_atk',
-            'badmumum_bp_pph21',
-            'badmumum_bp_pph23',
-            'badmumum_bp_pph4',
-            'badmumum_dapur',
-            'badmumum_la',
-            'badmumum_materai',
-            'badmumum_pencetakan',
-            'badmumum_jaspro',
-            'badmumum_manfee',
-            'badmumum_ppbd',
-            'badmumum_tagin',
-            'badmumum_tagtel',
-            'badmumum_transportasi',
-            'bdd__bp_pph23',
-            'bp_sewken',
-            'bp_perker',
-            'bab',
-            'bgu',
-            'bll',
-            'bpp_pk',
-            'bppn1',
-            'btl',
-            'lskl'
-
-
-        ));
+        return view(
+            'jurnal.profloss.profloss',
+            compact(
+                'laba_kotor',
+                'jumlah_beban_operasi',
+                'penjualan',
+                'hapok',
+                'potong_beli',
+                'badumum_atk',
+                'badmumum_bp_pph21',
+                'badmumum_bp_pph23',
+                'badmumum_bp_pph4',
+                'badmumum_dapur',
+                'badmumum_la',
+                'badmumum_materai',
+                'badmumum_pencetakan',
+                'badmumum_jaspro',
+                'badmumum_manfee',
+                'badmumum_ppbd',
+                'badmumum_tagin',
+                'badmumum_tagtel',
+                'badmumum_transportasi',
+                'bdd__bp_pph23',
+                'bp_sewken',
+                'bp_perker',
+                'bab',
+                'bgu',
+                'bll',
+                'bpp_pk',
+                'bppn1',
+                'btl',
+                'lskl'
+            )
+        );
     }
 }

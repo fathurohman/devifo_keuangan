@@ -208,7 +208,7 @@ class NeracaController extends Controller
     {
         $peralatan_kerja = $this->peralatan_kerja();
         $jumlah_aktiva_tetap = $this->jumlah_aktiva_tetap();
-        $jumlah_cash = ($peralatan_kerja['total_peralatan_kerja'] + $jumlah_aktiva_tetap['total_penyusutan_peralatan_kerja']);
+        $jumlah_cash = ($peralatan_kerja['total_peralatan_kerja'] + $jumlah_aktiva_tetap);
         return $jumlah_cash;
     }
 
@@ -216,6 +216,38 @@ class NeracaController extends Controller
     public function neraca()
     {
         $bca_idr = $this->BCA_IDR();
-        return view('jurnal.neraca.neraca');
+        $bca_usd = $this->BCA_USD();
+        $kas_kecil = $this->kas_kecil();
+        $jumlah_kas = $this->jumlah_kas();
+        $piutang_dagang = $this->piutang_dagang();
+        $piutang_saham = $this->piutang_saham();
+        $dp_pembelian = $this->dp_pembelian();
+        $dp_karyawan = $this->dp_karyawan();
+        $dp_pph = $this->dp_pph();
+        $dimuka_gedung = $this->dimuka_gedung();
+        $jumlah_aktiva_kas = $this->jumlah_aktiva_kas();
+        $peralatan_kerja = $this->peralatan_kerja();
+        $penyusutan_peralatan_kerja = $this->penyusutan_peralatan_kerja();
+        $jumlah_aktiva_tetap = $this->jumlah_aktiva_tetap();
+        $total_aktiva = $this->total_aktiva();
+
+        return view('jurnal.neraca.neraca',
+        compact(
+                'bca_idr',
+                'bca_usd',
+                'kas_kecil',
+                'jumlah_kas',
+                'piutang_dagang',
+                'piutang_saham',
+                'dp_pembelian',
+                'dp_karyawan',
+                'dp_pph',
+                'dimuka_gedung',
+                'jumlah_aktiva_kas',
+                'peralatan_kerja',
+                'penyusutan_peralatan_kerja',
+                'jumlah_aktiva_tetap',
+                'total_aktiva'
+        ));
     }
 }

@@ -36,47 +36,47 @@
                                     </tr>
                                     <tr>
                                         <td>BCA SIGMA IDR- 3728-888-557</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $bca_idr['total_bca_idr'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>BCA SIGMA USD- 3728-888-506</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $bca_usd['total_bca_usd'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Kas Kecil Kantor Pusat - IDR</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $kas_kecil['total_kas_kecil'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr style="background: blue">
                                         <td><b>Jumlah Cash</b></td>
-                                        <td><b>0</b></td>
+                                        <td><b>{{number_format((float) $jumlah_kas, 2, '.', ',')}}</b></td>
                                     </tr>
                                     <tr>
                                         <td>Piutang Dagang - IDR</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $piutang_dagang['total_piutang_dagang'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Piutang Pemegang Saham</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $piutang_saham['total_piutang_saham'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Uang Muka Pembelian - IDR</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $dp_pembelian['total_dp_pembelian'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Uang Muka Kerja Karyawan - IDR</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $dp_karyawan['total_dp_karyawan'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Pajak Dibayar Dimuka - PPH 23</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $dp_pph['total_dp_pph'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Biaya Dibayar Dimuka Fasilitas</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $dimuka_gedung['total_dimuka_gedung'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr style="background: blue">
                                         <td><b>Jumlah Aktiva Lancar</b></td>
-                                        <td><b>0</b></td>
+                                        <td><b>{{number_format((float) $jumlah_aktiva_kas, 2, '.', ',')}}</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -88,11 +88,11 @@
                                     </tr>
                                     <tr>
                                         <td>Aktiva Jakarta - Peralatan Kerja</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $peralatan_kerja['total_peralatan_kerja'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Akumulasi Penyusutan - Peralatan Kerja</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $penyusutan_peralatan_kerja['total_penyusutan_peralatan_kerja'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -104,7 +104,7 @@
                                     </tr>
                                     <tr style="background: blue">
                                         <td><b>Jumlah Aktiva Tetap</b></td>
-                                        <td><b>0</b></td>
+                                        <td><b>{{number_format((float) $jumlah_aktiva_tetap, 2, '.', ',')}}</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -112,7 +112,7 @@
                                     </tr>
                                     <tr style="background: orangered">
                                         <td><b>Total Aktiva</b></td>
-                                        <td>0</td>
+                                        <td><b>{{number_format((float) $total_aktiva, 2, '.', ',')}}</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>

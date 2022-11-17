@@ -10,7 +10,7 @@ class ProfitLossController extends Controller
     public function penjualan()
     {
         $sum_jual = 0;
-        $penjualan = Jurnal::where('Chart_Of_Account', 'Penjualan')->get();
+        $penjualan = Jurnal::where('Chart_Of_Account', 'Penjualan')->where('bs_pl', 'PL')->get();
         foreach ($penjualan as $x) {
             $ending_balance = $x->ending_balance;
             $sum_jual += $ending_balance;
@@ -40,7 +40,7 @@ class ProfitLossController extends Controller
     public function potongan_beli()
     {
         $sum_potong_beli = 0;
-        $potong_beli = Jurnal::where('Chart_Of_Account', 'Potongan Pembelian')->get();
+        $potong_beli = Jurnal::where('Chart_Of_Account', 'Potongan Pembelian')->where('bs_pl', 'PL')->get();
         foreach ($potong_beli as $x) {
             $ending_balance = $x->ending_balance;
             $sum_potong_beli += $ending_balance;
@@ -55,7 +55,7 @@ class ProfitLossController extends Controller
     public function badmumum_atk()
     {
         $sum_atk = 0;
-        $atk = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Alat Tulis Kantor')->get();
+        $atk = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Alat Tulis Kantor')->where('bs_pl', 'PL')->get();
         foreach ($atk as $x) {
             $ending_balance = $x->ending_balance;
             $sum_atk += $ending_balance;
@@ -70,7 +70,7 @@ class ProfitLossController extends Controller
     public function badmumum_bp_pph21()
     {
         $sum_bp_pph21 = 0;
-        $bp_pph21 = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 21 Non KA/Ryawan')->get();
+        $bp_pph21 = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 21 Non KA/Ryawan')->where('bs_pl', 'PL')->get();
         foreach ($bp_pph21 as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bp_pph21 += $ending_balance;
@@ -85,7 +85,7 @@ class ProfitLossController extends Controller
     public function badmumum_bp_pph23()
     {
         $sum_bp_pph23 = 0;
-        $bp_pph23 = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 23')->get();
+        $bp_pph23 = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 23')->where('bs_pl', 'PL')->get();
         foreach ($bp_pph23 as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bp_pph23 += $ending_balance;
@@ -100,7 +100,7 @@ class ProfitLossController extends Controller
     public function badmumum_bp_pph4()
     {
         $sum_bp_pph4 = 0;
-        $bp_pph4 = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 4(2)')->get();
+        $bp_pph4 = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 4(2)')->where('bs_pl', 'PL')->get();
         foreach ($bp_pph4 as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bp_pph4 += $ending_balance;
@@ -115,7 +115,7 @@ class ProfitLossController extends Controller
     public function badmumum_dapur()
     {
         $sum_dapur = 0;
-        $dapur = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Dapur')->get();
+        $dapur = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Dapur')->where('bs_pl', 'PL')->get();
         foreach ($dapur as $x) {
             $ending_balance = $x->ending_balance;
             $sum_dapur += $ending_balance;
@@ -130,7 +130,7 @@ class ProfitLossController extends Controller
     public function badmumum_la()
     {
         $sum_la = 0;
-        $la = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Listrik & Air')->get();
+        $la = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Listrik & Air')->where('bs_pl', 'PL')->get();
         foreach ($la as $x) {
             $ending_balance = $x->ending_balance;
             $sum_la += $ending_balance;
@@ -145,7 +145,7 @@ class ProfitLossController extends Controller
     public function badmumum_materai()
     {
         $sum_materai = 0;
-        $materai = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Materai')->get();
+        $materai = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Materai')->where('bs_pl', 'PL')->get();
         foreach ($materai as $x) {
             $ending_balance = $x->ending_balance;
             $sum_materai += $ending_balance;
@@ -160,7 +160,7 @@ class ProfitLossController extends Controller
     public function badmumum_pencetakan()
     {
         $sum_pencetakan = 0;
-        $pencetakan = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Pencetakan')->get();
+        $pencetakan = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Pencetakan')->where('bs_pl', 'PL')->get();
         foreach ($pencetakan as $x) {
             $ending_balance = $x->ending_balance;
             $sum_pencetakan += $ending_balance;
@@ -175,7 +175,7 @@ class ProfitLossController extends Controller
     public function badmumum_jaspro()
     {
         $sum_jaspro = 0;
-        $jaspro = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Jasa Profesional')->get();
+        $jaspro = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Jasa Profesional')->where('bs_pl', 'PL')->get();
         foreach ($jaspro as $x) {
             $ending_balance = $x->ending_balance;
             $sum_jaspro += $ending_balance;
@@ -190,7 +190,7 @@ class ProfitLossController extends Controller
     public function badmumum_manfee()
     {
         $sum_manfee = 0;
-        $manfee = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Management Fee')->get();
+        $manfee = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Management Fee')->where('bs_pl', 'PL')->get();
         foreach ($manfee as $x) {
             $ending_balance = $x->ending_balance;
             $sum_manfee += $ending_balance;
@@ -205,7 +205,7 @@ class ProfitLossController extends Controller
     public function badmumum_ppbd()
     {
         $sum_ppbd = 0;
-        $ppbd = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Pos dan Pengiriman Barang/Dokumen')->get();
+        $ppbd = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Pos dan Pengiriman Barang/Dokumen')->where('bs_pl', 'PL')->get();
         foreach ($ppbd as $x) {
             $ending_balance = $x->ending_balance;
             $sum_ppbd += $ending_balance;
@@ -220,7 +220,7 @@ class ProfitLossController extends Controller
     public function badmumum_tagin()
     {
         $sum_tagin = 0;
-        $tagin = Jurnal::where('Chart_Of_Account', 'Site - B. Adm & Umum - Tagihan Internet')->get();
+        $tagin = Jurnal::where('Chart_Of_Account', 'Site - B. Adm & Umum - Tagihan Internet')->where('bs_pl', 'PL')->get();
         foreach ($tagin as $x) {
             $ending_balance = $x->ending_balance;
             $sum_tagin += $ending_balance;
@@ -235,7 +235,7 @@ class ProfitLossController extends Controller
     public function badmumum_tagtel()
     {
         $sum_tagtel = 0;
-        $tagtel = Jurnal::where('Chart_Of_Account', 'Site - B. Adm & Umum - Tagihan Telpon')->get();
+        $tagtel = Jurnal::where('Chart_Of_Account', 'Site - B. Adm & Umum - Tagihan Telpon')->where('bs_pl', 'PL')->get();
         foreach ($tagtel as $x) {
             $ending_balance = $x->ending_balance;
             $sum_tagtel += $ending_balance;
@@ -250,7 +250,7 @@ class ProfitLossController extends Controller
     public function badmumum_transportasi()
     {
         $sum_transportasi = 0;
-        $transportasi = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Transportasi')->get();
+        $transportasi = Jurnal::where('Chart_Of_Account', 'B. Adm & Umum - Transportasi')->where('bs_pl', 'PL')->get();
         foreach ($transportasi as $x) {
             $ending_balance = $x->ending_balance;
             $sum_transportasi += $ending_balance;
@@ -265,7 +265,7 @@ class ProfitLossController extends Controller
     public function bdd__bp_pph23()
     {
         $sum_bdd__bp_pph23 = 0;
-        $bdd__bp_pph23 = Jurnal::where('Chart_Of_Account', 'Pajak Dibayar Dimuka - PPH 23')->get();
+        $bdd__bp_pph23 = Jurnal::where('Chart_Of_Account', 'Pajak Dibayar Dimuka - PPH 23')->where('bs_pl', 'PL')->get();
         foreach ($bdd__bp_pph23 as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bdd__bp_pph23 += $ending_balance;
@@ -280,7 +280,7 @@ class ProfitLossController extends Controller
     public function bp_sewken()
     {
         $sum_bp_sewken = 0;
-        $bp_sewken = Jurnal::where('Chart_Of_Account', 'B. Penjualan - Sewa KendA/Raan')->get();
+        $bp_sewken = Jurnal::where('Chart_Of_Account', 'B. Penjualan - Sewa KendA/Raan')->where('bs_pl', 'PL')->get();
         foreach ($bp_sewken as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bp_sewken += $ending_balance;
@@ -295,7 +295,7 @@ class ProfitLossController extends Controller
     public function bp_perker()
     {
         $sum_bp_perker = 0;
-        $bp_perker = Jurnal::where('Chart_Of_Account', 'B. Penyusutan - Peralatan Kerja')->get();
+        $bp_perker = Jurnal::where('Chart_Of_Account', 'B. Penyusutan - Peralatan Kerja')->where('bs_pl', 'PL')->get();
         foreach ($bp_perker as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bp_perker += $ending_balance;
@@ -310,7 +310,7 @@ class ProfitLossController extends Controller
     public function bab()
     {
         $sum_bab = 0;
-        $bab = Jurnal::where('Chart_Of_Account', 'Biaya Administrasi Bank')->get();
+        $bab = Jurnal::where('Chart_Of_Account', 'Biaya Administrasi Bank')->where('bs_pl', 'PL')->get();
         foreach ($bab as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bab += $ending_balance;
@@ -325,7 +325,7 @@ class ProfitLossController extends Controller
     public function bgu()
     {
         $sum_bgu = 0;
-        $bgu = Jurnal::where('Chart_Of_Account', 'Biaya Gaji & Upah')->get();
+        $bgu = Jurnal::where('Chart_Of_Account', 'Biaya Gaji & Upah')->where('bs_pl', 'PL')->get();
         foreach ($bgu as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bgu += $ending_balance;
@@ -340,7 +340,7 @@ class ProfitLossController extends Controller
     public function bll()
     {
         $sum_bll = 0;
-        $bll = Jurnal::where('Chart_Of_Account', 'Biaya Lain-Lain')->get();
+        $bll = Jurnal::where('Chart_Of_Account', 'Biaya Lain-Lain')->where('bs_pl', 'PL')->get();
         foreach ($bll as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bll += $ending_balance;
@@ -355,7 +355,7 @@ class ProfitLossController extends Controller
     public function bpp_pk()
     {
         $sum_bpp_pk = 0;
-        $bpp_pk = Jurnal::where('Chart_Of_Account', 'Biaya PemelihA/Raan & Perbaikan - PerlengkA/Pan Kantor')->get();
+        $bpp_pk = Jurnal::where('Chart_Of_Account', 'Biaya PemelihA/Raan & Perbaikan - PerlengkA/Pan Kantor')->where('bs_pl', 'PL')->get();
         foreach ($bpp_pk as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bpp_pk += $ending_balance;
@@ -370,7 +370,7 @@ class ProfitLossController extends Controller
     public function bppn1()
     {
         $sum_bppn1 = 0;
-        $bppn1 = Jurnal::where('Chart_Of_Account', 'Hutang Pajak - PPN Keluaranan')->get();
+        $bppn1 = Jurnal::where('Chart_Of_Account', 'Hutang Pajak - PPN Keluaranan')->where('bs_pl', 'PL')->get();
         foreach ($bppn1 as $x) {
             $ending_balance = $x->ending_balance;
             $sum_bppn1 += $ending_balance;
@@ -400,7 +400,7 @@ class ProfitLossController extends Controller
     public function btl()
     {
         $sum_btl = 0;
-        $btl = Jurnal::where('Chart_Of_Account', 'Biaya Tunjangan Lembur')->get();
+        $btl = Jurnal::where('Chart_Of_Account', 'Biaya Tunjangan Lembur')->where('bs_pl', 'PL')->get();
         foreach ($btl as $x) {
             $ending_balance = $x->ending_balance;
             $sum_btl += $ending_balance;
@@ -415,7 +415,7 @@ class ProfitLossController extends Controller
     public function lskl()
     {
         $sum_lskl = 0;
-        $lskl = Jurnal::where('Chart_Of_Account', 'Laba (Rugi) Selisih Kurs Riil')->get();
+        $lskl = Jurnal::where('Chart_Of_Account', 'Laba (Rugi) Selisih Kurs Riil')->where('bs_pl', 'PL')->get();
         foreach ($lskl as $x) {
             $ending_balance = $x->ending_balance;
             $sum_lskl += $ending_balance;
@@ -430,7 +430,7 @@ class ProfitLossController extends Controller
     public function pll()
     {
         $sum_pll = 0;
-        $pll = Jurnal::where('Chart_Of_Account', 'PENDA/PATAN LAIN-LAIN')->get();
+        $pll = Jurnal::where('Chart_Of_Account', 'PENDA/PATAN LAIN-LAIN')->where('bs_pl', 'PL')->get();
         foreach ($pll as $x) {
             $ending_balance = $x->ending_balance;
             $sum_pll += $ending_balance;
@@ -445,7 +445,7 @@ class ProfitLossController extends Controller
     public function pbb()
     {
         $sum_pbb = 0;
-        $pbb = Jurnal::where('Chart_Of_Account', 'PendA/Patan Bunga Bank')->get();
+        $pbb = Jurnal::where('Chart_Of_Account', 'PendA/Patan Bunga Bank')->where('bs_pl', 'PL')->get();
         foreach ($pbb as $x) {
             $ending_balance = $x->ending_balance;
             $sum_pbb += $ending_balance;
@@ -456,14 +456,6 @@ class ProfitLossController extends Controller
         );
         return $data_pbb;
     }
-
-
-
-
-
-
-
-
 
 
     public function prof_loss()

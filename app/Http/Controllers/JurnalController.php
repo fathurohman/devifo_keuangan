@@ -221,7 +221,7 @@ class JurnalController extends Controller
                         'trans_date' => $tanggal_inv,
                         'inv_No' => $trans_no,
                         'description' => "A/p $customer",
-                        'coa_id' => '79',
+                        'coa_id' => '189',
                         'debit' => $total_pajak,
                         'credit' => '0',
                         'ending_balance' => $total_pajak,

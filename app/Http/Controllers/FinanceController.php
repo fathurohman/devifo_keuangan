@@ -434,7 +434,7 @@ class FinanceController extends BaseController
     			buying_orders.sales_order_id as sales_id
         FROM sales_orders
         INNER JOIN buying_orders ON sales_orders.id=buying_orders.sales_order_id
-    	where sales_orders.booked = 1 and sales_orders.id = "' . $id . '" and description = "CO-LOADER CHARGES"
+    	where sales_orders.booked = 1 and sales_orders.id = "' . $id . '"
         GROUP BY buying_orders.curr,buying_orders.name, sales_orders.inv_date, sales_orders.nomor_invoice,
         sales_orders.job_order_id,buying_orders.sales_order_id');
     }
@@ -468,12 +468,16 @@ class FinanceController extends BaseController
             foreach ($buying as $y) {
                 $curr_b = $y->curr;
                 $sub_total_b = $y->sub_total;
+                if ($curr_b == 'IDR') {
+                    $nilai_usd = '0';
+                } else {
+                    $nilai_usd = $this->skomak($sub_total_b);
+                }
                 $customer_b = $y->customers;
                 if ($sales->tipe == 'I') {
                     $vat_b = 1.11 / 100;
                     $pph_b = $sub_total_b * (2 / 100);
                     $total_pajak_b = $sub_total_b * $vat_b;
-                    $nilai_usd = '0';
                     $pok_penjualan = $sub_total_b - $total_pajak_b;
                     $Admin = array(
                         'sales_order_id' => $id,
@@ -507,7 +511,7 @@ class FinanceController extends BaseController
                         'inv_No' => $trans_no,
                         'Customer' => $customer_b,
                         'description' => "A/p JOB $description",
-                        'coa_id' => '79',
+                        'coa_id' => '189',
                         'debit' => $total_pajak_b,
                         'credit' => '0',
                         'ending_balance' => $total_pajak_b,
@@ -519,8 +523,20 @@ class FinanceController extends BaseController
                     $hutang_pajak = NULL;
                     $ppn = NULL;
                     $total_charge = '0';
-                    $nilai_usd = $sub_total_b;
                 }
+                $hutang_dagang = array(
+                    'sales_order_id' => $id,
+                    'trans_date' => $tanggal_inv,
+                    'inv_No' => $trans_no,
+                    'Customer' => $customer_b,
+                    'description' => "A/p JOB $description",
+                    'coa_id' => '155',
+                    'debit' => $nilai_usd,
+                    'credit' => '0',
+                    'ending_balance' => $nilai_usd,
+                    'inv_us' => $nilai_usd,
+                    'bs_pl' => 'PL',
+                );
                 $pokok = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
@@ -547,12 +563,16 @@ class FinanceController extends BaseController
                     'inv_us' => $nilai_usd,
                     'bs_pl' => 'BS',
                 );
-                jurnal_pembelian_bank::insert($pokok);
-                jurnal_pembelian_bank::insert($bca);
-                if (!empty($ppn) && !empty($Admin) && !empty($hutang_pajak)) {
-                    jurnal_pembelian_bank::insert($ppn);
-                    jurnal_pembelian_bank::insert($Admin);
-                    jurnal_pembelian_bank::insert($hutang_pajak);
+                if ($curr_b == 'IDR') {
+                    jurnal_pembelian_bank::insert($pokok);
+                    jurnal_pembelian_bank::insert($bca);
+                    if (!empty($ppn) && !empty($Admin) && !empty($hutang_pajak)) {
+                        jurnal_pembelian_bank::insert($ppn);
+                        jurnal_pembelian_bank::insert($Admin);
+                        jurnal_pembelian_bank::insert($hutang_pajak);
+                    }
+                } else {
+                    jurnal_pembelian_bank::insert($hutang_dagang);
                 }
             }
         }
@@ -621,7 +641,7 @@ class FinanceController extends BaseController
                 $no_faktur = "DEBIT NOTE";
                 $pph = NULL;
             }
-            if($curr == 'IDR'){
+            if ($curr == 'IDR') {
                 $piutang = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
@@ -637,7 +657,7 @@ class FinanceController extends BaseController
                     'no_faktur' => $no_faktur,
                     'bs_pl' => 'BS',
                 );
-            }else{
+            } else {
                 $piutang = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
@@ -676,15 +696,15 @@ class FinanceController extends BaseController
 
     public function skomak($usd)
     {
-            // Fetching JSON
-            $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
-            $response_json = file_get_contents($req_url);
+        // Fetching JSON
+        $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
+        $response_json = file_get_contents($req_url);
 
-            // Continuing if we got a result
-            if(false !== $response_json) {
+        // Continuing if we got a result
+        if (false !== $response_json) {
 
-                // Try/catch for json_decode operation
-                try {
+            // Try/catch for json_decode operation
+            try {
 
                 // Decoding
                 $response_object = json_decode($response_json);
@@ -693,10 +713,9 @@ class FinanceController extends BaseController
                 $base_price = $usd; // Your price in USD
                 $IDR_price = round(($base_price * $response_object->rates->IDR), 2);
                 return $IDR_price;
-                }
-                catch(Exception $e) {
-                    return 'error';
-                }
+            } catch (Exception $e) {
+                return 'error';
             }
+        }
     }
 }

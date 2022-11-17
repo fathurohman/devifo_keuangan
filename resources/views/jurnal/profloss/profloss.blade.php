@@ -154,10 +154,119 @@
                                         <td><b>Jumlah Beban Operasi</b></td>
                                         <td><b>{{number_format((float) $jumlah_beban_operasi, 2, '.', ',')}}</b></td>
                                     </tr>
+                                    <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Pendapatan Lain"</b></td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{$pll['Nama']}}</td>
+                                        <td>{{number_format((float) $pll['total_pll'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{$pbb['Nama']}}</td>
+                                        <td>{{number_format((float) $pbb['total_pbb'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr style="background: green">
+                                        <td><b>Jumlah Pendapatan Lain" </b></td>
+                                        <td><b>{{number_format((float) $jumlah_pendapatan_lain, 2, '.', ',')}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Laba/Rugi</b></td>
+                                        <td>{{number_format((float) $laba_rugi, 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pembagian Laba :</td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>  Ibu Fedora 30%</td>
+                                        <td>{{number_format((float) $fedora_30persen, 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>  Bp Dicky 70%</td>
+                                        <td>{{number_format((float) $dicky_70persen, 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SALES</td>
+                                        <td>{{number_format((float) $penjualan['total_penjualan'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>HPP</td>
+                                        <td>{{number_format((float) $hapok['total_hapok'], 2, '.', ',') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>LABA KOTOR</td>
+                                        <td>{{number_format((float) $potong_beli['total_pot_beli'], 2, '.', ',')}}</td>
+                                    </tr>
 
-
-
-
+                                    <tr>
+                                        <td>Wages and Salaries</td>
+                                        <td>{{number_format((float) $wages_and_salaries, 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rent,Insurance,Manintenance Expense</td>
+                                        <td>{{number_format((float) $rime, 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>General & Administration Expenses</td>
+                                        <td>{{number_format((float) $gae, 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Depreciation Aset Expense</td>
+                                        <td>{{number_format((float) $bpp_pk['total_bpp_pk'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td> Interest Income</td>
+                                        <td> {{number_format((float) $pll['total_pll'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Rental Income</td>
+                                        <td> - </td>
+                                    </tr>
+                                    <tr>
+                                        <td> Other expense</td>
+                                        <td>{{number_format((float) $bab['total_bab'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Income Taxes</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Payroll Taxes 21</td>
+                                        <td>{{number_format((float) $badmumum_bp_pph21['total_bp_pph21'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Other Taxes- 23</td>
+                                        <td>{{number_format((float) $badmumum_bp_pph23['total_bp_pph23'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Other Taxes- 4(2) & UMKM Final </td>
+                                        <td>{{number_format((float) $badmumum_bp_pph4['total_bp_pph4'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="background: yellow">
+                                        <td><b>Profit and loss</b></td>
+                                        <td><b>{{number_format((float) $profit_loss, 2, '.', ',')}}</b></td>
+                                    </tr>
                                     </tr>
                                 </tbody>
                             </table>

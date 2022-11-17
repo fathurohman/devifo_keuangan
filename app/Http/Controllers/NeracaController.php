@@ -60,7 +60,7 @@ class NeracaController extends Controller
         $jumlah_cash = ($bca_idr['total_bca_idr'] + $bca_usd['total_bca_usd'] + $kas_kecil['total_kas_kecil']);
         return $jumlah_cash;
     }
-
+    //-------------------------------aktiva lancar -----------------------------------------
     public function piutang_dagang()
     {
         $sum_piutang_dagang = 0;
@@ -135,6 +135,83 @@ class NeracaController extends Controller
         );
         return $data_dp_pph;
     }
+
+    public function dimuka_gedung()
+    {
+        $sum_dimuka_gedung = 0;
+        $dimuka_gedung = Jurnal::where('Chart_Of_Account', 'Sewa Dibayar dimuka - Gedung')->where('bs_pl', 'BS')->get();
+        foreach ($dimuka_gedung as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_dimuka_gedung += $ending_balance;
+        }
+        $data_dimuka_gedung = array(
+            'Nama' => 'Sewa Dibayar dimuka - Gedung',
+            'total_dimuka_gedung' => $sum_dimuka_gedung,
+        );
+        return $data_dimuka_gedung;
+    }
+
+    public function jumlah_aktiva_kas()
+    {
+        $piutang_dagang = $this->piutang_dagang();
+        $piutang_saham = $this->piutang_saham();
+        $dp_pembelian = $this->dp_pembelian();
+        $dp_karyawan = $this->dp_karyawan();
+        $dp_pph = $this->dp_pph();
+        $dimuka_gedung = $this->dimuka_gedung();
+        $jumlah_cash = ($piutang_dagang['total_piutang_dagang'] + $piutang_saham['total_piutang_saham'] + $dp_pembelian['total_dp_pembelian']
+            + $dp_karyawan['total_dp_karyawan'] + $dp_pph['total_dp_pph'] + $dimuka_gedung['total_dimuka_gedung']);
+        return $jumlah_cash;
+    }
+    //----------------aktiva lancar-------------------------------------------
+    public function peralatan_kerja()
+    {
+        $sum_peralatan_kerja = 0;
+        $peralatan_kerja = Jurnal::where('Chart_Of_Account', 'Aktiva JakA/Rta - Peralatan Kerja')->where('bs_pl', 'BS')->get();
+        foreach ($peralatan_kerja as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_peralatan_kerja += $ending_balance;
+        }
+        $data_peralatan_kerja = array(
+            'Nama' => 'Aktiva Jakarta - Peralatan Kerja',
+            'total_peralatan_kerja' => $sum_peralatan_kerja,
+        );
+        return $data_peralatan_kerja;
+    }
+
+    public function penyusutan_peralatan_kerja()
+    {
+        $sum_penyusutan_peralatan_kerja = 0;
+        $penyusutan_peralatan_kerja = Jurnal::where('Chart_Of_Account', 'Akumulasi Penyusutan JakA/Rta - Peralatan Kerja')->where('bs_pl', 'BS')->get();
+        foreach ($penyusutan_peralatan_kerja as $x) {
+            $ending_balance = $x->ending_balance;
+            $sum_penyusutan_peralatan_kerja += $ending_balance;
+        }
+        $data_penyusutan_peralatan_kerja = array(
+            'Nama' => 'Akumulasi Penyusutan - Peralatan Kerja',
+            'total_penyusutan_peralatan_kerja' => $sum_penyusutan_peralatan_kerja,
+        );
+        return $data_penyusutan_peralatan_kerja;
+    }
+
+    public function jumlah_aktiva_tetap()
+    {
+        $peralatan_kerja = $this->peralatan_kerja();
+        $penyusutan_peralatan_kerja = $this->penyusutan_peralatan_kerja();
+        $jumlah_cash = ($peralatan_kerja['total_peralatan_kerja'] + $penyusutan_peralatan_kerja['total_penyusutan_peralatan_kerja']);
+        return $jumlah_cash;
+    }
+
+    //-----------------------Total aktiva-----------------------------------------------
+
+    public function total_aktiva()
+    {
+        $peralatan_kerja = $this->peralatan_kerja();
+        $jumlah_aktiva_tetap = $this->jumlah_aktiva_tetap();
+        $jumlah_cash = ($peralatan_kerja['total_peralatan_kerja'] + $jumlah_aktiva_tetap['total_penyusutan_peralatan_kerja']);
+        return $jumlah_cash;
+    }
+
 
     public function neraca()
     {

@@ -332,32 +332,32 @@ class NeracaController extends Controller
 
     public function dp_penjualan()
     {
-        $dp_penjualan = 0;
+        $sum_dp_penjualan = 0;
         $dp_penjualan = Jurnal::where('Chart_Of_Account', 'Uang Muka Penjualan - IDR')->where('bs_pl', 'BS')->get();
         foreach ($dp_penjualan as $x) {
             $ending_balance = $x->ending_balance;
-            $dp_penjualan += $ending_balance;
+            $sum_dp_penjualan += $ending_balance;
         }
-        $dp_penjualan = array(
+        $data_dp_penjualan = array(
             'Nama' => 'Uang Muka Penjualan - IDR',
-            'dp_penjualan' => $dp_penjualan,
+            'dp_penjualan' => $sum_dp_penjualan,
         );
-        return $dp_penjualan;
+        return $data_dp_penjualan;
     }
 
     public function dp_setoran_modal()
     {
-        $dp_setoran_modal = 0;
+        $sum_dp_setoran_modal = 0;
         $dp_setoran_modal = Jurnal::where('Chart_Of_Account', 'Modal Disetor')->where('bs_pl', 'BS')->get();
         foreach ($dp_setoran_modal as $x) {
             $ending_balance = $x->ending_balance;
-            $dp_setoran_modal += $ending_balance;
+            $sum_dp_setoran_modal += $ending_balance;
         }
-        $dp_setoran_modal = array(
+        $data_dp_setoran_modal = array(
             'Nama' => 'Modal Disetor',
-            'dp_setoran_modal' => $dp_setoran_modal,
+            'dp_setoran_modal' => $sum_dp_setoran_modal,
         );
-        return $dp_setoran_modal;
+        return $data_dp_setoran_modal;
     }
 
     public function jumlah_kewajiban_lancar()
@@ -372,56 +372,56 @@ class NeracaController extends Controller
         $hutang_ppn_kurbay = $this->hutang_ppn_kurbay();
         $dp_penjualan = $this->dp_penjualan();
         $dp_setoran_modal = $this->dp_setoran_modal();
-        $jumlah_cash = ($hutang_afiliasi['total_hutang_afiliasi'] + $afiliasi_fedora['total_afiliasi_fedora'] + $hutang_dagang['total_hutang_dagang']
+        $jumlah_cash = (($hutang_afiliasi['total_hutang_afiliasi'] + $afiliasi_fedora['total_afiliasi_fedora'] + $hutang_dagang['total_hutang_dagang']
             + $hutang_ketiga['total_hutang_ketiga'] + $hutang_pph_21['total_hutang_pph_21'] + $hutang_pph_23['total_hutang_pph_23'] +
-            +$hutang_pph_4['total_hutang_pph_4'] + $hutang_ppn_kurbay['total_hutang_ppn_kurbay'] + $dp_penjualan['dp_penjualan']
-                + $dp_setoran_modal['dp_setoran_modal']);
+            + $hutang_pph_4['total_hutang_pph_4'] + $hutang_ppn_kurbay['total_hutang_ppn_kurbay'] + $dp_penjualan['dp_penjualan']
+                + $dp_setoran_modal['dp_setoran_modal']));
         return $jumlah_cash;
     }
     //ekuitas
     public function modal_disetor()
     {
-        $modal_disetor = 0;
+        $sum_modal_disetor = 0;
         $modal_disetor = Jurnal::where('Chart_Of_Account', 'Modal Disetor')->where('bs_pl', 'BS')->get();
         foreach ($modal_disetor as $x) {
             $ending_balance = $x->ending_balance;
             $modal_disetor += $ending_balance;
         }
-        $modal_disetor = array(
+        $data_modal_disetor = array(
             'Nama' => 'Modal Disetor',
-            'modal_disetor' => $modal_disetor,
+            'modal_disetor' => $sum_modal_disetor,
         );
-        return $modal_disetor;
+        return $data_modal_disetor;
     }
 
     public function laba_ditahan()
     {
-        $laba_ditahan = 0;
+        $sum_laba_ditahan = 0;
         $laba_ditahan = Jurnal::where('Chart_Of_Account', 'Laba Ditahan')->where('bs_pl', 'BS')->get();
         foreach ($laba_ditahan as $x) {
             $ending_balance = $x->ending_balance;
-            $laba_ditahan += $ending_balance;
+            $sum_laba_ditahan += $ending_balance;
         }
-        $laba_ditahan = array(
+        $data_laba_ditahan = array(
             'Nama' => 'Laba Ditahan',
-            'laba_ditahan' => $laba_ditahan,
+            'laba_ditahan' => $sum_laba_ditahan,
         );
-        return $laba_ditahan;
+        return $data_laba_ditahan;
     }
 
     public function cadangan_dividen()
     {
-        $cadangan_dividen = 0;
+        $sum_cadangan_dividen = 0;
         $cadangan_dividen = Jurnal::where('Chart_Of_Account', 'Cadangan Deviden')->where('bs_pl', 'BS')->get();
         foreach ($cadangan_dividen as $x) {
             $ending_balance = $x->ending_balance;
-            $cadangan_dividen += $ending_balance;
+            $sum_cadangan_dividen += $ending_balance;
         }
-        $cadangan_dividen = array(
+        $data_cadangan_dividen = array(
             'Nama' => 'Cadangan Deviden',
-            'cadangan_dividen' => $cadangan_dividen,
+            'cadangan_dividen' => $sum_cadangan_dividen,
         );
-        return $cadangan_dividen;
+        return $data_cadangan_dividen;
     }
 
     public function jumlah_ekuitas()
@@ -442,6 +442,8 @@ class NeracaController extends Controller
     }
 
 
+
+
     public function neraca()
     {
         $bca_idr = $this->BCA_IDR();
@@ -460,6 +462,24 @@ class NeracaController extends Controller
         $jumlah_aktiva_tetap = $this->jumlah_aktiva_tetap();
         $total_aktiva = $this->total_aktiva();
 
+        $hutang_afiliasi = $this->hutang_afiliasi();
+        $afiliasi_fedora = $this->afiliasi_fedora();
+        $hutang_dagang = $this->hutang_dagang();
+        $hutang_ketiga = $this->hutang_ketiga();
+        $hutang_pph_21 = $this->hutang_pph_21();
+        $hutang_pph_23 = $this->hutang_pph_23();
+        $hutang_pph_4 = $this->hutang_pph_4();
+        $hutang_ppn_kurbay = $this->hutang_ppn_kurbay();
+        $dp_penjualan = $this->dp_penjualan();
+        $dp_setoran_modal = $this->dp_setoran_modal();
+        $jumlah_kewajiban_lancar = $this->jumlah_kewajiban_lancar();
+        $modal_disetor = $this->modal_disetor();
+        $laba_ditahan = $this->laba_ditahan();
+        $cadangan_dividen = $this->cadangan_dividen();
+        $jumlah_ekuitas = $this->jumlah_ekuitas();
+        $kewajiban_ekuitas = $this->kewajiban_ekuitas();
+
+
         return view('jurnal.neraca.neraca',
         compact(
                 'bca_idr',
@@ -476,7 +496,24 @@ class NeracaController extends Controller
                 'peralatan_kerja',
                 'penyusutan_peralatan_kerja',
                 'jumlah_aktiva_tetap',
-                'total_aktiva'
+                'total_aktiva',
+                'hutang_afiliasi',
+                'afiliasi_fedora',
+                'hutang_dagang',
+                'hutang_ketiga',
+                'hutang_pph_21',
+                'hutang_pph_23',
+                'hutang_pph_4',
+                'hutang_ppn_kurbay',
+                'dp_penjualan',
+                'dp_setoran_modal',
+                'jumlah_kewajiban_lancar',
+                'modal_disetor',
+                'laba_ditahan',
+                'cadangan_dividen',
+                'jumlah_ekuitas',
+                'kewajiban_ekuitas'
+
         ));
     }
 }

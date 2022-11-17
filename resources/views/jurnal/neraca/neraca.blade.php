@@ -132,43 +132,47 @@
                                     </tr>
                                     <tr>
                                         <td>Hutang Afiliasi - DUI</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $hutang_afiliasi['total_hutang_afiliasi'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Hutang Afiliasi - Fedora</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $afiliasi_fedora['total_afiliasi_fedora'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Hutang Dagang - IDR</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $hutang_dagang['total_hutang_dagang'], 2, '.', ',')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hutang Pihak Ketiga</td>
+                                        <td>{{number_format((float) $hutang_ketiga['total_hutang_ketiga'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Hutang Pajak - PPh 21</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $hutang_pph_21['total_hutang_pph_21'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Hutang Pajak - PPh 23</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $hutang_pph_23['total_hutang_pph_23'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Hutang Pajak - PPh 4 (2)</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $hutang_pph_4['total_hutang_pph_4'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Hutang PPn Kurang Bayar</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $hutang_ppn_kurbay['total_hutang_ppn_kurbay'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Uang Muka Penjualan - IDR</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $dp_penjualan['dp_penjualan'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Uang Muka Setoran Modal</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $dp_setoran_modal['dp_setoran_modal'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr style="background: blue">
                                         <td><b>Jumlah Kewajiban Lancar</b></td>
-                                        <td><b>0</b></td>
+                                        <td><b>{{number_format((float) $jumlah_kewajiban_lancar, 2, '.', ',')}}</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -180,11 +184,11 @@
                                     </tr>
                                     <tr>
                                         <td>Modal Disetor</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $modal_disetor['modal_disetor'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Laba/Rugi ditahan</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $laba_ditahan['laba_ditahan'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr>
                                         <td>Laba/Rugi ditahun berjalan</td>
@@ -192,11 +196,11 @@
                                     </tr>
                                     <tr>
                                         <td>Deviden</td>
-                                        <td>0</td>
+                                        <td>{{number_format((float) $cadangan_dividen['cadangan_dividen'], 2, '.', ',')}}</td>
                                     </tr>
                                     <tr style="background: blue">
                                         <td><b>Jumlah Ekuitas</b></td>
-                                        <td><b>0</b></td>
+                                        <td><b>{{number_format((float) $jumlah_ekuitas, 2, '.', ',')}}</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -204,7 +208,7 @@
                                     </tr>
                                     <tr style="background: orangered">
                                         <td><b>Total Kewajiban dan Ekuitas </b></td>
-                                        <td><b>0</b></td>
+                                        <td><b>{{number_format((float) $kewajiban_ekuitas, 2, '.', ',')}}</b></td>
                                     </tr>
 
 

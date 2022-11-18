@@ -19,7 +19,7 @@
         @foreach ($data_penjualan as $x)
             <tr>
                 <td>{{ date('d-F-Y', strtotime($x->trans_date)) }}</td>
-                <td>{{ date('F', strtotime($x->Trans_Date)) }}</td>
+                <td>{{ date('m', strtotime($x->trans_date)) }}</td>
                 <td>{{ 'PENJUALAN' }}</td>
                 <td>{{ $x->Customer }}</td>
                 <td>{{ $x->inv_No }}</td>

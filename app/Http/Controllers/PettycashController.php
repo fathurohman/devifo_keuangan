@@ -25,9 +25,7 @@ class PettycashController extends Controller
 
     public function create_pettycash()
     {
-
-        $data = nama_cash::where('aktif', 'Y')->get();
-        return view('jurnal.bank.pettycash.create_pettycash', compact('data'));
+        return view('jurnal.bank.pettycash.create_pettycash');
     }
 
     public function store_pettycash(Request $request)
@@ -49,20 +47,15 @@ class PettycashController extends Controller
         $data->debit = $request->amount;
         $data->ending_balance = $request->total;
         $data->bs_pl = 'PL';
+        $data->coa_id = $request->coa_id_pemasukan;
         $data->created_by = Auth::user()->id;
 
         if ($request->status_coa == 'pemasukan') {
             $data->dk = 'D';
-            $data->untuk_kas = $request->untuk_kas;
-            $data->coa_id = $request->coa_id_pemasukan;
         } elseif ($request->status_coa == 'pengeluaran') {
             $data->dk = 'K';
-            $data->dari_kas = $request->dari_kas;
-            $data->coa_id = $request->coa_id_pengeluaran;
         } else {
             $data->dk = '-';
-            $data->dari_kas = '-';
-            $data->coa_id = '-';
         }
 
         $data->save();
@@ -89,7 +82,7 @@ class PettycashController extends Controller
     public function listpettycash()
     {
 
-        $query = pettycash::where('created_by', '<>' , 'ROBOT');
+        $query = pettycash::where('created_by', '<>', 'ROBOT');
         return Datatables::of(
             $query
         )->editColumn('date', function ($row) {

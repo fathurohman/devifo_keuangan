@@ -35,7 +35,7 @@ class BankController extends Controller
 
     public function listcoa()
     {
-        $query = COA::where('bank' , '1');
+        $query = COA::where('bank', '1');
         return Datatables::of(
             $query
         )->editColumn('kd_aktiva', function ($row) {
@@ -98,9 +98,9 @@ class BankController extends Controller
         $term = $request->term;
         $queries = DB::table('jns_akun')
             ->where('jns_trans', 'LIKE', '%' . $term . '%')
-            ->where('laba_rugi', '1')
-            ->orWhere('neraca', '1')
-            // ->where('rtk', '1')
+            ->where('induk', 'T')
+            ->where('aktif', 'Y')
+            // ->orWhere('neraca', '1')
             ->get();
         $results = array();
         foreach ($queries as $query) {
@@ -212,6 +212,4 @@ class BankController extends Controller
         $data = jurnal_bank_child::where('jurnal_bank_id', $id)->get();
         return view('jurnal.bank.child_jb', compact('data'));
     }
-
-
 }

@@ -25,7 +25,6 @@ function addkolom() {
           '</td>' +
           '<td><input class="form-control memo" type="text" id="memo" name="memo_c[]"></td>' +
           '<td><input class="form-control department" id="department"></td>' +
-          '<td><input type="text" id="project" class="form-control project" name="project[]"></td>' +
           '<td>' +
           '<a href="#" class="btn btn-primary btn-sm" id="addkolom"><i class="fa fa-plus"></i></a>' +
           '<a href="#" id="refreshkolom" class="btn btn-warning btn-sm refresh"><i class="fa fa-spinner"></i></a>' +

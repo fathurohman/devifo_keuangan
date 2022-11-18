@@ -44,39 +44,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div id="pemasukan" class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-group{{ $errors->has('kas') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label"
-                                            for="input-status_coa">{{ __('kas pemasukan') }}</label>
-                                        <select name="untuk_kas"
-                                            class="form-control form-control-alternative{{ $errors->has('kas') ? ' is-invalid' : '' }}"
-                                            aria-label="kas:" >
-                                            <option selected>Open this select menu</option>
-                                            @foreach ($data as $x )
-                                                <option value="{{$x->id}}">{{$x->nama}}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div id="pengeluaran" class="col-lg-6 col-md-6 col-sm-12">
-                                    <div class="form-group{{ $errors->has('kas') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label"
-                                            for="input-status_coa">{{ __('kas pengeluaran') }}</label>
-                                        <select name="dari_kas"
-                                            class="form-control form-control-alternative{{ $errors->has('kas') ? ' is-invalid' : '' }}"
-                                            aria-label="kas:" >
-                                            <option selected>Open this select menu</option>
-                                            @foreach ($data as $x )
-                                                <option value="{{$x->id}}">{{$x->nama}}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                </div>
-
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -107,21 +74,6 @@
                                     <input id="coa-field-id-pemasukan" type="text" class="form-control" placeholder="coa"
                                         name="coa_id_pemasukan" hidden>
                                 </div>
-                                <div id="coa_pengeluaran" class="col-lg-6 col-md-6 col-sm-12">
-                                    <label class="form-control-label" for="input-coa">{{ __('coa') }}</label>
-                                    <div class="input-group">
-                                        <input id="coa-field_pengeluaran" type="text" class="form-control" placeholder="coa"
-                                            aria-label="coa" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#modal_pengeluaran">
-                                                Find
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <input id="coa-field-id-pengeluaran" type="text" class="form-control" placeholder="coa"
-                                        name="coa_id_pengeluaran" hidden>
-                                </div>
                             </div>
                             <div class="row">
                                 {{-- <div class="col-lg-6 col-md-6 col-sm-12">
@@ -148,11 +100,11 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-amount">{{ __('amount') }}</label>
                                         <input type="text" id="input-amount"
-                                            class="form-control form-control-alternative"
-                                            placeholder="{{ __('amount') }}" required>
+                                            class="form-control form-control-alternative" placeholder="{{ __('amount') }}"
+                                            required>
                                         <input type="text" name="amount" id="input-amount-real"
-                                            class="form-control form-control-alternative"
-                                            placeholder="{{ __('amount') }}" hidden>
+                                            class="form-control form-control-alternative" placeholder="{{ __('amount') }}"
+                                            hidden>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-12">
@@ -217,32 +169,6 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#pemasukan').hide();
-            $('#pengeluaran').hide();
-            $('#coa_pemasukan').hide();
-            $('#coa_pengeluaran').hide();
-            $('#status_coa').change(function (e) {
-                e.preventDefault();
-                var status = $('#status_coa').val();
-                if(status === 'pemasukan'){
-                    $('#pemasukan').show();
-                    $('#coa_pemasukan').show();
-                }else{
-                    $('#pemasukan').hide();
-                    $('#coa_pemasukan').hide();
-                }
-
-                if(status === 'pengeluaran'){
-                    $('#pengeluaran').show();
-                    $('#coa_pengeluaran').show();
-                }else{
-                    $('#pengeluaran').hide();
-                    $('#coa_pengeluaran').hide();
-                }
-
-
-            });
-
             $('#table_pemasukan').DataTable({
                 processing: true,
                 serverSide: true,

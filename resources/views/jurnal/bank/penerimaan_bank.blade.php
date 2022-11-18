@@ -165,7 +165,6 @@
                                                 <th>Amount</th>
                                                 <th>Memo</th>
                                                 <th>Department</th>
-                                                <th>Project</th>
                                                 <th>Action</th>
                                             </thead>
                                             <tbody class="account">
@@ -188,9 +187,6 @@
                                                     </td>
                                                     <td><input class="form-control department" id="department"
                                                             name="department[]">
-                                                    </td>
-                                                    <td><input type="text" id="project" class="form-control project"
-                                                            name="project[]">
                                                     </td>
                                                     <td>
                                                         <a href="#" class="btn btn-primary btn-sm"

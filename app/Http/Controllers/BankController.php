@@ -35,7 +35,7 @@ class BankController extends Controller
 
     public function listcoa()
     {
-        $query = COA::where('bank', '1');
+        $query = COA::all();
         return Datatables::of(
             $query
         )->editColumn('kd_aktiva', function ($row) {
@@ -52,7 +52,7 @@ class BankController extends Controller
 
     public function listcoa_pemasukan()
     {
-        $query = COA::where('pemasukan', '1');
+        $query = COA::all();
         return Datatables::of(
             $query
         )->editColumn('kd_aktiva', function ($row) {
@@ -69,7 +69,7 @@ class BankController extends Controller
 
     public function listcoa_pengeluaran()
     {
-        $query = COA::where('pengeluaran', '1');
+        $query = COA::all();
         return Datatables::of(
             $query
         )->editColumn('kd_aktiva', function ($row) {

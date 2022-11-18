@@ -77,8 +77,8 @@ $('tbody').on('keyup', ".amount_c", function () {
 
 $("#input-amount").keyup(function () {
      $(this).val(format($(this).val()));
-     var clone = $(this).val();
-     var cloned = clone.replace(/[A-Za-z$ ,-]/g, "");
+     var cloned = $(this).val();
+    //  var cloned = clone.replace(/[A-Za-z$ ,-]/g, "");
      $('#input-amount-real').val(cloned);
      var kurs = $('#input-kurs-idr-real').val();
      var coa = $('#coa-field-id').val();

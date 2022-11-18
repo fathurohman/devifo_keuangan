@@ -269,14 +269,14 @@
 
                     </div>
                 </li>
-                <li class="nav-bank {{ $activePage == 'Profit_Loss' || $activePage == 'Neraca' }}">
-                    <a class="nav-link collapsed" href="#navbar-crud-bank" data-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="navbar-crud-bank">
-                        <i class="ni ni-money-coins"></i>
+                <li class="nav-reports {{ $activePage == 'Profitloss' || $activePage == 'Neraca' ? ' active' : '' }}">
+                    <a class="nav-link collapsed" href="#navbar-crud-reports" data-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="navbar-crud-reports">
+                        <i class="ni ni-single-copy-04"></i>
                         <span class="nav-link-text">{{ __('Reports') }}</span>
                     </a>
 
-                    <div class="collapse" id="navbar-crud-bank">
+                    <div class="collapse" id="navbar-crud-reports">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('prof_loss') }}">

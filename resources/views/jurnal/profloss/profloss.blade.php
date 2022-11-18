@@ -42,7 +42,7 @@
                                         <td>{{$potong_beli['Nama']}}</td>
                                         <td>{{number_format((float) $potong_beli['total_pot_beli'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background-color: orangered">
+                                    <tr style="background-color: #96D2D9">
                                         <td><b>LABA KOTOR</b></td>
                                         <td><b>{{number_format((float) $laba_kotor, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -150,7 +150,7 @@
                                         <td>{{$lskl['Nama']}}</td>
                                         <td>{{number_format((float) $lskl['total_lskl'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background: orangered">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Beban Operasi</b></td>
                                         <td><b>{{number_format((float) $jumlah_beban_operasi, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -170,7 +170,7 @@
                                         <td>{{$pbb['Nama']}}</td>
                                         <td>{{number_format((float) $pbb['total_pbb'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background: green">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Pendapatan Lain" </b></td>
                                         <td><b>{{number_format((float) $jumlah_pendapatan_lain, 2, '.', ',')}}</b></td>
                                     </tr>

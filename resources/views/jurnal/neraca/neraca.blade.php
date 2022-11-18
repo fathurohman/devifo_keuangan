@@ -46,7 +46,7 @@
                                         <td>Kas Kecil Kantor Pusat - IDR</td>
                                         <td>{{number_format((float) $kas_kecil['total_kas_kecil'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background: blue">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Cash</b></td>
                                         <td><b>{{number_format((float) $jumlah_kas, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -74,7 +74,7 @@
                                         <td>Biaya Dibayar Dimuka Fasilitas</td>
                                         <td>{{number_format((float) $dimuka_gedung['total_dimuka_gedung'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background: blue">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Aktiva Lancar</b></td>
                                         <td><b>{{number_format((float) $jumlah_aktiva_kas, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -102,7 +102,7 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                    <tr style="background: blue">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Aktiva Tetap</b></td>
                                         <td><b>{{number_format((float) $jumlah_aktiva_tetap, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -110,7 +110,7 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                    <tr style="background: orangered">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Total Aktiva</b></td>
                                         <td><b>{{number_format((float) $total_aktiva, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -170,7 +170,7 @@
                                         <td>Uang Muka Setoran Modal</td>
                                         <td>{{number_format((float) $dp_setoran_modal['dp_setoran_modal'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background: blue">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Kewajiban Lancar</b></td>
                                         <td><b>{{number_format((float) $jumlah_kewajiban_lancar, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -198,7 +198,7 @@
                                         <td>Deviden</td>
                                         <td>{{number_format((float) $cadangan_dividen['cadangan_dividen'], 2, '.', ',')}}</td>
                                     </tr>
-                                    <tr style="background: blue">
+                                    <tr style="background: #96D2D9">
                                         <td><b>Jumlah Ekuitas</b></td>
                                         <td><b>{{number_format((float) $jumlah_ekuitas, 2, '.', ',')}}</b></td>
                                     </tr>
@@ -206,7 +206,7 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                    <tr style="background: orangered">
+                                    <tr style="background: yellow">
                                         <td><b>Total Kewajiban dan Ekuitas </b></td>
                                         <td><b>{{number_format((float) $kewajiban_ekuitas, 2, '.', ',')}}</b></td>
                                     </tr>

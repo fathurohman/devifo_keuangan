@@ -232,7 +232,8 @@
                     </li>
                 @endcan
 
-                <li class="nav-bank {{ $activePage == 'Jurnal Bank' || $activePage == 'PettyCash' || $activePage == 'Asset' ? ' active' : '' }}">
+                <li
+                    class="nav-bank {{ $activePage == 'Jurnal Bank' || $activePage == 'PettyCash' || $activePage == 'Asset' ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-crud-bank" data-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="navbar-crud-bank">
                         <i class="ni ni-money-coins"></i>
@@ -261,6 +262,33 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asset') }}">
                                     {{ __('Assets') }}
+                                </a>
+
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+                <li class="nav-bank {{ $activePage == 'Profit_Loss' || $activePage == 'Neraca' }}">
+                    <a class="nav-link collapsed" href="#navbar-crud-bank" data-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="navbar-crud-bank">
+                        <i class="ni ni-money-coins"></i>
+                        <span class="nav-link-text">{{ __('Reports') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-crud-bank">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('prof_loss') }}">
+                                    {{ __('Profit Loss') }}
+                                </a>
+
+                            </li>
+                        </ul>
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('neraca') }}">
+                                    {{ __('Neraca') }}
                                 </a>
 
                             </li>

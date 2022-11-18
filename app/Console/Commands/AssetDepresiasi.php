@@ -82,7 +82,13 @@ class AssetDepresiasi extends Command
 
                                     $selisih_bulan = date_diff($s,$d);
 
-                                    $current_mount = $selisih_bulan->m;
+                                    if($selisih_bulan->y >= 0){
+                                        $tahun = $selisih_bulan->y * 12;
+                                    }else{
+                                        $tahun = 0;
+                                    }
+
+                                    $current_mount = $selisih_bulan->m + $tahun + 1;
                                     $depresiasai_mount = (25/100)/12;
 
                                     $hitung_depresiasai_mount = $depresiasai_mount * $current_mount;

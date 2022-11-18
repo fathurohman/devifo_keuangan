@@ -40,7 +40,7 @@
                                             <option value="" selected>Open this select menu</option>
                                             <option value="pemasukan">Pemasukan</option>
                                             <option value="pengeluaran">Pengeluaran</option>
-                                            <option value="transfer">Transfer</option>
+                                            {{-- <option value="transfer">Transfer</option> --}}
                                         </select>
                                     </div>
                                 </div>

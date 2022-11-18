@@ -110,7 +110,7 @@ class AssetController extends Controller
     public function create_asset_penyusutan()
     {
         // $price =  2950000 ;
-        // $current_mount = 39;
+        // $current_mount = 0;
         // $depresiasai_mount = (25/100)/12;
 
         // $hitung_depresiasai_mount = $depresiasai_mount * $current_mount;
@@ -124,7 +124,7 @@ class AssetController extends Controller
         //     echo $currentpriceafterdepresiasi;
         // }
 
-        // dd($depresiasai_mount);
+        // // dd($depresiasai_mount);
 
         // $ambil_data = Asset::all();
 
@@ -158,7 +158,23 @@ class AssetController extends Controller
         // }
 
 
+        $hari_ini = Carbon::now()->format('Y-m-d');
+        $tgl_akhir = Date('Y-m-t', strtotime($hari_ini));
 
+        $now = Carbon::parse($hari_ini)->format('Y-m-d');
+
+        $s  = date_create('1995-11-01');
+        $d  = date_create($now);
+
+        $selisih_bulan = date_diff($s,$d);
+        if($selisih_bulan->y >= 0){
+            $tahun = $selisih_bulan->y * 12;
+        }else{
+            $tahun = 0;
+        }
+        $hitung = $selisih_bulan->m + $tahun + 1;
+
+        dd($hitung);
 
 
         // $data = nama_barang::where('aktif', 'Y')->get();

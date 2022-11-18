@@ -9,11 +9,16 @@ class ProfitLossController extends Controller
 {
     public function penjualan()
     {
+        $sum_debit = 0;
+        $sum_credit = 0;
         $sum_jual = 0;
         $penjualan = Jurnal::where('Chart_Of_Account', 'Penjualan')->where('bs_pl', 'PL')->get();
         foreach ($penjualan as $x) {
-            $ending_balance = $x->ending_balance;
-            $sum_jual += $ending_balance;
+            $debit = $x->debit;
+            $credit = $x->credit;
+            $sum_debit += $debit;
+            $sum_credit += $credit;
+            $sum_jual = $sum_debit - $sum_credit;
         }
         $data_jual = array(
             'Nama' => 'PENJUALAN',
@@ -525,60 +530,62 @@ class ProfitLossController extends Controller
         $jumlah_pendapatan_lain = (($pll['total_pll'] + $pbb['total_pbb']));
         $laba_rugi = (($laba_kotor - $jumlah_beban_operasi + $jumlah_pendapatan_lain));
 
-        $fedora_30persen = ($laba_rugi * 30)/100;
+        $fedora_30persen = ($laba_rugi * 30) / 100;
         $dicky_70persen = $laba_rugi - $fedora_30persen;
 
-        $wages_and_salaries = (($bgu['total_bgu'] + $btl['total_btl'] ));
-        $rime = (( $bp_sewken['total_bp_sewken'] + $bpp_pk['total_bpp_pk']));
+        $wages_and_salaries = (($bgu['total_bgu'] + $btl['total_btl']));
+        $rime = (($bp_sewken['total_bp_sewken'] + $bpp_pk['total_bpp_pk']));
         $gae = (($wages_and_salaries - $rime - $bpp_pk['total_bpp_pk'] - $bab['total_bab'] - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4']));
 
         $profit_loss = (($laba_kotor - $wages_and_salaries - $rime - $gae - $bpp_pk['total_bpp_pk'] - $bab['total_bab']) - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4'] + $pll['total_pll']);
 
 
-        return view('jurnal.profloss.profloss',
-        compact(
-            'laba_kotor',
-            'jumlah_beban_operasi',
-            'penjualan',
-            'hapok',
-            'potong_beli',
-            'badumum_atk',
-            'badmumum_bp_pph21',
-            'badmumum_bp_pph23',
-            'badmumum_bp_pph4',
-            'badmumum_dapur',
-            'badmumum_la',
-            'badmumum_materai',
-            'badmumum_pencetakan',
-            'badmumum_jaspro',
-            'badmumum_manfee',
-            'badmumum_ppbd',
-            'badmumum_tagin',
-            'badmumum_tagtel',
-            'badmumum_transportasi',
-            'bdd__bp_pph23',
-            'bp_sewken',
-            'bp_perker',
-            'bab',
-            'bgu',
-            'bll',
-            'bpp_pk',
-            'bppn1',
-            'btl',
-            'lskl',
-            'pll',
-            'pbb',
-            'jumlah_pendapatan_lain',
-            'laba_rugi',
-            'fedora_30persen',
-            'dicky_70persen',
-            'wages_and_salaries',
-            'rime',
-            'gae',
-            'profit_loss'
+        return view(
+            'jurnal.profloss.profloss',
+            compact(
+                'laba_kotor',
+                'jumlah_beban_operasi',
+                'penjualan',
+                'hapok',
+                'potong_beli',
+                'badumum_atk',
+                'badmumum_bp_pph21',
+                'badmumum_bp_pph23',
+                'badmumum_bp_pph4',
+                'badmumum_dapur',
+                'badmumum_la',
+                'badmumum_materai',
+                'badmumum_pencetakan',
+                'badmumum_jaspro',
+                'badmumum_manfee',
+                'badmumum_ppbd',
+                'badmumum_tagin',
+                'badmumum_tagtel',
+                'badmumum_transportasi',
+                'bdd__bp_pph23',
+                'bp_sewken',
+                'bp_perker',
+                'bab',
+                'bgu',
+                'bll',
+                'bpp_pk',
+                'bppn1',
+                'btl',
+                'lskl',
+                'pll',
+                'pbb',
+                'jumlah_pendapatan_lain',
+                'laba_rugi',
+                'fedora_30persen',
+                'dicky_70persen',
+                'wages_and_salaries',
+                'rime',
+                'gae',
+                'profit_loss'
 
 
 
-        ));
+            )
+        );
     }
 }

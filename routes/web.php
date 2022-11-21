@@ -143,7 +143,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	//profloss routes
 	Route::get('/profloss', 'ProfitLossController@prof_loss')->name('prof_loss');
+    Route::get('/profloss_json', 'ProfitLossController@prof_loss_json')->name('prof_loss_json');
+    Route::post('/export_profitloss', 'ProfitLossController@export_profitloss')->name('export_profitloss');
+
 	Route::get('/neraca', 'NeracaController@neraca')->name('neraca');
+    Route::get('/neraca_json', 'NeracaController@neraca_json')->name('neraca_json');
+    Route::post('/export_neraca', 'NeracaController@export_neraca')->name('export_neraca');
+
 	Route::get('/coa_data', 'BankController@getdatacoa');
 
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');

@@ -280,7 +280,7 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('prof_loss') }}">
-                                    {{ __('Profit Loss') }}
+                                    {{ __('ProfitLoss') }}
                                 </a>
 
                             </li>

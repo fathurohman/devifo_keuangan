@@ -17,12 +17,50 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-12">
+                    <form method="post" action="{{ route('export_profitloss') }}" class="form-horizontal" enctype="multipart/form-data">
+                        @csrf
+                    <div class="row">
+                        <div class="col-xl-6 mb-5 mb-xl-0">
+                            <div class="card shadow">
+                                <div class="card-header border-0">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                            </div>
+                                            <input class="form-control datepicker" id="start" name="start" placeholder="Start From"
+                                                type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 mb-5 mb-xl-0">
+                            <div class="card shadow">
+                                <div class="card-header border-0">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                            </div>
+                                            <input class="form-control datepicker" id="end" name="end" placeholder="Until date"
+                                                type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="ml-3 mt-2 mb-2 col-lg-6 col-md-6 col-sm-6">
+                            <button type="submit" class="btn btn-primary">{{ __('Export Excel') }}</button>
+                        </div>
+                    </div>
+                    </form>
+
                     <div class="mx-3">
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush">
+                            {{-- <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col"> </th>
@@ -269,7 +307,8 @@
                                     </tr>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> --}}
+                            <div id="table-prof"></div>
                         </div>
                     </div>
                     <div class="card-footer py-4">
@@ -284,8 +323,41 @@
 @endsection
 @push('js')
     <script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>
+    <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript">
+    $(".datepicker").datepicker({
+            format: "yyyy-mm-dd",
+            // startView: "months",
+            // minViewMode: "months"
+        });
+        function narik(from, to) {
+            $.ajax({
+                url: "{{ route('prof_loss_json') }}",
+                method: "GET",
+                dataType: "json",
+                data: {
+                    from: from,
+                    to: to
 
+                },
+                success: function(data) {
+                    $('#table-prof').html(data.html);
+                    console.log(data);
+                }
+            });
+        }
+        $("#start").change(function() {
+            var from = $('#start').val();
+            var to = $('#end').val();
 
+            narik(from, to);
+        });
+        $("#end").change(function() {
+            var from = $('#start').val();
+            var to = $('#end').val();
+
+            narik(from, to);
+        });
     </script>
+
 @endpush

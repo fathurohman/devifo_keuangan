@@ -23,6 +23,23 @@ class AssetController extends Controller
         return view('jurnal.bank.asset.show_asset');
     }
 
+    public function edit_assets($id)
+    {
+        $data = Asset::find($id);
+        return view('jurnal.bank.asset.edit_assets', compact('data'));
+    }
+
+    public function update_assets(Request $request, $id)
+    {
+
+        $data = Asset::find($id);
+        $data->details = $request->details;
+        $data->penggunaan = $request->penggunaan;
+        $data->save();
+
+        return redirect(route('asset'));
+    }
+
     public function create_assets()
     {
 

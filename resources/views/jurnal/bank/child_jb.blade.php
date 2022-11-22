@@ -10,8 +10,6 @@
             <th>Ending Balance</th>
             <th>Inv US</th>
             <th>Kurs IDR</th>
-            <th>Bs_pl</th>
-            <th>Dk</th>
         </thead>
         <tbody>
             @foreach ($data as $item)
@@ -20,6 +18,9 @@
                 <td>{{$item->project}}</td>
                 <td>{{$item->inv_no}}</td>
                 <td>{{$item->coa->jns_trans}}</td>
+                <td>{{ number_format((float) $item->debit, 2, '.', ',') }}</td>
+                <td>{{ number_format((float) $item->credit, 2, '.', ',') }}</td>
+                <td>{{ number_format((float) $item->ending_balance, 2, '.', ',') }}</td>
             </tr>
             @endforeach
 

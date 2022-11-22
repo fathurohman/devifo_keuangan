@@ -18,9 +18,9 @@
                             {{-- <div class="col-4 text-right">
                                 <a href="{{ route('create_asset_penyusutan') }}" class="btn btn-sm btn-primary">Add Data Penyusutan</a>
                             </div> --}}
-                            <div class="col-4 text-right">
+                            {{-- <div class="col-4 text-right">
                                 <a href="{{ route('create_asset') }}" class="btn btn-sm btn-primary">Add Data</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 

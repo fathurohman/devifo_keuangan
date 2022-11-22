@@ -43,6 +43,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 findbarang">
+                                        <label class="form-control-label" for="input-coa">{{ __('Barang') }}</label>
+                                        <div class="input-group">
+                                            <input id="name_barang" name="name_barang" type="text" class="form-control" placeholder="nama barang"
+                                                aria-label="coa" aria-describedby="basic-addon2" readonly>
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#barangList">
+                                                    Find
+                                                </button>
+                                            </div>
+                                            <input name="id_barang" id="id_barang" hidden>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -72,6 +86,8 @@
                                     </div>
                                     <input id="coa-field-id" type="text" class="form-control" placeholder="coa"
                                         name="coa_id" hidden>
+                                        <input id="coa-field-aset" type="text" class="form-control" placeholder="coa"
+                                        name="coa_aset" hidden>
                                 </div>
                             </div>
                             <div class="row">
@@ -162,6 +178,7 @@
                                             <thead class="thead-light">
                                                 <th>Account No</th>
                                                 <th>Account Name</th>
+                                                <th>Barang</th>
                                                 <th>Amount</th>
                                                 <th>Memo</th>
                                                 <th>Department</th>
@@ -171,12 +188,20 @@
                                                 <tr class="row-account">
                                                     <td><input class="form-control account_no" type="text"
                                                             id="account_no" name="account_no[]" readonly>
+                                                        <input class="form-control account_aset" type="text"
+                                                            id="account_aset" name="account_aset[]" hidden>
                                                     </td>
                                                     <td><input class="form-control autosuggest ui-widget" type="text"
-                                                            id="account_name" name="account_name[]">
-                                                        <input class="form-control account_id" type="text"
-                                                            id="account_id" name="account_id[]" hidden>
+                                                        id="account_name" name="account_name[]">
+                                                    <input class="form-control account_id" type="text"
+                                                        id="account_id" name="account_id[]" hidden>
+                                                </td>
+                                                    <td><input class="form-control autosuggestbarang ui-widget" type="text"
+                                                        id="account_nama_barang" name="account_nama_barang[]">
+                                                    <input class="form-control account_id_barang" type="text"
+                                                        id="account_id_barang" name="account_id_barang[]" hidden>
                                                     </td>
+
                                                     <td><input class="form-control amount_c" type="text"
                                                             id="amount_c">
                                                         <input class="form-control amount_real" type="text"
@@ -215,6 +240,7 @@
         </div>
     </div>
     @include('jurnal.bank.jurnalbanklist')
+    @include('jurnal.bank.asset.nama_baranglist')
     @include('layouts.footers.auth')
 @endsection
 @push('js')
@@ -222,6 +248,9 @@
     <script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="{{ asset('argon/js/bank.js') }}"></script>
     <script type="text/javascript">
+    $('.autosuggestbarang').show();
+    $('.findbarang').hide();
+
         $(function() {
             $('tbody').on('focus', ".autosuggest", function() {
                 var tr = $(this).parent().parent();
@@ -233,10 +262,36 @@
                     select: function(event, ui) {
                         // tr.find('.qty').val("");
                         // $('#selectnip').val(ui.item.value);
+                        tr.find('.account_aset').val(ui.item.aset);
                         tr.find('.account_no').val(ui.item.kode);
                         tr.find('.autosuggest').val(ui.item.value);
                         tr.find('.account_id').val(ui.item.id);
+
                     }
+
+                })
+
+
+            })
+        })
+        $(function() {
+            $('tbody').on('focus', ".autosuggestbarang", function() {
+                var trs = $(this).parent().parent();
+
+                $(this).autocomplete({
+
+                    source: "{{ URL('br/autocomplete') }}",
+
+                    // source: "{{ URL('search/autocompletenama') }}",
+                    minLength: 1,
+                    select: function(event, ui) {
+                        // tr.find('.qty').val("");
+                        // $('#selectnip').val(ui.item.value);
+                        trs.find('.autosuggestbarang').val(ui.item.value);
+                        trs.find('.account_nama_barang').val(ui.item.value);
+                        trs.find('.account_id_barang').val(ui.item.id);
+                    }
+
                 })
             })
         })
@@ -257,12 +312,19 @@
                             $('#input-no_coa').val(data.kd_aktiva);
                             $('#coa-field').val(data.jns_trans);
                             $('#coa-field-id').val(data.id);
+                            $('#coa-field-aset').val(data.aset);
                             if (data.id == '15') {
                                 $('#input-kurs-idr').attr("readonly", false);
                             } else {
                                 $('#input-kurs-idr').attr("readonly", true);
                             }
-                            // console.log(data);
+
+                            if(data.aset > 0){
+                                $('.findbarang').show();
+                            }else{
+                                $('.findbarang').hide();
+                            }
+                            // console.log(cek_aset);
                             // For debugging purposes you can add : console.log(data); to see the output of your request
                         });
                         $('#coaList').modal('toggle');
@@ -277,6 +339,44 @@
                     {
                         data: 'jns_trans',
                         name: 'jns_trans'
+                    },
+                    {
+                        data: 'Action',
+                        name: 'Action',
+                        searchable: false,
+                        orderable: false
+                    },
+                ]
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#barang').DataTable({
+                processing: true,
+                serverSide: true,
+                drawCallback: function(settings) {
+                    $('.pilihbarang').click(function() {
+                        $currID = $(this).attr("data-id");
+                        $('#input-id_barang').val('');
+                        $('#name_barang').val('');
+                        $('#id_barang').val('');
+                        // alert($currID);
+                        $.get('/data_barang?pid=' + $currID, function(data) {
+                            $('#input-id_barang').val(data.id);
+                            $('#name_barang').val(data.nama_barang);
+                            $('#id_barang').val(data.id);
+
+
+                        });
+                        $('#barangList').modal('toggle');
+                        // $('#coa-field').val($currID);
+                    });
+                },
+                ajax: '{!! route('listnamabarang') !!}',
+                columns: [{
+                        data: 'nama_barang',
+                        name: 'nama_barang'
                     },
                     {
                         data: 'Action',

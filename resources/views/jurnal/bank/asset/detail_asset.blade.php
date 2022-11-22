@@ -19,3 +19,22 @@
         </tbody>
     </table>
 </div>
+
+<div class="table-responsive">
+    <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+            <th>Details</th>
+            <th>Penggunaan</th>
+
+        </thead>
+        <tbody>
+            @foreach ($data as $x)
+                <tr>
+                    <td>{{ $x->details }}</td>
+                    <td>{{ $x->penggunaan}}</td>
+
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>

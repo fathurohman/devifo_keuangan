@@ -10,17 +10,23 @@ $(document).on("keydown", ":input:not(textarea):not(:submit)", function (event) 
 
 $(document).on('click', '#addkolom', function (e) {
      e.preventDefault();
+
      addkolom();
+    //  $('.autosuggestbarang').hide();
      // console.log(curr);
 });
 
 function addkolom() {
      var kolom = '<tr class="row-account">' +
-          '<td><input class="form-control account_no" type="text" id="account_no" name="account_no[]" readonly></td>' +
+          '<td><input class="form-control account_no" type="text" id="account_no" name="account_no[]" readonly><input class="form-control account_aset" type="text" id="account_aset" name="account_aset[]" hidden></td>' +
           '<td><input class="form-control autosuggest ui-widget" type="text" id="account_name" name="account_name[]">' +
           '<input class="form-control account_id" type="text" id="account_id" name="account_id[]" hidden>' +
+          ' <td><input class="form-control autosuggestbarang ui-widget" type="text"' +
+          'id="account_nama_barang" name="account_nama_barang[]">' +
+          '<input class="form-control account_id_barang" type="text"' +
+          'id="account_id_barang" name="account_id_barang[]" hidden></td>' +
           '</td>' +
-          '<td><input class="form-control amount" type="text" id="amount_c">' +
+          '<td><input class="form-control amount_c" type="text" id="amount_c">' +
           '<input class="form-control amount_real" type="text" id="amount_real" name="amount_c[]" hidden>' +
           '</td>' +
           '<td><input class="form-control memo" type="text" id="memo" name="memo_c[]"></td>' +
@@ -78,16 +84,16 @@ $('tbody').on('keyup', ".amount_c", function () {
 $("#input-amount").keyup(function () {
      $(this).val(format($(this).val()));
      var cloned = $(this).val();
-    //  var cloned = clone.replace(/[A-Za-z$ ,-]/g, "");
-     $('#input-amount-real').val(cloned);
+     var cloneder = cloned.replace(/[A-Za-z$ ,-]/g, "");
+     $('#input-amount-real').val(cloneder);
      var kurs = $('#input-kurs-idr-real').val();
      var coa = $('#coa-field-id').val();
      if (coa == '15') {
-          var total = cloned * kurs;
+          var total = cloneder * kurs;
           $('#input-total').val(total);
      }
      else {
-          $('#input-total').val(cloned);
+          $('#input-total').val(cloneder);
      }
 });
 

@@ -14,6 +14,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Response;
+use Auth;
+
 
 class BankController extends Controller
 {
@@ -96,6 +98,7 @@ class BankController extends Controller
     public function autocomplete_coa(Request $request)
     {
         $term = $request->term;
+
         $queries = DB::table('jns_akun')
             ->where('jns_trans', 'LIKE', '%' . $term . '%')
             ->where('induk', 'T')
@@ -104,7 +107,23 @@ class BankController extends Controller
             ->get();
         $results = array();
         foreach ($queries as $query) {
-            $results[] = ['id' => $query->id, 'value' => $query->jns_trans, 'kode' => $query->kd_aktiva];
+            $results[] = ['id' => $query->id, 'value' => $query->jns_trans, 'kode' => $query->kd_aktiva, 'aset' => $query->aset];
+        }
+        return Response::json($results);
+
+    }
+
+    public function autocomplete_barang(Request $request)
+    {
+        $term = $request->term;
+
+        $queries = DB::table('nama_barang')
+            ->where('nama_barang', 'LIKE', '%' . $term . '%')
+            ->where('aktif', 'Y')
+            ->get();
+        $results = array();
+        foreach ($queries as $query) {
+            $results[] = ['id' => $query->id, 'value' => $query->nama_barang];
         }
         return Response::json($results);
     }
@@ -125,6 +144,8 @@ class BankController extends Controller
             $bs_pl = 'unk';
         }
         $now = Carbon::parse($request->Date)->format('Y-m-d');
+        $bulan = Carbon::parse($request->Date)->format('m');
+
         $jurnal = new jurnal_bank;
         if ($status == 'pengeluaran') {
             $jurnal->cheque_no = $request->cheque_no;
@@ -135,15 +156,44 @@ class BankController extends Controller
             $dk = 'D';
             $jurnal->dk = $dk;
         }
-        $jurnal->trans_date = $now;
-        $jurnal->inv_no = $request->voucher_no;
-        $jurnal->description = $request->memo;
-        $jurnal->coa_id = $coa_id;
-        $jurnal->debit = $request->amount;
-        $jurnal->ending_balance = $request->total;
-        $jurnal->kurs_rupiah = $request->kurs_idr;
-        $jurnal->bs_pl = $bs_pl;
-        $jurnal->save();
+
+        //cek aset 1 jns_akun
+        $coa_aset = $request->coa_aset;
+            if($coa_aset == 1){
+
+                $details_a = array(
+                    'trans_date' => $now,
+                    'bulan' => $bulan,
+                    'sumber' => 'ASSET',
+                    'trans_no' => $request->voucher_no,
+                    'description' => $request->memo,
+                    'coa_id' => $request->coa_id,
+                    'barang_id' => $request->id_barang,
+                    'debit' => $request->amount,
+                    'ending_balance' => $request->amount,
+                    'bs_pl' => 'BS',
+                    'created_by' => Auth::user()->id,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'updated_at' => Carbon::now()->toDateTimeString()
+                );
+
+                asset::insert($details_a);
+
+            }else{
+
+            $jurnal->trans_date = $now;
+            $jurnal->inv_no = $request->voucher_no;
+            $jurnal->description = $request->memo;
+            $jurnal->coa_id = $coa_id;
+            $jurnal->debit = $request->amount;
+            $jurnal->ending_balance = $request->total;
+            $jurnal->kurs_rupiah = $request->kurs_idr;
+            $jurnal->bs_pl = $bs_pl;
+            $jurnal->save();
+
+            }
+
+
         if (!empty($request->account_id[0])) {
             foreach ($request->account_id as $a => $v) {
                 $acc = COA::find($v);
@@ -156,22 +206,60 @@ class BankController extends Controller
                 } else {
                     $bs_pl = 'unk';
                 }
-                $details_b = array(
-                    'jurnal_bank_id' => $jurnal->id,
-                    'trans_date' => $now,
-                    'inv_no' => $request->voucher_no,
-                    'description' => $request->memo[$a],
-                    'coa_id' => $v,
-                    'debit' => $request->amount_c[$a],
-                    'ending_balance' => $request->amount_c[$a],
-                    'project' => $request->project[$a],
-                    'dk' => $dk,
-                    'bs_pl' => $bs_pl,
-                    'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
-                );
-                jurnal_bank_child::insert($details_b);
+
+                if($request->account_aset[$a] == 1){
+
+                    $dt = array(
+                        'trans_date' => $now,
+                        'bulan' => $bulan,
+                        'sumber' => 'ASSET_looping',
+                        'trans_no' => $request->voucher_no,
+                        'description' => $request->memo_c[$a],
+                        'coa_id' => $v,
+                        'barang_id' => $request->account_id_barang[$a],
+                        'debit' => $request->amount_c[$a],
+                        'ending_balance' => $request->amount_c[$a],
+                        'bs_pl' => 'BS',
+                        'created_by' => Auth::user()->id,
+                        'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                        'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    );
+                    asset::insert($dt);
+
+
+                }else{
+
+                    if($jurnal->id == null){
+                        $jbid = 0;
+                    }else{
+                        $jbid = $jurnal->id;
+                    }
+
+                    $details_b = array(
+                        'jurnal_bank_id' =>$jbid,
+                        'trans_date' => $now,
+                        'inv_no' => $request->voucher_no,
+                        'description' => $request->memo_c[$a],
+                        'coa_id' => $v,
+                        'debit' => $request->amount_c[$a],
+                        'ending_balance' => $request->amount_c[$a],
+                        // 'project' => $request->project[$a],
+                        'project' => '-',
+                        'dk' => $dk,
+                        'bs_pl' => $bs_pl,
+                        'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                        'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
+                    );
+
+                    jurnal_bank_child::insert($details_b);
+
+                }
+
                 $i++;
+
+
+
+
             }
         }
 

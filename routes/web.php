@@ -131,6 +131,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//assets
 	Route::get('asset', 'AssetController@index_assets')->name('asset');
 	Route::get('create_asset', 'AssetController@create_assets')->name('create_asset');
+    Route::get('edit_asset/{id}', 'AssetController@edit_assets')->name('edit_assets');
+    Route::put('/update/asset/{id}', 'AssetController@update_assets')->name('update.asset');
 	Route::post('/store/asset', 'AssetController@store_asset')->name('store.asset');
 	Route::get('/listasset', 'AssetController@listasset')->name('listasset');
 	Route::get('/asset_detail/{id}', 'AssetController@showDetailAsset');
@@ -153,6 +155,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/coa_data', 'BankController@getdatacoa');
 
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
+    Route::get('br/autocomplete/', 'BankController@autocomplete_barang');
 	Route::post('/store/coa', 'BankController@store')->name('store.coa');
 
 

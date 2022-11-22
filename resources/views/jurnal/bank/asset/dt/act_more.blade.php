@@ -5,7 +5,7 @@
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
         <a href="#" data-id="{{ $data['id'] }}" class="dropdown-item details" data-toggle="modal"
             data-target="#details">Details </a>
-
+            <a href="{{ route('edit_assets', $data['id'])  }}" data-id="{{ $data['id'] }}" class="dropdown-item">Edit </a>
     </div>
 
 </div>

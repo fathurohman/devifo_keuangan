@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'edit Assets Spek'])
+@extends('layouts.app', ['activePage' => 'edit Assets'])
 
 @section('content')
     @include('users.partials.header', [
@@ -10,13 +10,13 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="mb-0">{{ __('Update Assets Spek') }}</h3>
+                            <h3 class="mb-0">{{ __('Add Assets Spesifikasi') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('update.asset', $data->id) }}" autocomplete="off">
+                        <form method="post" action="{{ route('add.add_assets') }}" autocomplete="off">
                             @csrf
-                            @method('PUT')
+                            {{-- @method('PUT') --}}
                             <h6 class="heading-small text-muted mb-4">{{ __('Fill this form') }}</h6>
 
                             @if (session('status'))
@@ -27,13 +27,12 @@
                                     </button>
                                 </div>
                             @endif
-
-                            <input name="assets_id" value="{{$data->assets_id}}" hidden/>
+                            <input name="assets_id" value="{{$data->id}}" hidden/>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group{{ $errors->has('nama') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-nama">{{ __('Nama') }}</label>
-                                        <input name="nama" class="form-control" placeholder="nama..." value="{{$data->nama}}"/>
+                                        <input name="nama" class="form-control" placeholder="nama..." />
                                         @if ($errors->has('nama'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('nama') }}</strong>
@@ -41,16 +40,16 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group{{ $errors->has('detail') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-details">{{ __('detail') }}</label>
-                                        <textarea name="detail" class="form-control" id="area1" rows="3" placeholder="details..." required>{{ $data->detail }}</textarea>
+                                        <textarea name="detail" class="form-control" id="area1" rows="3" placeholder="details..." required>{{ $data->details }}</textarea>
                                         @if ($errors->has('detail'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('details') }}</strong>
+                                                <strong>{{ $errors->first('detail') }}</strong>
                                             </span>
                                         @endif
                                     </div>

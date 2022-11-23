@@ -65,11 +65,12 @@ class AssetDepresiasi extends Command
 
                     if($data->barang->elektronik){
 
-                        if($data->coa_id == '109' || $data->coa_id == '90'){
+                        if($data->coa->depresiasi == 1){
 
                             echo " EKSEKUSI ".$data->barang->nama_barang." ".$data->trans_date;
                                     $post = new Asset;
                                     $now = Carbon::parse($data->trans_date)->format('Y-m-d');
+                                    $skrng = Carbon::now()->format('Y-m-d');
                                     $tahun = Carbon::parse($data->trans_date)->format('y');
                                     $bulan = Carbon::parse($data->trans_date)->format('m');
 
@@ -100,7 +101,7 @@ class AssetDepresiasi extends Command
                                     }
 
 
-                                    $post->trans_date = $now;
+                                    $post->trans_date = $skrng;
                                     $post->induk_id = $data->id;
                                     $post->trans_no = $data->trans_no;
                                     $post->coa_id = '390';
@@ -115,7 +116,7 @@ class AssetDepresiasi extends Command
                                     $post->save();
 
                                     $details_b = array(
-                                        'trans_date' => $now,
+                                        'trans_date' => $skrng,
                                         'induk_id' => $data->id,
                                         'trans_no' => $data->trans_no,
                                         'coa_id' => '124',

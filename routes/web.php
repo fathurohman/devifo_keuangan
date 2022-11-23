@@ -132,16 +132,25 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('asset', 'AssetController@index_assets')->name('asset');
 	Route::get('create_asset', 'AssetController@create_assets')->name('create_asset');
     Route::get('edit_asset/{id}', 'AssetController@edit_assets')->name('edit_assets');
+
+    Route::get('add_asset_spek/{id}', 'AssetController@add_assets_spek')->name('add_assets_spek');
+
+    Route::post('add_assets', 'AssetController@add_assets')->name('add.add_assets');
     Route::put('/update/asset/{id}', 'AssetController@update_assets')->name('update.asset');
+
 	Route::post('/store/asset', 'AssetController@store_asset')->name('store.asset');
 	Route::get('/listasset', 'AssetController@listasset')->name('listasset');
+    Route::get('/report_listasset', 'AssetController@report_listasset')->name('report_listasset');
 	Route::get('/asset_detail/{id}', 'AssetController@showDetailAsset');
+    Route::get('/asset_detail_report/{id}', 'AssetController@showDetailSpek');
+    Route::get('/asset_detail_des/{id}', 'AssetController@showDetailDes');
 	Route::get('/listnamabarang', 'AssetController@listnamabarang')->name('listnamabarang');
 	Route::get('/data_barang', 'AssetController@getdatabarang');
 
 	Route::get('create_asset_penyusutan', 'AssetController@create_asset_penyusutan')->name('create_asset_penyusutan');
 	Route::post('/store/asset_penyusutan', 'AssetController@store_penyusutan')->name('store_penyusutan');
 
+    Route::get('/report_assets', 'AssetController@report_assets')->name('report.assets');
 
 	//profloss routes
 	Route::get('/profloss', 'ProfitLossController@prof_loss')->name('prof_loss');

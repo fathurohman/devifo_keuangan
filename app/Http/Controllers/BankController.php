@@ -161,6 +161,21 @@ class BankController extends Controller
         $coa_aset = $request->coa_aset;
             if($coa_aset == 1){
 
+                // $aset = new Asset
+                // $aset->trans_date = $now;
+                // $aset->bulan = $bulan;
+                // $aset->sumber = 'ASSET';
+                // $aset->trans_no = $request->voucher_no;
+                // $aset->description = $request->memo;
+                // $aset->coa_id = $request->coa_id;
+                // $aset->barang_id = $request->id_barang;
+                // $aset->debit = $request->amount;
+                // $aset->ending_balance = $request->amount;
+                // $aset->bs_pl = 'BS';
+                // $aset->created_by = Auth::user()->id;
+                // $aset->created_at = Carbon::now()->toDateTimeString();
+                // $aset->updated_at = Carbon::now()->toDateTimeString();
+
                 $details_a = array(
                     'trans_date' => $now,
                     'bulan' => $bulan,
@@ -178,6 +193,8 @@ class BankController extends Controller
                 );
 
                 asset::insert($details_a);
+
+
 
             }else{
 
@@ -212,7 +229,7 @@ class BankController extends Controller
                     $dt = array(
                         'trans_date' => $now,
                         'bulan' => $bulan,
-                        'sumber' => 'ASSET_looping',
+                        'sumber' => 'ASSET',
                         'trans_no' => $request->voucher_no,
                         'description' => $request->memo_c[$a],
                         'coa_id' => $v,

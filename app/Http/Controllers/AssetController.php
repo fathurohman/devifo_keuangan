@@ -10,6 +10,7 @@ use App\Model\pettycash;
 use App\Model\nama_cash;
 use App\Model\nama_barang;
 use App\Model\Asset;
+use App\Model\assets_spek;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
@@ -20,20 +21,45 @@ class AssetController extends Controller
 {
     public function index_assets()
     {
+
         return view('jurnal.bank.asset.show_asset');
     }
 
+
+
     public function edit_assets($id)
     {
-        $data = Asset::find($id);
+        $data = assets_spek::where('assets_id',$id)->firstOrFail();
+
         return view('jurnal.bank.asset.edit_assets', compact('data'));
+    }
+
+    public function add_assets_spek($id)
+    {
+        $data = Asset::find($id);
+        return view('jurnal.bank.asset.add_asset_spek', compact('data'));
+    }
+
+    public function add_assets(Request $request)
+    {
+
+        $data = new assets_spek;
+        $data->assets_id = $request->assets_id;
+        $data->nama = $request->nama;
+        $data->detail = $request->detail;
+        $data->penggunaan = $request->penggunaan;
+        $data->save();
+
+        return redirect(route('asset'));
     }
 
     public function update_assets(Request $request, $id)
     {
 
-        $data = Asset::find($id);
-        $data->details = $request->details;
+        $data = assets_spek::find($id);
+        $data->assets_id = $request->assets_id;
+        $data->nama = $request->nama;
+        $data->detail = $request->detail;
         $data->penggunaan = $request->penggunaan;
         $data->save();
 
@@ -50,6 +76,7 @@ class AssetController extends Controller
     public function listasset()
     {
 
+
         $query = Asset::where('created_by', '<>' , 'ROBOT');
         return Datatables::of(
             $query
@@ -65,7 +92,19 @@ class AssetController extends Controller
             $data = [
                 'id' => $row->id
             ];
-            return view('jurnal.bank.asset.dt.act_more', compact('data'));
+            $cek_spek = assets_spek::where('assets_id',$row->id )->count();
+
+            if($cek_spek == 1){
+
+                return view('jurnal.bank.asset.dt.act_more2', compact('data'));
+
+            }else{
+
+                return view('jurnal.bank.asset.dt.act_more', compact('data'));
+
+            }
+
+
         })->rawColumns(['More'])->toJson();
     }
 
@@ -120,7 +159,8 @@ class AssetController extends Controller
     public function showDetailAsset($id)
     {
         $data = Asset::where('id', $id)->get();
-        return view('jurnal.bank.asset.detail_asset', compact('data'));
+        $spek = assets_spek::where('assets_id', $id)->get();
+        return view('jurnal.bank.asset.detail_asset', compact('data','spek'));
     }
 
 
@@ -254,5 +294,50 @@ class AssetController extends Controller
 
         return redirect(route('asset'));
     }
+
+
+    public function report_assets()
+    {
+        return view('jurnal.bank.asset.report_assets');
+    }
+
+    public function report_listasset()
+    {
+
+
+        $query = Asset::where('created_by', '<>' , 'ROBOT');
+        return Datatables::of(
+            $query
+        )->editColumn('trans_date', function ($row) {
+            return $row->trans_date;
+        })->editColumn('nama_barang', function ($row) {
+            return $row->barang->nama_barang;
+        })->editColumn('harga_barang', function ($row) {
+            return number_format((float) $row->debit, 2, '.', ',');
+        })->addColumn('More', function ($row) {
+            $data = [
+                'id' => $row->id,
+                'elektronik' => $row->barang->elektronik
+            ];
+
+        return view('jurnal.bank.asset.dt.act_more_report', compact('data'));
+
+
+        })->rawColumns(['More'])->toJson();
+    }
+
+    public function showDetailSpek($id)
+    {
+        $spek = assets_spek::where('assets_id', $id)->get();
+        return view('jurnal.bank.asset.detail_report_asset', compact('spek'));
+    }
+    public function showDetailDes($id)
+    {
+        $data = Asset::where('id', $id)->get();
+        $des = Asset::where('induk_id', $id)->where('coa_id', '390')->get();
+        return view('jurnal.bank.asset.detail_report_despresiasi', compact('data','des'));
+    }
+
+
 
 }

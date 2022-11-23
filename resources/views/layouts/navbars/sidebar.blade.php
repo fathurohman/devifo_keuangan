@@ -269,7 +269,7 @@
 
                     </div>
                 </li>
-                <li class="nav-reports {{ $activePage == 'Profitloss' || $activePage == 'Neraca' ? ' active' : '' }}">
+                <li class="nav-reports {{ $activePage == 'Profitloss' || $activePage == 'Neraca' || $activePage == 'Report Assets' ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-crud-reports" data-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="navbar-crud-reports">
                         <i class="ni ni-single-copy-04"></i>
@@ -291,6 +291,13 @@
                                     {{ __('Neraca') }}
                                 </a>
 
+                            </li>
+                        </ul>
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('report.assets') }}">
+                                    {{ __('Assets') }}
+                                </a>
                             </li>
                         </ul>
 

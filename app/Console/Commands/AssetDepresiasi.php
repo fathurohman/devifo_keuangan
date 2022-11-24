@@ -71,6 +71,7 @@ class AssetDepresiasi extends Command
                                     $post = new Asset;
                                     $now = Carbon::parse($data->trans_date)->format('Y-m-d');
                                     $skrng = Carbon::now()->format('Y-m-d');
+                                    $skrng_bulan = Carbon::parse($skrng)->format('m');
                                     $tahun = Carbon::parse($data->trans_date)->format('y');
                                     $bulan = Carbon::parse($data->trans_date)->format('m');
 
@@ -105,7 +106,7 @@ class AssetDepresiasi extends Command
                                     $post->induk_id = $data->id;
                                     $post->trans_no = $data->trans_no;
                                     $post->coa_id = '390';
-                                    $post->bulan = $bulan;
+                                    $post->bulan = $skrng_bulan;
                                     $post->sumber = 'ASSET';
                                     $post->barang_id = $data->barang_id;
                                     $post->debit = $currentpriceafterdepresiasi;
@@ -120,7 +121,7 @@ class AssetDepresiasi extends Command
                                         'induk_id' => $data->id,
                                         'trans_no' => $data->trans_no,
                                         'coa_id' => '124',
-                                        'bulan' => $bulan,
+                                        'bulan' => $skrng_bulan,
                                         'sumber' => 'ASSET',
                                         'barang_id' => $data->barang_id,
                                         'credit' => $currentpriceafterdepresiasi,

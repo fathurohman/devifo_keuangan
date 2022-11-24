@@ -152,6 +152,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/report_assets', 'AssetController@report_assets')->name('report.assets');
 
+    Route::post('/export_report_asset', 'AssetController@export_report_asset')->name('export_report_asset');
+
 	//profloss routes
 	Route::get('/profloss', 'ProfitLossController@prof_loss')->name('prof_loss');
     Route::get('/profloss_json', 'ProfitLossController@prof_loss_json')->name('prof_loss_json');

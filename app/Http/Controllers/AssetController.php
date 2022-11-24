@@ -14,6 +14,8 @@ use App\Model\assets_spek;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use App\Exports\ReportAssetExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Response;
 use Auth;
 
@@ -298,12 +300,12 @@ class AssetController extends Controller
 
     public function report_assets()
     {
-        return view('jurnal.bank.asset.report_assets');
+        $data = Asset::where('created_by', '<>' , 'ROBOT');
+        return view('jurnal.bank.asset.report_assets', compact('data'));
     }
 
     public function report_listasset()
     {
-
 
         $query = Asset::where('created_by', '<>' , 'ROBOT');
         return Datatables::of(
@@ -338,6 +340,13 @@ class AssetController extends Controller
         return view('jurnal.bank.asset.detail_report_despresiasi', compact('data','des'));
     }
 
+    public function export_report_asset(Request $request)
+    {
+        $from = $request->start;
+        $to = $request->end;
+        $download = Excel::download(new ReportAssetExport($from, $to), 'ReportAsset.xlsx');
+        return $download;
+    }
 
 
 }

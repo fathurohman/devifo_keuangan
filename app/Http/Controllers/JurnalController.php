@@ -84,7 +84,7 @@ class JurnalController extends Controller
                         'Customer' => $customer,
                         'inv_No' => $trans_no,
                         'description' => $description,
-                        'coa_id' => '189',
+                        'coa_id' => '6',
                         'debit' => '0',
                         'credit' => $total_pajak,
                         'ending_balance' => $total_pajak,
@@ -108,7 +108,7 @@ class JurnalController extends Controller
                     'Customer' => $customer,
                     'inv_No' => $trans_no,
                     'description' => $description,
-                    'coa_id' => '38',
+                    'coa_id' => '4',
                     'debit' => $total_charge,
                     'credit' => '0',
                     'ending_balance' => $total_charge,
@@ -125,7 +125,7 @@ class JurnalController extends Controller
                     'Customer' => $customer,
                     'inv_No' => $trans_no,
                     'description' => $description,
-                    'coa_id' => '247',
+                    'coa_id' => '31',
                     'debit' => '0',
                     'credit' => $sum_idr,
                     'ending_balance' => $sum_idr,
@@ -157,13 +157,13 @@ class JurnalController extends Controller
         return DB::select('SELECT buying_orders.curr AS curr, sum(buying_orders.sub_total ) AS sub_total,
         buying_orders.name AS customers, sales_orders.inv_date as inv_date,
 				sales_orders.nomor_invoice AS nomor_invoice, sales_orders.job_order_id,
-				buying_orders.sales_order_id as sales_id
+				buying_orders.sales_order_id as sales_id, sales_orders.tipe as tipe
         FROM sales_orders
         INNER JOIN buying_orders ON sales_orders.id=buying_orders.sales_order_id
 		where sales_orders.created_at between "' . $start . '" and "' . $end . '"
         and sales_orders.booked = 1
 		GROUP BY buying_orders.curr,buying_orders.name, sales_orders.inv_date, sales_orders.nomor_invoice,
-        sales_orders.job_order_id,buying_orders.sales_order_id');
+        sales_orders.job_order_id,buying_orders.sales_order_id, sales_orders.tipe');
     }
     public function tarik_pembelian($start, $end)
     {
@@ -175,64 +175,76 @@ class JurnalController extends Controller
             $sub_total = $y->sub_total;
             $customer = $y->customers;
             $tanggal_inv = $y->inv_date;
+            $tipe = $y->tipe;
+            $description = $y->job_order_id;
             // $date_inv = date('d-F-Y', strtotime($tanggal_inv));
             $no_inv = $y->nomor_invoice;
+            $ptng = sprintf('%03d', $no_inv);
+            $sub_string = substr($no_inv, strpos($no_inv, "/") + 1);
+            $trans_no = "$ptng/$sub_string";
+            $vat = 1.1 / 100;
+            $pph = $sub_total * (2 / 100);
+            $total_pajak = $sub_total * $vat;
+            $total_charge = $sub_total + $total_pajak;
             $j_pembelian = JurnalPembelian::where('sales_order_id', $id)->where('nilai_trans', $sub_total)->count();
             if ($j_pembelian == '0') {
                 if ($curr == 'IDR') {
                     $nilai_usd = '0';
-                    $ptng = sprintf('%03d', $no_inv);
-                    $sub_string = substr($no_inv, strpos($no_inv, "/") + 1);
-                    $trans_no = "$ptng/$sub_string";
-                    $description = $y->job_order_id;
-                    $vat = 1.1 / 100;
-                    $pph = $sub_total * (2 / 100);
-                    $total_pajak = $sub_total * $vat;
-                    $total_charge = $sub_total + $total_pajak;
-                    $Admin = array(
-                        'sales_order_id' => $id,
-                        'job_order_id' => $description,
-                        'trans_date' => $tanggal_inv,
-                        'inv_No' => $trans_no,
-                        'description' => "A/p $customer",
-                        'coa_id' => '386',
-                        'debit' => $pph,
-                        'credit' => '0',
-                        'ending_balance' => $pph,
-                        'inv_usd' => '0',
-                        'nilai_trans' => $sub_total,
-                    );
-                    $hutang_pajak = array(
-                        'sales_order_id' => $id,
-                        'job_order_id' => $description,
-                        'trans_date' => $tanggal_inv,
-                        'inv_No' => $trans_no,
-                        'description' => "A/p $customer",
-                        'coa_id' => '195',
-                        'debit' => '0',
-                        'credit' => $pph,
-                        'ending_balance' => $pph,
-                        'inv_usd' => '0',
-                        'nilai_trans' => $sub_total,
-                    );
-                    $ppn = array(
-                        'sales_order_id' => $id,
-                        'job_order_id' => $description,
-                        'trans_date' => $tanggal_inv,
-                        'inv_No' => $trans_no,
-                        'description' => "A/p $customer",
-                        'coa_id' => '189',
-                        'debit' => $total_pajak,
-                        'credit' => '0',
-                        'ending_balance' => $total_pajak,
-                        'inv_usd' => '0',
-                        'nilai_trans' => $sub_total,
-                    );
+                    if ($tipe == 'I') {
+                        $Admin = array(
+                            'sales_order_id' => $id,
+                            'job_order_id' => $description,
+                            'trans_date' => $tanggal_inv,
+                            'inv_No' => $trans_no,
+                            'description' => "A/p $customer",
+                            'coa_id' => '35',
+                            'debit' => $pph,
+                            'credit' => '0',
+                            'ending_balance' => $pph,
+                            'inv_usd' => '0',
+                            'nilai_trans' => $sub_total,
+                            'bs_pl' => 'PL',
+                        );
+                        $hutang_pajak = array(
+                            'sales_order_id' => $id,
+                            'job_order_id' => $description,
+                            'trans_date' => $tanggal_inv,
+                            'inv_No' => $trans_no,
+                            'description' => "A/p $customer",
+                            'coa_id' => '22',
+                            'debit' => '0',
+                            'credit' => $pph,
+                            'ending_balance' => $pph,
+                            'inv_usd' => '0',
+                            'nilai_trans' => $sub_total,
+                            'bs_pl' => 'BS',
+                        );
+                        $ppn = array(
+                            'sales_order_id' => $id,
+                            'job_order_id' => $description,
+                            'trans_date' => $tanggal_inv,
+                            'inv_No' => $trans_no,
+                            'description' => "A/p $customer",
+                            'coa_id' => '51',
+                            'debit' => $total_pajak,
+                            'credit' => '0',
+                            'ending_balance' => $total_pajak,
+                            'inv_usd' => '0',
+                            'nilai_trans' => $sub_total,
+                            'bs_pl' => 'PL',
+                        );
+                    } else {
+                        $Admin = NULL;
+                        $hutang_pajak = NULL;
+                        $ppn = NULL;
+                        $total_charge = $sub_total;
+                        $nilai_usd = '0';
+                    }
                 } else {
                     $Admin = NULL;
                     $hutang_pajak = NULL;
                     $ppn = NULL;
-                    $total_charge = '0';
+                    $total_charge = $this->skomak($sub_total);
                     $nilai_usd = $sub_total;
                 }
                 $pembelian = array(
@@ -241,12 +253,13 @@ class JurnalController extends Controller
                     'trans_date' => $tanggal_inv,
                     'inv_No' => $trans_no,
                     'description' => "A/p $customer",
-                    'coa_id' => '253',
+                    'coa_id' => '33',
                     'debit' => $total_charge,
                     'credit' => '0',
                     'ending_balance' => $total_charge,
                     'inv_usd' => $nilai_usd,
                     'nilai_trans' => $sub_total,
+                    'bs_pl' => 'PL',
                 );
                 $hutang = array(
                     'sales_order_id' => $id,
@@ -254,12 +267,13 @@ class JurnalController extends Controller
                     'trans_date' => $tanggal_inv,
                     'inv_No' => $trans_no,
                     'description' => "A/p $customer",
-                    'coa_id' => '155',
+                    'coa_id' => '18',
                     'debit' => '0',
                     'credit' => $total_charge,
                     'ending_balance' => $total_charge,
                     'inv_usd' => $nilai_usd,
                     'nilai_trans' => $sub_total,
+                    'bs_pl' => 'BS',
                 );
                 // dd($hutang);
                 JurnalPembelian::insert($pembelian);
@@ -273,6 +287,31 @@ class JurnalController extends Controller
                 return 'data available';
             }
             $sub_total = 0;
+        }
+    }
+
+    public function skomak($usd)
+    {
+        // Fetching JSON
+        $req_url = 'https://api.exchangerate-api.com/v4/latest/USD';
+        $response_json = file_get_contents($req_url);
+
+        // Continuing if we got a result
+        if (false !== $response_json) {
+
+            // Try/catch for json_decode operation
+            try {
+
+                // Decoding
+                $response_object = json_decode($response_json);
+
+                // YOUR APPLICATION CODE HERE, e.g.
+                $base_price = $usd; // Your price in USD
+                $IDR_price = round(($base_price * $response_object->rates->IDR), 2);
+                return $IDR_price;
+            } catch (Exception $e) {
+                return 'error';
+            }
         }
     }
 }

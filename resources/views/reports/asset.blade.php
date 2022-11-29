@@ -8,10 +8,7 @@
         <th colspan="3">Asset Report</th>
     </tr>
     <tr>
-
         <th colspan="3">{{ $from }} s/d {{ $to }}</th>
-
-
     </tr>
 </table>
 <table>
@@ -42,7 +39,15 @@
             $now = Carbon\Carbon::now()->format('Y-m-d');
             $s  = date_create($own);
             $d  = date_create($now);
+
             $selisih_bulan = date_diff($s,$d);
+            if($selisih_bulan->y >= 0){
+                $tahun = $selisih_bulan->y * 12;
+            }else{
+                $tahun = 0;
+            }
+
+            $current_mount = $selisih_bulan->m + $tahun + 1;
         @endphp
 
             <tr>
@@ -51,9 +56,14 @@
                 <td>{{$x->barang->nama_barang}}</td>
                 <td>{{number_format($x->debit, 2) }}</td>
                 @if($selisih_bulan->m > 0)
-                    <td>{{$selisih_bulan->m }}</td>
+                    <td>{{$current_mount }}</td>
                 @else
-                    <td>-</td>
+                    @if ($x->barang->elektronik == 1)
+                        <td>{{$current_mount }}</td>
+                    @else
+                        <td>-</td>
+                    @endif
+
                 @endif
 
                 @foreach ($afterdespresiasi as $ad)

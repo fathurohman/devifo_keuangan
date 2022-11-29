@@ -105,7 +105,7 @@ class AssetDepresiasi extends Command
                                     $post->trans_date = $skrng;
                                     $post->induk_id = $data->id;
                                     $post->trans_no = $data->trans_no;
-                                    $post->coa_id = '390';
+                                    $post->coa_id = '44';
                                     $post->bulan = $skrng_bulan;
                                     $post->sumber = 'ASSET';
                                     $post->barang_id = $data->barang_id;
@@ -120,7 +120,7 @@ class AssetDepresiasi extends Command
                                         'trans_date' => $skrng,
                                         'induk_id' => $data->id,
                                         'trans_no' => $data->trans_no,
-                                        'coa_id' => '124',
+                                        'coa_id' => '15',
                                         'bulan' => $skrng_bulan,
                                         'sumber' => 'ASSET',
                                         'barang_id' => $data->barang_id,

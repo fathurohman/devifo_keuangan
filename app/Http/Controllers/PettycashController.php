@@ -67,7 +67,7 @@ class PettycashController extends Controller
             'credit' => $request->amount,
             'ending_balance' => $request->total,
             'bs_pl' => 'BS',
-            'coa_id' => 7,
+            'coa_id' => 1,
             'dk' => 'K',
             'created_by' => 'ROBOT'
 

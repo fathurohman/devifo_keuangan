@@ -270,7 +270,7 @@ class AssetController extends Controller
 
 
         $data->trans_date = $now;
-        $data->coa_id = '390';
+        $data->coa_id = '44';
         $data->bulan = $bulan;
         $data->sumber = 'ASSET';
         $data->barang_id = $request->id_barang;
@@ -282,7 +282,7 @@ class AssetController extends Controller
 
         $details_b = array(
             'trans_date' => $now,
-            'coa_id' => 124,
+            'coa_id' => 15,
             'bulan' => $bulan,
             'sumber' => 'ASSET',
             'barang_id' => '',
@@ -336,7 +336,7 @@ class AssetController extends Controller
     public function showDetailDes($id)
     {
         $data = Asset::where('id', $id)->get();
-        $des = Asset::where('induk_id', $id)->where('coa_id', '390')->get();
+        $des = Asset::where('induk_id', $id)->where('coa_id', '44')->get();
         return view('jurnal.bank.asset.detail_report_despresiasi', compact('data','des'));
     }
 

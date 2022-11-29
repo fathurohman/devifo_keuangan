@@ -99,9 +99,9 @@ class BankController extends Controller
     {
         $term = $request->term;
 
-        $queries = DB::table('jns_akun')
+        $queries = DB::table('jns_akun_sigma')
             ->where('jns_trans', 'LIKE', '%' . $term . '%')
-            ->where('induk', 'T')
+            // ->where('induk', 'T')
             ->where('aktif', 'Y')
             // ->orWhere('neraca', '1')
             ->get();

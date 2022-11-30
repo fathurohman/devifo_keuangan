@@ -14,7 +14,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bca_idr = 0;
-        $bca_idr = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'BCA - IDR XXX (NON PPN)')->where('bs_pl', 'BS')->get();
+        $bca_idr = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'BCA SIGMA IDR- 3728-888-557')->where('bs_pl', 'BS')->get();
         foreach ($bca_idr as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -34,7 +34,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bca_usd = 0;
-        $bca_usd = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'BCA - USD')->where('bs_pl', 'BS')->get();
+        $bca_usd = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'BCA SIGMA USD- 3728-888-506')->where('bs_pl', 'BS')->get();
         foreach ($bca_usd as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -103,7 +103,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_piutang_saham = 0;
-        $piutang_saham = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'PIUTANG PEMEGANG SAHAM')->where('bs_pl', 'BS')->get();
+        $piutang_saham = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Piutang Pemegang Saham')->where('bs_pl', 'BS')->get();
         foreach ($piutang_saham as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -183,7 +183,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_dimuka_gedung = 0;
-        $dimuka_gedung = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Sewa Dibayar dimuka - Gedung')->where('bs_pl', 'BS')->get();
+        $dimuka_gedung = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya Dibayar Dimuka-Fasilitas Gedung')->where('bs_pl', 'BS')->get();
         foreach ($dimuka_gedung as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -192,7 +192,7 @@ class NeracaController extends Controller
             $sum_dimuka_gedung = $sum_debit - $sum_credit;
         }
         $data_dimuka_gedung = array(
-            'Nama' => 'Sewa Dibayar dimuka - Gedung',
+            'Nama' => 'Biaya Dibayar Dimuka - Fasilitas Gedung',
             'total_dimuka_gedung' => $sum_dimuka_gedung,
         );
         return $data_dimuka_gedung;
@@ -216,7 +216,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_peralatan_kerja = 0;
-        $peralatan_kerja = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Aktiva JakA/Rta - Peralatan Kerja')->where('bs_pl', 'BS')->get();
+        $peralatan_kerja = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Aktiva Jakarta - Peralatan Kerja')->where('bs_pl', 'BS')->get();
         foreach ($peralatan_kerja as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -236,7 +236,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_penyusutan_peralatan_kerja = 0;
-        $penyusutan_peralatan_kerja = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Akumulasi Penyusutan JakA/Rta - Peralatan Kerja')->where('bs_pl', 'BS')->get();
+        $penyusutan_peralatan_kerja = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Akumulasi Penyusutan - Peralatan Kerja')->where('bs_pl', 'BS')->get();
         foreach ($penyusutan_peralatan_kerja as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -272,7 +272,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_hutang_afiliasi = 0;
-        $hutang_afiliasi = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'HUTANG AFILIASI')->where('bs_pl', 'BS')->get();
+        $hutang_afiliasi = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang Afiliasi - DUI')->where('bs_pl', 'BS')->get();
         foreach ($hutang_afiliasi as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -281,7 +281,7 @@ class NeracaController extends Controller
             $sum_hutang_afiliasi = $sum_debit - $sum_credit;
         }
         $data_hutang_afiliasi = array(
-            'Nama' => 'HUTANG AFILIASI',
+            'Nama' => 'Hutang Afiliasi - DUI',
             'total_hutang_afiliasi' => $sum_hutang_afiliasi,
         );
         return $data_hutang_afiliasi;
@@ -332,7 +332,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_hutang_ketiga = 0;
-        $hutang_ketiga = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'HUTANG PIHAK KETIGA')->where('bs_pl', 'BS')->get();
+        $hutang_ketiga = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang Pihak Ketiga')->where('bs_pl', 'BS')->get();
         foreach ($hutang_ketiga as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -341,7 +341,7 @@ class NeracaController extends Controller
             $sum_hutang_ketiga = $sum_debit - $sum_credit;
         }
         $data_hutang_ketiga = array(
-            'Nama' => 'HUTANG PIHAK KETIGA',
+            'Nama' => 'Hutang Pihak Ketiga',
             'total_hutang_ketiga' => $sum_hutang_ketiga,
         );
         return $data_hutang_ketiga;
@@ -392,7 +392,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_hutang_pph_4 = 0;
-        $hutang_pph_4 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang Pajak - PPh 4')->where('bs_pl', 'BS')->get();
+        $hutang_pph_4 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang Pajak - PPh 4 (2)')->where('bs_pl', 'BS')->get();
         foreach ($hutang_pph_4 as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -401,7 +401,7 @@ class NeracaController extends Controller
             $sum_hutang_pph_4 = $sum_debit - $sum_credit;
         }
         $data_hutang_pph_4 = array(
-            'Nama' => 'Hutang Pajak - PPh 4',
+            'Nama' => 'Hutang Pajak - PPh 4 (2)',
             'total_hutang_pph_4' => $sum_hutang_pph_4,
         );
         return $data_hutang_pph_4;
@@ -412,7 +412,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_hutang_ppn_kurbay = 0;
-        $hutang_ppn_kurbay = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang Pajak - PPN Kurang Bayar')->where('bs_pl', 'BS')->get();
+        $hutang_ppn_kurbay = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang PPn Kurang Bayar')->where('bs_pl', 'BS')->get();
         foreach ($hutang_ppn_kurbay as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -421,7 +421,7 @@ class NeracaController extends Controller
             $sum_hutang_ppn_kurbay = $sum_debit - $sum_credit;
         }
         $data_hutang_ppn_kurbay = array(
-            'Nama' => 'Hutang Pajak - PPN Kurang Bayar',
+            'Nama' => 'Hutang PPn Kurang Bayar',
             'total_hutang_ppn_kurbay' => $sum_hutang_ppn_kurbay,
         );
         return $data_hutang_ppn_kurbay;
@@ -452,7 +452,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_dp_setoran_modal = 0;
-        $dp_setoran_modal = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Modal Disetor')->where('bs_pl', 'BS')->get();
+        $dp_setoran_modal = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Uang Muka Setoran Modal')->where('bs_pl', 'BS')->get();
         foreach ($dp_setoran_modal as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -461,7 +461,7 @@ class NeracaController extends Controller
             $sum_dp_setoran_modal = $sum_debit - $sum_credit;
         }
         $data_dp_setoran_modal = array(
-            'Nama' => 'Modal Disetor',
+            'Nama' => 'Uang Muka Setoran Modal',
             'dp_setoran_modal' => $sum_dp_setoran_modal,
         );
         return $data_dp_setoran_modal;
@@ -511,7 +511,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_laba_ditahan = 0;
-        $laba_ditahan = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Laba Ditahan')->where('bs_pl', 'BS')->get();
+        $laba_ditahan = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Laba/Rugi ditahan')->where('bs_pl', 'BS')->get();
         foreach ($laba_ditahan as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -520,7 +520,7 @@ class NeracaController extends Controller
             $sum_laba_ditahan = $sum_debit - $sum_credit;
         }
         $data_laba_ditahan = array(
-            'Nama' => 'Laba Ditahan',
+            'Nama' => 'Laba/Rugi ditahan',
             'laba_ditahan' => $sum_laba_ditahan,
         );
         return $data_laba_ditahan;
@@ -531,7 +531,7 @@ class NeracaController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_cadangan_dividen = 0;
-        $cadangan_dividen = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Cadangan Deviden')->where('bs_pl', 'BS')->get();
+        $cadangan_dividen = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Deviden')->where('bs_pl', 'BS')->get();
         foreach ($cadangan_dividen as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -540,7 +540,7 @@ class NeracaController extends Controller
             $sum_cadangan_dividen = $sum_debit - $sum_credit;
         }
         $data_cadangan_dividen = array(
-            'Nama' => 'Cadangan Deviden',
+            'Nama' => 'Deviden',
             'cadangan_dividen' => $sum_cadangan_dividen,
         );
         return $data_cadangan_dividen;

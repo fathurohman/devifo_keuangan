@@ -78,7 +78,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_atk = 0;
-        $atk = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Alat Tulis Kantor')->where('bs_pl', 'PL')->get();
+        $atk = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya Pembelian ATK')->where('bs_pl', 'PL')->get();
         foreach ($atk as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -98,7 +98,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bp_pph21 = 0;
-        $bp_pph21 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 21 Non KA/Ryawan')->where('bs_pl', 'PL')->get();
+        $bp_pph21 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 21')->where('bs_pl', 'PL')->get();
         foreach ($bp_pph21 as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -138,7 +138,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bp_pph4 = 0;
-        $bp_pph4 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 4(2)')->where('bs_pl', 'PL')->get();
+        $bp_pph4 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Biaya Pajak PPh 4 (2)')->where('bs_pl', 'PL')->get();
         foreach ($bp_pph4 as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -258,7 +258,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_manfee = 0;
-        $manfee = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Management Fee')->where('bs_pl', 'PL')->get();
+        $manfee = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Management fee')->where('bs_pl', 'PL')->get();
         foreach ($manfee as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -318,7 +318,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_tagtel = 0;
-        $tagtel = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Site - B. Adm & Umum - Tagihan Telpon')->where('bs_pl', 'PL')->get();
+        $tagtel = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Adm & Umum - Tagihan Telpon')->where('bs_pl', 'PL')->get();
         foreach ($tagtel as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -358,7 +358,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bdd__bp_pph23 = 0;
-        $bdd__bp_pph23 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Pajak Dibayar Dimuka - PPH 23')->where('bs_pl', 'PL')->get();
+        $bdd__bp_pph23 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Dibayar Dimuka - Biaya Pajak PPh 23')->where('bs_pl', 'PL')->get();
         foreach ($bdd__bp_pph23 as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -378,7 +378,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bp_sewken = 0;
-        $bp_sewken = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Penjualan - Sewa KendA/Raan')->where('bs_pl', 'PL')->get();
+        $bp_sewken = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'B. Penjualan - Sewa Kendaraan')->where('bs_pl', 'PL')->get();
         foreach ($bp_sewken as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -478,7 +478,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bpp_pk = 0;
-        $bpp_pk = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya PemelihA/Raan & Perbaikan - PerlengkA/Pan Kantor')->where('bs_pl', 'PL')->get();
+        $bpp_pk = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya Pemeliharaan & Perbaikan - Perlengkapan Kantor')->where('bs_pl', 'PL')->get();
         foreach ($bpp_pk as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -498,7 +498,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_bppn1 = 0;
-        $bppn1 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Hutang Pajak - PPN Keluaranan')->where('bs_pl', 'PL')->get();
+        $bppn1 = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya PPn - 1%')->where('bs_pl', 'PL')->get();
         foreach ($bppn1 as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -527,6 +527,25 @@ class ProfitLossController extends Controller
     //     );
     //     return $data_briem;
     // }
+    public function reimbes($from, $to)
+    {
+        $sum_debit = 0;
+        $sum_credit = 0;
+        $sum_reimbes = 0;
+        $reimbes = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya Reimbursement')->where('bs_pl', 'PL')->get();
+        foreach ($reimbes as $x) {
+            $debit = $x->Debit;
+            $credit = $x->Credit;
+            $sum_debit += $debit;
+            $sum_credit += $credit;
+            $sum_reimbes += $sum_debit - $sum_credit;
+        }
+        $data_reimbes = array(
+            'Nama' => 'Biaya Reimbursement',
+            'total_reimbes' => $sum_reimbes,
+        );
+        return $data_reimbes;
+    }
 
     public function btl($from, $to)
     {
@@ -568,12 +587,32 @@ class ProfitLossController extends Controller
         return $data_lskl;
     }
 
+    public function fasged($from, $to)
+    {
+        $sum_debit = 0;
+        $sum_credit = 0;
+        $sum_fasged = 0;
+        $fasged = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Biaya Fasilitas Gedung')->where('bs_pl', 'PL')->get();
+        foreach ($fasged as $x) {
+            $debit = $x->Debit;
+            $credit = $x->Credit;
+            $sum_debit += $debit;
+            $sum_credit += $credit;
+            $sum_fasged += $sum_debit - $sum_credit;
+        }
+        $data_fasged = array(
+            'Nama' => 'Biaya Fasilitas Gedung',
+            'total_fasged' => $sum_fasged,
+        );
+        return $data_fasged;
+    }
+
     public function pll($from, $to)
     {
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_pll = 0;
-        $pll = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'PENDA/PATAN LAIN-LAIN')->where('bs_pl', 'PL')->get();
+        $pll = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Pendapatan Lain-lain')->where('bs_pl', 'PL')->get();
         foreach ($pll as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -593,7 +632,7 @@ class ProfitLossController extends Controller
         $sum_debit = 0;
         $sum_credit = 0;
         $sum_pbb = 0;
-        $pbb = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'PendA/Patan Bunga Bank')->where('bs_pl', 'PL')->get();
+        $pbb = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Pendapatan Bunga Bank')->where('bs_pl', 'PL')->get();
         foreach ($pbb as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
@@ -641,8 +680,9 @@ class ProfitLossController extends Controller
         $bppn1 = $this->bppn1($from, $to);
         // $briem = $this->briem();
         $btl = $this->btl($from, $to);
+        $reimbes = $this->reimbes($from, $to);
         $lskl = $this->lskl($from, $to);
-
+        $fasged = $this->fasged($from, $to);
 
         $laba_kotor = (($penjualan['total_penjualan'] + $hapok['total_hapok']) - $potong_beli['total_pot_beli']);
         $jumlah_beban_operasi = (
@@ -667,8 +707,10 @@ class ProfitLossController extends Controller
                 $bll['total_bll'] +
                 $bpp_pk['total_bpp_pk'] +
                 $bppn1['total_bppn1'] +
+                $reimbes['total_reimbes'] +
                 $btl['total_btl'] +
-                $lskl['total_lskl'])
+                $lskl['total_lskl'] +
+                $fasged['total_fasged'])
         );
 
 
@@ -687,50 +729,50 @@ class ProfitLossController extends Controller
 
         $profit_loss = (($laba_kotor - $wages_and_salaries - $rime - $gae - $bpp_pk['total_bpp_pk'] - $bab['total_bab']) - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4'] + $pll['total_pll']);
 
-        $html = view('jurnal.profloss.table_profloss')->with(compact(
-            'laba_kotor',
-            'jumlah_beban_operasi',
-            'penjualan',
-            'hapok',
-            'potong_beli',
-            'badumum_atk',
-            'badmumum_bp_pph21',
-            'badmumum_bp_pph23',
-            'badmumum_bp_pph4',
-            'badmumum_dapur',
-            'badmumum_la',
-            'badmumum_materai',
-            'badmumum_pencetakan',
-            'badmumum_jaspro',
-            'badmumum_manfee',
-            'badmumum_ppbd',
-            'badmumum_tagin',
-            'badmumum_tagtel',
-            'badmumum_transportasi',
-            'bdd__bp_pph23',
-            'bp_sewken',
-            'bp_perker',
-            'bab',
-            'bgu',
-            'bll',
-            'bpp_pk',
-            'bppn1',
-            'btl',
-            'lskl',
-            'pll',
-            'pbb',
-            'jumlah_pendapatan_lain',
-            'laba_rugi',
-            'fedora_30persen',
-            'dicky_70persen',
-            'wages_and_salaries',
-            'rime',
-            'gae',
-            'profit_loss'
-        )
+        $html = view('jurnal.profloss.table_profloss')->with(
+            compact(
+                'laba_kotor',
+                'jumlah_beban_operasi',
+                'penjualan',
+                'hapok',
+                'potong_beli',
+                'badumum_atk',
+                'badmumum_bp_pph21',
+                'badmumum_bp_pph23',
+                'badmumum_bp_pph4',
+                'badmumum_dapur',
+                'badmumum_la',
+                'badmumum_materai',
+                'badmumum_pencetakan',
+                'badmumum_jaspro',
+                'badmumum_manfee',
+                'badmumum_ppbd',
+                'badmumum_tagin',
+                'badmumum_tagtel',
+                'badmumum_transportasi',
+                'bdd__bp_pph23',
+                'bp_sewken',
+                'bp_perker',
+                'bab',
+                'bgu',
+                'bll',
+                'bpp_pk',
+                'bppn1',
+                'btl',
+                'lskl',
+                'pll',
+                'pbb',
+                'jumlah_pendapatan_lain',
+                'laba_rugi',
+                'fedora_30persen',
+                'dicky_70persen',
+                'wages_and_salaries',
+                'rime',
+                'gae',
+                'profit_loss'
+            )
         )->render();
         return response()->json(['success' => true, 'html' => $html]);
-
     }
 
     public function prof_loss()
@@ -770,7 +812,9 @@ class ProfitLossController extends Controller
         $bppn1 = $this->bppn1($from, $to);
         // $briem = $this->briem();
         $btl = $this->btl($from, $to);
+        $reimbes = $this->reimbes($from, $to);
         $lskl = $this->lskl($from, $to);
+        $fasged = $this->fasged($from, $to);
 
 
         $laba_kotor = (($penjualan['total_penjualan'] + $hapok['total_hapok']) - $potong_beli['total_pot_beli']);
@@ -796,8 +840,10 @@ class ProfitLossController extends Controller
                 $bll['total_bll'] +
                 $bpp_pk['total_bpp_pk'] +
                 $bppn1['total_bppn1'] +
+                $reimbes['total_reimbes'] +
                 $btl['total_btl'] +
-                $lskl['total_lskl'])
+                $lskl['total_lskl'] +
+                $fasged['total_fasged'])
         );
 
 

@@ -47,7 +47,7 @@
             <td>{{number_format((float) $dp_pph['total_dp_pph'], 2, '.', ',')}}</td>
         </tr>
         <tr>
-            <td>Biaya Dibayar Dimuka Fasilitas</td>
+            <td>Biaya Dibayar Dimuka Fasilitas Gedung</td>
             <td>{{number_format((float) $dimuka_gedung['total_dimuka_gedung'], 2, '.', ',')}}</td>
         </tr>
         <tr style="background: #96D2D9">
@@ -168,7 +168,7 @@
         </tr>
         <tr>
             <td>Laba/Rugi ditahun berjalan</td>
-            <td>0</td>
+            <td>{{number_format((float) $laba_ditahun_berjalan['laba_ditahun_berjalan'], 2, '.', ',')}}</td>
         </tr>
         <tr>
             <td>Deviden</td>

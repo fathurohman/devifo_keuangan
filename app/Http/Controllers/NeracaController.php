@@ -206,8 +206,9 @@ class NeracaController extends Controller
         $dp_karyawan = $this->dp_karyawan($from, $to);
         $dp_pph = $this->dp_pph($from, $to);
         $dimuka_gedung = $this->dimuka_gedung($from, $to);
+        $jumlah_kas = $this->jumlah_kas($from, $to);
         $jumlah_cash = ($piutang_dagang['total_piutang_dagang'] + $piutang_saham['total_piutang_saham'] + $dp_pembelian['total_dp_pembelian']
-            + $dp_karyawan['total_dp_karyawan'] + $dp_pph['total_dp_pph'] + $dimuka_gedung['total_dimuka_gedung']);
+            + $dp_karyawan['total_dp_karyawan'] + $dp_pph['total_dp_pph'] + $dimuka_gedung['total_dimuka_gedung'] + $jumlah_kas);
         return $jumlah_cash;
     }
     //----------------aktiva lancar-------------------------------------------
@@ -261,10 +262,12 @@ class NeracaController extends Controller
 
     public function total_aktiva($from, $to)
     {
-        $peralatan_kerja = $this->peralatan_kerja($from, $to);
+        $jumlah_aktiva_kas = $this->jumlah_aktiva_kas($from, $to);
         $jumlah_aktiva_tetap = $this->jumlah_aktiva_tetap($from, $to);
-        $jumlah_cash = ($peralatan_kerja['total_peralatan_kerja'] + $jumlah_aktiva_tetap);
+        $jumlah_cash = ($jumlah_aktiva_kas + $jumlah_aktiva_tetap);
         return $jumlah_cash;
+
+        echo $jumlah_cas;
     }
     //-----------------------Total aktiva-----------------------------------------------
     public function hutang_afiliasi($from, $to)
@@ -526,6 +529,26 @@ class NeracaController extends Controller
         return $data_laba_ditahan;
     }
 
+    public function laba_ditahun_berjalan($from, $to)
+    {
+        $sum_debit = 0;
+        $sum_credit = 0;
+        $sum_laba_ditahun_berjalan = 0;
+        $laba_ditahun_berjalan = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Laba/Rugi ditahun berjalan')->where('bs_pl', 'BS')->get();
+        foreach ($laba_ditahun_berjalan as $x) {
+            $debit = $x->Debit;
+            $credit = $x->Credit;
+            $sum_debit += $debit;
+            $sum_credit += $credit;
+            $sum_laba_ditahun_berjalan = $sum_debit - $sum_credit;
+        }
+        $data_laba_ditahun_berjalan = array(
+            'Nama' => 'Laba/Rugi ditahun berjalan',
+            'laba_ditahun_berjalan' => $sum_laba_ditahun_berjalan,
+        );
+        return $data_laba_ditahun_berjalan;
+    }
+
     public function cadangan_dividen($from, $to)
     {
         $sum_debit = 0;
@@ -599,6 +622,7 @@ class NeracaController extends Controller
         $jumlah_kewajiban_lancar = $this->jumlah_kewajiban_lancar($from, $to);
         $modal_disetor = $this->modal_disetor($from, $to);
         $laba_ditahan = $this->laba_ditahan($from, $to);
+        $laba_ditahun_berjalan = $this->laba_ditahun_berjalan($from, $to);
         $cadangan_dividen = $this->cadangan_dividen($from, $to);
         $jumlah_ekuitas = $this->jumlah_ekuitas($from, $to);
         $kewajiban_ekuitas = $this->kewajiban_ekuitas($from, $to);
@@ -632,6 +656,7 @@ class NeracaController extends Controller
             'jumlah_kewajiban_lancar',
             'modal_disetor',
             'laba_ditahan',
+            'laba_ditahun_berjalan',
             'cadangan_dividen',
             'jumlah_ekuitas',
             'kewajiban_ekuitas'

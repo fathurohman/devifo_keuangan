@@ -131,46 +131,47 @@ Route::group(['middleware' => 'auth'], function () {
 	//assets
 	Route::get('asset', 'AssetController@index_assets')->name('asset');
 	Route::get('create_asset', 'AssetController@create_assets')->name('create_asset');
-    Route::get('edit_asset/{id}', 'AssetController@edit_assets')->name('edit_assets');
+	Route::get('edit_asset/{id}', 'AssetController@edit_assets')->name('edit_assets');
 
-    Route::get('add_asset_spek/{id}', 'AssetController@add_assets_spek')->name('add_assets_spek');
+	Route::get('add_asset_spek/{id}', 'AssetController@add_assets_spek')->name('add_assets_spek');
 
-    Route::post('add_assets', 'AssetController@add_assets')->name('add.add_assets');
-    Route::put('/update/asset/{id}', 'AssetController@update_assets')->name('update.asset');
+	Route::post('add_assets', 'AssetController@add_assets')->name('add.add_assets');
+	Route::put('/update/asset/{id}', 'AssetController@update_assets')->name('update.asset');
 
 	Route::post('/store/asset', 'AssetController@store_asset')->name('store.asset');
 	Route::get('/listasset', 'AssetController@listasset')->name('listasset');
-    Route::get('/report_listasset', 'AssetController@report_listasset')->name('report_listasset');
+	Route::get('/report_listasset', 'AssetController@report_listasset')->name('report_listasset');
 	Route::get('/asset_detail/{id}', 'AssetController@showDetailAsset');
-    Route::get('/asset_detail_report/{id}', 'AssetController@showDetailSpek');
-    Route::get('/asset_detail_des/{id}', 'AssetController@showDetailDes');
+	Route::get('/asset_detail_report/{id}', 'AssetController@showDetailSpek');
+	Route::get('/asset_detail_des/{id}', 'AssetController@showDetailDes');
 	Route::get('/listnamabarang', 'AssetController@listnamabarang')->name('listnamabarang');
 	Route::get('/data_barang', 'AssetController@getdatabarang');
 
 	Route::get('create_asset_penyusutan', 'AssetController@create_asset_penyusutan')->name('create_asset_penyusutan');
 	Route::post('/store/asset_penyusutan', 'AssetController@store_penyusutan')->name('store_penyusutan');
 
-    Route::get('/report_assets', 'AssetController@report_assets')->name('report.assets');
+	Route::get('/report_assets', 'AssetController@report_assets')->name('report.assets');
 
-    Route::post('/export_report_asset', 'AssetController@export_report_asset')->name('export_report_asset');
+	Route::post('/export_report_asset', 'AssetController@export_report_asset')->name('export_report_asset');
 
 	//profloss routes
 	Route::get('/profloss', 'ProfitLossController@prof_loss')->name('prof_loss');
-    Route::get('/profloss_json', 'ProfitLossController@prof_loss_json')->name('prof_loss_json');
-    Route::post('/export_profitloss', 'ProfitLossController@export_profitloss')->name('export_profitloss');
+	Route::get('/profloss_json', 'ProfitLossController@prof_loss_json')->name('prof_loss_json');
+	Route::post('/export_profitloss', 'ProfitLossController@export_profitloss')->name('export_profitloss');
 
 	Route::get('/neraca', 'NeracaController@neraca')->name('neraca');
-    Route::get('/neraca_json', 'NeracaController@neraca_json')->name('neraca_json');
-    Route::post('/export_neraca', 'NeracaController@export_neraca')->name('export_neraca');
+	Route::get('/neraca_json', 'NeracaController@neraca_json')->name('neraca_json');
+	Route::post('/export_neraca', 'NeracaController@export_neraca')->name('export_neraca');
 
 	Route::get('/coa_data', 'BankController@getdatacoa');
 
 	Route::get('coa/autocomplete/', 'BankController@autocomplete_coa');
-    Route::get('br/autocomplete/', 'BankController@autocomplete_barang');
+	Route::get('br/autocomplete/', 'BankController@autocomplete_barang');
 	Route::post('/store/coa', 'BankController@store')->name('store.coa');
 
 
 	Route::get('/skomak', 'FinanceController@skomak')->name('finance.skomak');
+	Route::get('/hapok', 'ProfitLossController@hapok');
 });
 
 

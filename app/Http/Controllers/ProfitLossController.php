@@ -37,13 +37,12 @@ class ProfitLossController extends Controller
         $sum_credit = 0;
         $sum_hapok = 0;
         $hapok = Jurnal::whereBetween('Trans_Date', [$from, $to])->where('Chart_Of_Account', 'Harga Pokok Penjualan')->where('bs_pl', 'PL')->get();
-
         foreach ($hapok as $x) {
             $debit = $x->Debit;
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_hapok += -1 * abs($sum_debit - $sum_credit);
+            $sum_hapok = -1 * abs($sum_debit - $sum_credit);
         }
         $data_hapok = array(
             'Nama' => 'Harga Pokok Penjualan',
@@ -64,7 +63,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_potong_beli += $sum_debit - $sum_credit;
+            $sum_potong_beli = $sum_debit - $sum_credit;
         }
         $data_potong_beli = array(
             'Nama' => 'Potongan Pembelian',
@@ -84,7 +83,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_atk += $sum_debit - $sum_credit;
+            $sum_atk = $sum_debit - $sum_credit;
         }
         $data_atk = array(
             'Nama' => 'B. Adm & Umum - Alat Tulis Kantor',
@@ -104,7 +103,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bp_pph21 += $sum_debit - $sum_credit;
+            $sum_bp_pph21 = $sum_debit - $sum_credit;
         }
         $data_bp_pph21 = array(
             'Nama' => 'B. Adm & Umum - Biaya Pajak PPh 21',
@@ -124,7 +123,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bp_pph23 += $sum_debit - $sum_credit;
+            $sum_bp_pph23 = $sum_debit - $sum_credit;
         }
         $data_bp_pph23 = array(
             'Nama' => 'B. Adm & Umum - Biaya Pajak PPh 23',
@@ -144,7 +143,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bp_pph4 += $sum_debit - $sum_credit;
+            $sum_bp_pph4 = $sum_debit - $sum_credit;
         }
         $data_bp_pph4 = array(
             'Nama' => 'B. Adm & Umum - Biaya Pajak PPh 4 (2)',
@@ -164,7 +163,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_dapur += $sum_debit - $sum_credit;
+            $sum_dapur = $sum_debit - $sum_credit;
         }
         $data_dapur = array(
             'Nama' => 'B. Adm & Umum - Dapur',
@@ -184,7 +183,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_la += $sum_debit - $sum_credit;
+            $sum_la = $sum_debit - $sum_credit;
         }
         $data_la = array(
             'Nama' => 'B. Adm & Umum - Listrik & Air',
@@ -204,7 +203,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_materai += $sum_debit - $sum_credit;
+            $sum_materai = $sum_debit - $sum_credit;
         }
         $data_materai = array(
             'Nama' => 'B. Adm & Umum - Materai',
@@ -224,7 +223,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_pencetakan += $sum_debit - $sum_credit;
+            $sum_pencetakan = $sum_debit - $sum_credit;
         }
         $data_pencetakan = array(
             'Nama' => 'B. Adm & Umum - Pencetakan',
@@ -244,7 +243,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_jaspro += $sum_debit - $sum_credit;
+            $sum_jaspro = $sum_debit - $sum_credit;
         }
         $data_jaspro = array(
             'Nama' => 'B. Adm & Umum - Jasa Profesional',
@@ -264,7 +263,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_manfee += $sum_debit - $sum_credit;
+            $sum_manfee = $sum_debit - $sum_credit;
         }
         $data_manfee = array(
             'Nama' => 'B. Adm & Umum - Management Fee',
@@ -284,7 +283,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_ppbd += $sum_debit - $sum_credit;
+            $sum_ppbd = $sum_debit - $sum_credit;
         }
         $data_ppbd = array(
             'Nama' => 'B. Adm & Umum - Pos dan Pengiriman Barang/Dokumen',
@@ -304,7 +303,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_tagin += $sum_debit - $sum_credit;
+            $sum_tagin = $sum_debit - $sum_credit;
         }
         $data_tagin = array(
             'Nama' => 'Site - B. Adm & Umum - Tagihan Internet',
@@ -324,7 +323,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_tagtel += $sum_debit - $sum_credit;
+            $sum_tagtel = $sum_debit - $sum_credit;
         }
         $data_tagtel = array(
             'Nama' => 'Site - B. Adm & Umum - Tagihan Telpon',
@@ -344,7 +343,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_transportasi += $sum_debit - $sum_credit;
+            $sum_transportasi = $sum_debit - $sum_credit;
         }
         $data_transportasi = array(
             'Nama' => 'B. Adm & Umum - Transportasi',
@@ -364,7 +363,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bdd__bp_pph23 += $sum_debit - $sum_credit;
+            $sum_bdd__bp_pph23 = $sum_debit - $sum_credit;
         }
         $data_bdd__bp_pph23 = array(
             'Nama' => 'B. Dibayar Dimuka - Biaya Pajak PPh 23',
@@ -384,7 +383,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bp_sewken += $sum_debit - $sum_credit;
+            $sum_bp_sewken = $sum_debit - $sum_credit;
         }
         $data_bp_sewken = array(
             'Nama' => 'B. Penjualan - Sewa KendaRaan',
@@ -404,7 +403,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bp_perker += $sum_debit - $sum_credit;
+            $sum_bp_perker = $sum_debit - $sum_credit;
         }
         $data_bp_perker = array(
             'Nama' => 'B. Penyusutan - Peralatan Kerja',
@@ -424,7 +423,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bab += $sum_debit - $sum_credit;
+            $sum_bab = $sum_debit - $sum_credit;
         }
         $data_bab = array(
             'Nama' => 'Biaya Administrasi Bank',
@@ -444,7 +443,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bgu += $sum_debit - $sum_credit;
+            $sum_bgu = $sum_debit - $sum_credit;
         }
         $data_bgu = array(
             'Nama' => 'Biaya Gaji & Upah',
@@ -464,7 +463,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bll += $sum_debit - $sum_credit;
+            $sum_bll = $sum_debit - $sum_credit;
         }
         $data_bll = array(
             'Nama' => 'Biaya Lain-Lain',
@@ -484,7 +483,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bpp_pk += $sum_debit - $sum_credit;
+            $sum_bpp_pk = $sum_debit - $sum_credit;
         }
         $data_bpp_pk = array(
             'Nama' => 'Biaya Pemeliharaan & Perbaikan - Perlengkapan Kantor',
@@ -504,7 +503,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_bppn1 += $sum_debit - $sum_credit;
+            $sum_bppn1 = $sum_debit - $sum_credit;
         }
         $data_bppn1 = array(
             'Nama' => 'Biaya PPn - 1%',
@@ -538,7 +537,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_reimbes += $sum_debit - $sum_credit;
+            $sum_reimbes = $sum_debit - $sum_credit;
         }
         $data_reimbes = array(
             'Nama' => 'Biaya Reimbursement',
@@ -558,7 +557,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_btl += $sum_debit - $sum_credit;
+            $sum_btl = $sum_debit - $sum_credit;
         }
         $data_btl = array(
             'Nama' => 'Biaya Tunjangan Lembur',
@@ -578,7 +577,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_lskl += $sum_debit - $sum_credit;
+            $sum_lskl = $sum_debit - $sum_credit;
         }
         $data_lskl = array(
             'Nama' => 'Laba (Rugi) Selisih Kurs Riil',
@@ -598,7 +597,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_fasged += $sum_debit - $sum_credit;
+            $sum_fasged = $sum_debit - $sum_credit;
         }
         $data_fasged = array(
             'Nama' => 'Biaya Fasilitas Gedung',
@@ -618,7 +617,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_pll += $sum_debit - $sum_credit;
+            $sum_pll = $sum_debit - $sum_credit;
         }
         $data_pll = array(
             'Nama' => 'Pendapatan Lain-lain',
@@ -638,7 +637,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_pbb += $sum_debit - $sum_credit;
+            $sum_pbb = $sum_debit - $sum_credit;
         }
         $data_pbb = array(
             'Nama' => 'Pendapatan Bunga Bank',
@@ -727,7 +726,7 @@ class ProfitLossController extends Controller
         $rime = (($bp_sewken['total_bp_sewken'] + $bpp_pk['total_bpp_pk']));
         $gae = (($wages_and_salaries - $rime - $bpp_pk['total_bpp_pk'] - $bab['total_bab'] - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4']));
 
-        $profit_loss = (($laba_kotor - $wages_and_salaries - $rime - $gae - $bpp_pk['total_bpp_pk'] - $bab['total_bab']) - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4'] + $pll['total_pll']);
+        $profit_loss = (($laba_kotor - $wages_and_salaries - $rime - $gae - $bp_perker['total_bp_perker'] - $bab['total_bab']) - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4'] + $pll['total_pll']);
 
         $html = view('jurnal.profloss.table_profloss')->with(
             compact(
@@ -759,7 +758,9 @@ class ProfitLossController extends Controller
                 'bpp_pk',
                 'bppn1',
                 'btl',
+                'reimbes',
                 'lskl',
+                'fasged',
                 'pll',
                 'pbb',
                 'jumlah_pendapatan_lain',

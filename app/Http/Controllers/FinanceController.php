@@ -439,8 +439,55 @@ class FinanceController extends BaseController
         sales_orders.job_order_id,buying_orders.sales_order_id');
     }
 
+    public function romawi($month)
+    {
+        $romawi = 0;
+        switch ($month) {
+            case 1:
+                return 'I';
+                break;
+            case 2:
+                return 'II';
+                break;
+            case 3:
+                return 'III';
+                break;
+            case 4:
+                return 'IV';
+                break;
+            case 5:
+                return 'V';
+                break;
+            case 6:
+                return 'VI';
+                break;
+            case 7:
+                return 'VII';
+                break;
+            case 8:
+                return 'VIII';
+                break;
+            case 9:
+                return 'IX';
+                break;
+            case 10:
+                return 'X';
+                break;
+            case 11:
+                return 'XI';
+                break;
+            case 12:
+                return 'XII';
+                break;
+            default:
+                return 0;
+                break;
+        }
+    }
+
     public function pembukuan($id)
     {
+
         SalesOrder::where('id', $id)->update(['booked' => '1']);
         $sales = SalesOrder::where([
             ['id', '=', $id],
@@ -461,6 +508,25 @@ class FinanceController extends BaseController
         $sub_string = substr($no_inv, strpos($no_inv, "/") + 1);
         $trans_no = "$ptng/$sub_string";
         $description = $sales->job_orders->order_id;
+
+        $rows_number = $sales->order_row;
+
+        //inv_no format bank idr dan usd
+        $years = Carbon::parse($tanggal_inv)->format('y');
+        $months = Carbon::parse($tanggal_inv)->format('m');
+
+        $angka_romawi = $this->romawi($months);
+
+        $cek_penjualan_jurnal = jurnal_penjualan_bank::whereMonth('trans_date', $months)->count();
+
+        if($cek_penjualan_jurnal > 0){
+            $running_number = $cek_penjualan_jurnal + 1;
+        }else{
+            $running_number = 1;
+        }
+
+
+
         //pembelian bank
         $j_bank_pembelian = jurnal_pembelian_bank::where('sales_order_id', $id)->count();
         if ($j_bank_pembelian == '0') {
@@ -604,11 +670,21 @@ class FinanceController extends BaseController
                 $total_charge = $sum_idr + $total_pajak;
                 $with_pajak = $total_charge - $pph;
                 $no_faktur = "-";
+                $cek_penjualan_jurnal = jurnal_penjualan_bank::whereMonth('trans_date', $months)->count();
+
+                    if($cek_penjualan_jurnal > 0){
+                        $running_number = $cek_penjualan_jurnal + 1;
+                    }else{
+                        $running_number = 1;
+                    }
+
+                    $num_row = sprintf('%03d', $running_number);
+
                 $pph = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
                     'Customer' => $customer,
-                    'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                    'inv_No' => 'SGM/BCA IDR/'.$angka_romawi.'/'.$years.'/'.$num_row,
                     'description' => "A/R $description $trans_no ($description)",
                     'coa_id' => '12',
                     'debit' => $pph,
@@ -619,11 +695,25 @@ class FinanceController extends BaseController
                     'bs_pl' => 'BS',
                     'no_faktur' => $no_faktur,
                 );
+                if (!empty($pph)) {
+                    jurnal_penjualan_bank::insert($pph);
+                }
+
+                $cek_penjualan_jurnal = jurnal_penjualan_bank::whereMonth('trans_date', $months)->count();
+
+                    if($cek_penjualan_jurnal > 0){
+                        $running_number = $cek_penjualan_jurnal + 1;
+                    }else{
+                        $running_number = 1;
+                    }
+
+                    $num_row = sprintf('%03d', $running_number);
+
                 $penjualan = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
                     'Customer' => $customer,
-                    'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                    'inv_No' => 'SGM/BCA IDR/'.$angka_romawi.'/'.$years.'/'.$num_row,
                     'description' => "A/R $description $trans_no ($description)",
                     'coa_id' => '2',
                     'debit' => $with_pajak,
@@ -634,6 +724,9 @@ class FinanceController extends BaseController
                     'no_faktur' => $no_faktur,
                     'bs_pl' => 'PL',
                 );
+                if (!empty($penjualan)) {
+                    jurnal_penjualan_bank::insert($penjualan);
+                }
             } else {
                 $vat = 0;
                 $pph = 0;
@@ -642,11 +735,20 @@ class FinanceController extends BaseController
                 $pph = NULL;
             }
             if ($curr == 'IDR') {
+                $cek_penjualan_jurnal = jurnal_penjualan_bank::whereMonth('trans_date', $months)->count();
+
+                    if($cek_penjualan_jurnal > 0){
+                        $running_number = $cek_penjualan_jurnal + 1;
+                    }else{
+                        $running_number = 1;
+                    }
+
+                    $num_row = sprintf('%03d', $running_number);
                 $piutang = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
                     'Customer' => $customer,
-                    'inv_No' => 'SGM/BCA IDR/IX/xx/xx',
+                    'inv_No' => 'SGM/BCA IDR/'.$angka_romawi.'/'.$years.'/'.$num_row,
                     'description' => "A/R $description $trans_no ($description)",
                     'coa_id' => '4',
                     'debit' => '0',
@@ -657,12 +759,22 @@ class FinanceController extends BaseController
                     'no_faktur' => $no_faktur,
                     'bs_pl' => 'BS',
                 );
+                jurnal_penjualan_bank::insert($piutang);
             } else {
+                $cek_penjualan_jurnal = jurnal_penjualan_bank::whereMonth('trans_date', $months)->count();
+
+                    if($cek_penjualan_jurnal > 0){
+                        $running_number = $cek_penjualan_jurnal + 1;
+                    }else{
+                        $running_number = 1;
+                    }
+
+                    $num_row = sprintf('%03d', $running_number);
                 $piutang = array(
                     'sales_order_id' => $id,
                     'trans_date' => $tanggal_inv,
                     'Customer' => $customer,
-                    'inv_No' => 'SGM/BCA USD/IX/xx/xx',
+                    'inv_No' => 'SGM/BCA USD/'.$angka_romawi.'/'.$years.'/'.$num_row,
                     'description' => "A/R $description $trans_no ($description)",
                     'coa_id' => '4',
                     'debit' => '0',
@@ -673,20 +785,21 @@ class FinanceController extends BaseController
                     'no_faktur' => $no_faktur,
                     'bs_pl' => 'BS',
                 );
+                jurnal_penjualan_bank::insert($piutang);
             }
-
-            // echo var_dump($pph) . "<br>";
 
             // echo var_dump($piutang) . "<br>";
 
-            // dd($penjualan);
-            jurnal_penjualan_bank::insert($piutang);
-            if (!empty($penjualan)) {
-                jurnal_penjualan_bank::insert($penjualan);
-            }
-            if (!empty($pph)) {
-                jurnal_penjualan_bank::insert($pph);
-            }
+            // echo var_dump($penjualan) . "<br>";
+
+            // dd($pph);
+            // jurnal_penjualan_bank::insert($piutang);
+            // if (!empty($penjualan)) {
+            //     jurnal_penjualan_bank::insert($penjualan);
+            // }
+            // if (!empty($pph)) {
+            //     jurnal_penjualan_bank::insert($pph);
+            // }
         } else {
             return 'data available';
         }

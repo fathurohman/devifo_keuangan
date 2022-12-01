@@ -617,7 +617,7 @@ class ProfitLossController extends Controller
             $credit = $x->Credit;
             $sum_debit += $debit;
             $sum_credit += $credit;
-            $sum_pll = $sum_debit - $sum_credit;
+            $sum_pll = abs($sum_debit - $sum_credit);
         }
         $data_pll = array(
             'Nama' => 'Pendapatan Lain-lain',

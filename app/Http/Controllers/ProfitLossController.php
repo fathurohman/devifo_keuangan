@@ -724,7 +724,7 @@ class ProfitLossController extends Controller
 
         $wages_and_salaries = (($bgu['total_bgu'] + $btl['total_btl']));
         $rime = (($bp_sewken['total_bp_sewken'] + $bpp_pk['total_bpp_pk']));
-        $gae = (($wages_and_salaries - $rime - $bpp_pk['total_bpp_pk'] - $bab['total_bab'] - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4']));
+        $gae = (($jumlah_beban_operasi - $wages_and_salaries - $rime - $bp_perker['total_bp_perker'] - $bab['total_bab'] - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4']));
 
         $profit_loss = (($laba_kotor - $wages_and_salaries - $rime - $gae - $bp_perker['total_bp_perker'] - $bab['total_bab']) - $badmumum_bp_pph21['total_bp_pph21'] - $badmumum_bp_pph23['total_bp_pph23'] - $badmumum_bp_pph4['total_bp_pph4'] + $pll['total_pll']);
 

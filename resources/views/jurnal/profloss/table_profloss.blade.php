@@ -192,7 +192,7 @@
         </tr>
         <tr>
             <td>LABA KOTOR</td>
-            <td>{{ number_format((float) $potong_beli['total_pot_beli'], 2, '.', ',') }}</td>
+            <td>{{ number_format((float) $laba_kotor, 2, '.', ',') }}</td>
         </tr>
 
         <tr>

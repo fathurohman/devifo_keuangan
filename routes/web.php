@@ -171,7 +171,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::get('/skomak', 'FinanceController@skomak')->name('finance.skomak');
-	Route::get('/hapok', 'ProfitLossController@hapok');
+	Route::get('/bca_idr', 'NeracaController@BCA_IDR');
 });
 
 

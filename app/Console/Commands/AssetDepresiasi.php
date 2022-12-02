@@ -54,6 +54,11 @@ class AssetDepresiasi extends Command
         $ambil_data = Asset::all();
 
         foreach($ambil_data as $data){
+            //cek apakah data barang_id ada
+            if($data->barang_id == null){
+                //tidak di eksekusi
+            }else{
+            //dieksekusi
             $barang = $data->barang->nama_barang;
             $barang_id = $data->barang_id;
             $elektronik = $data->barang->elektronik;
@@ -145,7 +150,7 @@ class AssetDepresiasi extends Command
                         echo " | INI NULL | ".$b." ";
                         Log::info('ada yg null');
                     }
-
+            }
 
         }
 

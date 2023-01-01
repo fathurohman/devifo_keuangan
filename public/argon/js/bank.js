@@ -81,6 +81,20 @@ $('tbody').on('keyup', ".amount_c", function () {
      tr.find('.amount_real').val(cloned);
 });
 
+$("#input-debit").keyup(function () {
+    $(this).val(format($(this).val()));
+    var cloned = $(this).val();
+    var cloneder = cloned.replace(/[A-Za-z$ ,-]/g, "");
+    $('#input-debit-real').val(cloneder);
+});
+
+$("#input-credit").keyup(function () {
+    $(this).val(format($(this).val()));
+    var cloned = $(this).val();
+    var cloneder = cloned.replace(/[A-Za-z$ ,-]/g, "");
+    $('#input-credit-real').val(cloneder);
+});
+
 $("#input-amount").keyup(function () {
      $(this).val(format($(this).val()));
      var cloned = $(this).val();

@@ -27,7 +27,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('role', 'RoleController');
 	Route::resource('items', 'ItemsController');
 	Route::get('search/autocomplete_username', 'RoleUserController@autocomplete_username')->name('autocomplete_username');
-	//job order routes
+
+    //laporan offline
+    Route::resource('lap_off', 'LapOffController');
+    Route::get('/lf_detail/{id}', 'LapOffController@detail');
+
+
+    //job order routes
 	Route::resource('job_order', 'JobOrderController');
 	Route::resource('sales_order', 'SalesOrderController');
 	Route::get('/customer_data', 'JobOrderController@getdata');

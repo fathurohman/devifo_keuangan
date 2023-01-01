@@ -66,9 +66,15 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="fas fa-home text-primary"></i> {{ __('Dashboard') }}
+                        <i class="fas fa-home"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('lap_off.index') }}">
+                        <i class="fas fa-file {{ $activePage == 'laporan offline' ? 'text-primary' : '' }}"></i> {{ __('Laporan Offline') }}
+                    </a>
+                </li>
+
                 @can('admin.hakakses', Auth::user())
                     <li class="nav-pa {{ $activePage == 'permission' || $activePage == 'role' ? ' active' : '' }}">
                         <a class="nav-link collapsed" href="#navbar-examples" data-toggle="collapse" role="button"

@@ -69,10 +69,34 @@
                         <i class="fas fa-home"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('lap_off.index') }}">
                         <i class="fas fa-file {{ $activePage == 'laporan offline' ? 'text-primary' : '' }}"></i> {{ __('Laporan Offline') }}
                     </a>
+                </li> --}}
+
+                <li class="nav-lo {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline'  ? ' active' : '' }}">
+                    <a class="nav-link collapsed" href="#navbar-examples" data-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="navbar-examples">
+                        <i class="fas fa-file {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline' ? 'text-primary' : '' }}"></i>
+                        <span class="nav-link-text">{{ __('Laporan Offline') }}</span>
+                    </a>
+                    <div class="collapse" id="navbar-examples">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item {{ $activePage == 'laporan offline'  ? ' active' : '' }}">
+                                <a class="nav-link" href="{{ route('lap_off.index') }}">
+                                    {{ __('Laporan') }}
+                                </a>
+                            </li>
+                            <li class="nav-item {{ $activePage == 'reports laporan offline'  ? ' active' : '' }}">
+                                <a class="nav-link" href="{{ route('ReportsLo') }}">
+                                    {{ __('Reports') }}
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
                 </li>
 
                 @can('admin.hakakses', Auth::user())

@@ -31,7 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
     //laporan offline
     Route::resource('lap_off', 'LapOffController');
     Route::get('/lf_detail/{id}', 'LapOffController@detail');
+    Route::get('reports_lap_off', 'LapOffController@ReportsLo')->name('ReportsLo');
+    Route::get('getLo', 'LapOffController@GetLo')->name('GetLo');
 
+    Route::post('export_lap_of', 'LapOffController@export_lo')->name('export_lo');
 
     //job order routes
 	Route::resource('job_order', 'JobOrderController');

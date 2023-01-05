@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LapOffExport;
 use App\Model\lap_offline;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 use Image;
 
 class LapOffController extends Controller
@@ -151,4 +154,34 @@ class LapOffController extends Controller
         return view('lap_offline.detail', compact('data'));
     }
 
+    public function ReportsLo()
+    {
+        $month = array_reduce(range(1, 12), function ($rslt, $m) {
+            $rslt[$m] = date('F', mktime(0, 0, 0, $m, 10));
+            return $rslt;
+        });
+        return view('lap_offline.reports.show',compact('month'));
+    }
+
+    public function GetLo(Request $request)
+    {
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+
+        $data = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get();
+
+
+        $html = view('lap_offline.reports.table_reports')->with(compact('data'))->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
+
+    public function export_lo(Request $request)
+    {
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+        $data = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get();
+
+        $download = Excel::download(new LapOffExport($bulan, $tahun, $data), 'LaporanOffline.xlsx');
+        return $download;
+    }
 }

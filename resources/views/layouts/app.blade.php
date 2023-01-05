@@ -58,6 +58,11 @@
             var thisID = $('li.nav-vc a').next().addClass('show');
             // console.log(thisID);
         }
+        if ($('li.nav-lo').hasClass('active')) {
+            //ada class active
+            $('li.nav-lo a').removeClass('collapsed').attr("aria-expanded", "true");
+            var thisID = $('li.nav-lo a').next().addClass('show');
+        }
         if ($('li.nav-pa').hasClass('active')) {
             //ada class active
             $('li.nav-pa a').removeClass('collapsed').attr("aria-expanded", "true");

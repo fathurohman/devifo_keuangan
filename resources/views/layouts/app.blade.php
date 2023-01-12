@@ -8,7 +8,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>PT Sigma Global Makmur</title>
+    <title>DEVIFO FINANCE</title>
     <!-- Favicon -->
     <link href="{{ asset('argon') }}/img/brand/favicondevifo.png" rel="icon" type="image/png">
     <!-- Fonts -->

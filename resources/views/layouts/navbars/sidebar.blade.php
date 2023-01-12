@@ -7,7 +7,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/sgm.jpg" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('argon') }}/img/devifologoicon.jpg" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -76,12 +76,12 @@
                 </li> --}}
 
                 <li class="nav-lo {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline'  ? ' active' : '' }}">
-                    <a class="nav-link collapsed" href="#navbar-examples" data-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="navbar-examples">
+                    <a class="nav-link collapsed" href="#navbar-lo" data-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="navbar-lo">
                         <i class="fas fa-file {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline' ? 'text-primary' : '' }}"></i>
                         <span class="nav-link-text">{{ __('Laporan Offline') }}</span>
                     </a>
-                    <div class="collapse" id="navbar-examples">
+                    <div class="collapse" id="navbar-lo">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item {{ $activePage == 'laporan offline'  ? ' active' : '' }}">
                                 <a class="nav-link" href="{{ route('lap_off.index') }}">

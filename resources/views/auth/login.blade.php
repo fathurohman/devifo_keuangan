@@ -9,12 +9,12 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-3">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <img width="50px" height="auto" src="{{ asset('argon') }}/img/brand/sgm.jpg" alt="">
+                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                <img width="70%" height="auto" src="{{ asset('argon') }}/img/devifo.jpg" alt="">
                             </div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 mb-3">
+                            {{-- <div class="col-lg-9 col-md-9 col-sm-9 mb-3">
                                 <h2>{{ __('PT Sigma Global Makmur') }}</h2>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-body px-lg-3 py-lg-3">
@@ -56,13 +56,13 @@
                         </form>
                     </div>
                 </div>
-                <div class="row mt-3">
+                {{-- <div class="row mt-3">
                     <div class="col-6 text-right">
                         <a href="{{ route('register') }}" class="text-light">
                             <small>{{ __('Create new account') }}</small>
                         </a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

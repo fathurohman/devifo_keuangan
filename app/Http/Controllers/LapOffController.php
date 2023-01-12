@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Image;
+use Auth;
 
 class LapOffController extends Controller
 {
@@ -45,6 +46,7 @@ class LapOffController extends Controller
         $data->keterangan = $request->keterangan;
         $data->debit = $request->debit;
         $data->credit = $request->credit;
+        $data->created_by = Auth::user()->id;
 
         $image = $request->file('nota');
         if (empty($image)) {
@@ -160,6 +162,7 @@ class LapOffController extends Controller
             $rslt[$m] = date('F', mktime(0, 0, 0, $m, 10));
             return $rslt;
         });
+
         return view('lap_offline.reports.show',compact('month'));
     }
 
@@ -168,20 +171,89 @@ class LapOffController extends Controller
         $bulan = $request->bulan;
         $tahun = $request->tahun;
 
-        $data = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get();
+        $data = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->orderBy('created_at')->get();
+        $sum_debit = 0;
+        $sum_credit = 0;
+        foreach($data as $x){
+            $sum_debit += $x->debit;
+            $sum_credit += $x->credit;
+            $x->saldo = $sum_debit - $sum_credit;
+        }
+
+        $sum_debit2 = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('debit');
+        $sum_credit2 = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('credit');
 
 
-        $html = view('lap_offline.reports.table_reports')->with(compact('data'))->render();
+        $html = view('lap_offline.reports.table_reports')->with(compact('data','sum_debit2','sum_credit2'))->render();
         return response()->json(['success' => true, 'html' => $html]);
+    }
+
+    public function namabulan($month)
+    {
+        $nama_bulan = 0;
+        switch ($month) {
+            case 1:
+                return 'JANUARI';
+                break;
+            case 2:
+                return 'FEBRUARI';
+                break;
+            case 3:
+                return 'MARET';
+                break;
+            case 4:
+                return 'APRIL';
+                break;
+            case 5:
+                return 'MEI';
+                break;
+            case 6:
+                return 'JUNI';
+                break;
+            case 7:
+                return 'JULI';
+                break;
+            case 8:
+                return 'AGUSTUS';
+                break;
+            case 9:
+                return 'SEPTEMBER';
+                break;
+            case 10:
+                return 'OKTOBER';
+                break;
+            case 11:
+                return 'NOVEMBER';
+                break;
+            case 12:
+                return 'DESEMBER';
+                break;
+            default:
+                return 0;
+                break;
+        }
     }
 
     public function export_lo(Request $request)
     {
-        $bulan = $request->bulan;
+        $bulan = $this->namabulan($request->bulan);
+        $bulan2 = $request->bulan;
         $tahun = $request->tahun;
-        $data = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->get();
+        $data = lap_offline::whereMonth('created_at', $bulan2)->whereYear('created_at', $tahun)->get();
+        $sum_debit2 = lap_offline::whereMonth('created_at', $bulan2)->whereYear('created_at', $tahun)->sum('debit');
+        $sum_credit2 = lap_offline::whereMonth('created_at', $bulan2)->whereYear('created_at', $tahun)->sum('credit');
 
-        $download = Excel::download(new LapOffExport($bulan, $tahun, $data), 'LaporanOffline.xlsx');
+        $sum_debit = 0;
+        $sum_credit = 0;
+        foreach($data as $x){
+            $sum_debit += $x->debit;
+            $sum_credit += $x->credit;
+            $x->saldo = $sum_debit - $sum_credit;
+        }
+
+
+
+        $download = Excel::download(new LapOffExport($bulan, $tahun, $data, $sum_debit2, $sum_credit2), 'LaporanOffline.xlsx');
         return $download;
     }
 }

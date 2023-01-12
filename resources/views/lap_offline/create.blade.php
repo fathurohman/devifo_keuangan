@@ -83,7 +83,7 @@
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                <a href="#" type="button" class="btn btn-info mt-4">{{ __('Back') }}</a>
+                                <a href="{{ route('lap_off.index')}}" type="button" class="btn btn-info mt-4">{{ __('Back') }}</a>
                             </div>
                         </form>
                     </div>

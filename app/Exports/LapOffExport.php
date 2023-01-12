@@ -13,17 +13,24 @@ class LapOffExport implements FromView, ShouldAutoSize, WithStrictNullComparison
 {
     protected $bulan, $tahun, $data;
 
-    function __construct($bulan, $tahun, $data)
+    function __construct($bulan, $tahun, $data, $sum_debit2, $sum_credit2)
     {
-        $this->bulan = $tahun;
+        $this->bulan = $bulan;
         $this->tahun = $tahun;
         $this->data = $data;
+        $this->sum_debit2 = $sum_debit2;
+        $this->sum_credit2 = $sum_credit2;
     }
 
     public function view(): View
     {
         $data = $this->data;
-        return view('lap_offline.reports.table_excel', ['data' => $data]);
+        $bulan = $this->bulan;
+        $tahun = $this->tahun;
+        $sum_debit2 = $this->sum_debit2;
+        $sum_credit2 = $this->sum_credit2;
+
+        return view('lap_offline.reports.table_excel', ['data' => $data, 'bulan' => $bulan, 'tahun' => $tahun, 'sum_debit' => $sum_debit2, 'sum_credit' => $sum_credit2]);
     }
 
     public function title(): string

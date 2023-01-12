@@ -19,7 +19,13 @@ class LapOffController extends Controller
      */
     public function index()
     {
-        $data = lap_offline::orderBy('created_at', 'desc')->get();
+        if(Auth::user()->department == 'owner'){
+            $data = lap_offline::orderBy('created_at', 'desc')->get();
+        }else{
+            $data = lap_offline::where('created_by' , Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+        }
+
         return view('lap_offline.show', compact('data'));
     }
 
@@ -253,7 +259,7 @@ class LapOffController extends Controller
 
 
 
-        $download = Excel::download(new LapOffExport($bulan, $tahun, $data, $sum_debit2, $sum_credit2), 'LaporanOffline.xlsx');
+        $download = Excel::download(new LapOffExport($bulan, $tahun, $data, $sum_debit2, $sum_credit2), 'LaporanOffline_'.$bulan.'_'.$tahun.'.xlsx');
         return $download;
     }
 }

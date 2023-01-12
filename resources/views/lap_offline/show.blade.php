@@ -34,7 +34,8 @@
                                         <th scope="col">Keterangan</th>
                                         <th scope="col">Debit</th>
                                         <th scope="col">Credit</th>
-                                        <th scope="col">Details</th>
+                                        <th scope="col">Created By</th>
+                                        <th scope="col">Nota</th>
                                         <th scope="col">Action</th>
                                         {{-- <th scope="col">Delete</th> --}}
                                     </tr>
@@ -47,11 +48,17 @@
                                             <td>{{ $x->keterangan }}</td>
                                             <td>Rp. {{ number_format((float) $x->debit) }}</td>
                                             <td>Rp. {{ number_format((float) $x->credit) }}</td>
+                                            <td>{{$x->users->name}}</td>
                                             <td>
-                                                <button type="button" data-id="{{ $x->id }}"
-                                                    class="btn btn-sm btn-round btn-primary detail" data-toggle="modal"
-                                                    data-target="#detail">
-                                                    Detail </button>
+                                                @if ($x->nota)
+                                                    <button type="button" data-id="{{ $x->id }}"
+                                                        class="btn btn-sm btn-round btn-primary detail" data-toggle="modal"
+                                                        data-target="#detail">
+                                                        Nota </button>
+                                                @else
+                                                     <span class="badge badge-primary">Tidak ada</span>
+                                                @endif
+
                                             </td>
                                             <td class="text-center">
                                                 <div class="dropdown">
@@ -99,7 +106,7 @@
         <div class="modal-dialog modal- modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="modal-title-default">Detail</h6>
+                    <h6 class="modal-title" id="modal-title-default">Nota</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

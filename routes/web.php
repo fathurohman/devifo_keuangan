@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('export_lap_of', 'LapOffController@export_lo')->name('export_lo');
 
+
+
     //job order routes
 	Route::resource('job_order', 'JobOrderController');
 	Route::resource('sales_order', 'SalesOrderController');

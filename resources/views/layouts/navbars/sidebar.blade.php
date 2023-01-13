@@ -126,7 +126,8 @@
                             </ul>
                         </div>
                     </li>
-                    @endcan @can('admin.crud-vendor-client', Auth::user())
+                    @endcan
+                    {{-- @can('admin.crud-vendor-client', Auth::user())
                     <li
                         class="nav-vc {{ $activePage == 'vendor' || $activePage == 'client' || $activePage == 'items' || $activePage == 'BOL' || $activePage == 'barang' ? ' active' : '' }}">
                         <a class="nav-link collapsed" href="#navbar-crud-vendor" data-toggle="collapse" role="button"
@@ -332,7 +333,7 @@
                         </ul>
 
                     </div>
-                </li>
+                </li> --}}
             </ul>
             <!-- Divider -->
             <hr class="my-3">

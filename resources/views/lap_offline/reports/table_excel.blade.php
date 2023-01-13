@@ -44,7 +44,7 @@
                 <td style="font-size: 15pt;font-weight: 700;text-align: center" colspan="3"> TOTAL </td>
                 <td style="text-align: right">{{ number_format((float) $sum_debit) }}</td>
                 <td style="text-align: right">{{ number_format((float) $sum_credit) }}</td>
-                <td style="text-align: right">{{ number_format((float) $total = $sum_debit - $sum_credit) }}</td>
+                <td style="text-align: right;font-size: 15pt;font-weight: 700">{{ number_format((float) $total = $sum_debit - $sum_credit) }}</td>
             </tr>
 
     </tbody>

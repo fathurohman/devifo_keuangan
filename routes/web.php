@@ -40,6 +40,16 @@ Route::group(['middleware' => 'auth'], function () {
     //barang
     Route::resource('barangs', 'BarangsController');
 
+    //pos
+    Route::get('pos', 'PosController@index')->name('pos.index');
+
+    Route::get('order/listorder', 'PosController@listorder')->name('listorder.order');
+    Route::get('create/order', 'PosController@create')->name('create.order');
+    Route::post('store/order/', 'PosController@store')->name('store.order');
+
+    Route::post('store/pos_order/', 'PosController@store_child')->name('store.store_child');
+    Route::get('pos_order/{id}', 'PosController@order_index')->name('pos.order_index');
+    Route::delete('order_child_delete/{id}', 'PosController@delete_child')->name('delete_child');
 
     //job order routes
 	Route::resource('job_order', 'JobOrderController');

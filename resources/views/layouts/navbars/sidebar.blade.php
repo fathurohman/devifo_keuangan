@@ -70,8 +70,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-money-coins {{$activePage == 'home' ? 'text-primary' : '' }}"></i> {{ __('POS') }}
+                    <a class="nav-link" href="{{ route('pos.index') }}">
+                        <i class="ni ni-money-coins {{$activePage == 'pos' ? 'text-primary' : '' }}"></i> {{ __('POS') }}
                     </a>
                 </li>
 
@@ -142,7 +142,7 @@
                         </div>
                     </li>
                     @endcan
-                    {{-- @can('admin.crud-vendor-client', Auth::user())
+                    @can('admin.crud-vendor-client', Auth::user())
                     <li
                         class="nav-vc {{ $activePage == 'vendor' || $activePage == 'client' || $activePage == 'items' || $activePage == 'BOL' || $activePage == 'barang' ? ' active' : '' }}">
                         <a class="nav-link collapsed" href="#navbar-crud-vendor" data-toggle="collapse" role="button"
@@ -348,7 +348,7 @@
                         </ul>
 
                     </div>
-                </li> --}}
+                </li>
             </ul>
             <!-- Divider -->
             <hr class="my-3">

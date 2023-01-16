@@ -69,11 +69,28 @@
                         <i class="fas fa-home {{$activePage == 'home' ? 'text-primary' : '' }}"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('lap_off.index') }}">
-                        <i class="fas fa-file {{ $activePage == 'laporan offline' ? 'text-primary' : '' }}"></i> {{ __('Laporan Offline') }}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">
+                        <i class="ni ni-money-coins {{$activePage == 'home' ? 'text-primary' : '' }}"></i> {{ __('POS') }}
                     </a>
-                </li> --}}
+                </li>
+
+                <li class="nav-vc {{ $activePage == 'barangs' ? ' active' : '' }}">
+                <a class="nav-link collapsed" href="#navbar-crud-vendor" data-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="navbar-crud-vendor">
+                    <i class="fas fa-database {{ $activePage == 'barangs' ? 'text-primary' : '' }}"></i>
+                    <span class="nav-link-text">{{ __('Basis Data') }}</span>
+                </a>
+                <div class="collapse" id="navbar-crud-vendor">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('barangs.index') }}">
+                                {{ __('Barang') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                </li>
 
                 <li class="nav-lo {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline'  ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-lo" data-toggle="collapse" role="button"
@@ -93,8 +110,6 @@
                                     {{ __('Reports') }}
                                 </a>
                             </li>
-
-
                         </ul>
                     </div>
                 </li>

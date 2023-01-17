@@ -22,6 +22,7 @@
     <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
     <link type="text/css" href="{{ asset('argon') }}/css/my.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.css">
     @stack('css')
 </head>
 
@@ -47,9 +48,36 @@
     <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('argon') }}/js/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.js"></script>
     @stack('js')
 
+
+    <script>
+        $(function(){
+            @if(Session::has('success'))
+                Swal.fire({
+                // position: 'top-end',
+                icon: 'success',
+                title: '{{ Session::get("success") }}',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            @endif
+        });
+        </script>
+
+    <script>
+        $(function(){
+            @if(Session::has('error'))
+            Swal.fire({
+                icon: 'error',
+                title: '{{ Session::get("error") }}',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            @endif
+        });
+        </script>
     <!-- Argon JS -->
     <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
     <script type="text/javascript">

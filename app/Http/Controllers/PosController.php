@@ -23,8 +23,13 @@ class PosController extends Controller
     {
         $order = order::find($id);
         $data = child_order::where('order_id', $id)->get();
+        $sum = 0;
+        foreach($data as $x){
+            $x->total = $x->barangs->harga_barang * $x->jumlah;
+            $sum += $x->total;
+        }
         $barangs = barangs::all();
-        return view('pos.order_index' , compact('data','order','barangs'));
+        return view('pos.order_index' , compact('data','order','barangs','sum'));
     }
 
     public function listorder()
@@ -86,14 +91,45 @@ class PosController extends Controller
         $data->order_id = $request->order_id;
         $data->barangs_id = $request->barangs_id;
         $data->jumlah = $request->jumlah;
-        $data->save();
 
-        return redirect()->back();
+        $barang = barangs::find($request->barangs_id);
+
+        if($request->jumlah > $barang->stock){
+
+            session()->flash("error", "Stock tidak cukup");
+            return redirect()->back()->with('success', 'Stock tidak cukup');
+
+        }else{
+            $stok_barang = $barang->stock - $request->jumlah;
+
+            barangs::where('id', $request->barangs_id)->update(['stock' => $stok_barang]);
+
+            // dd($stok_barang);
+
+            $data->save();
+
+            session()->flash("success", "Berhasil di tambahkan");
+            return redirect()->back()->with('success', 'Berhasil di tambahkan');
+        }
+
+
+
+
+
     }
 
     public function delete_child($id)
     {
+
+
+        $data = child_order::find($id);
+        $barang = barangs::find($data->barangs_id);
+        $restore = $data->jumlah + $barang->stock;
+
+        barangs::where('id', $data->barangs_id)->update(['stock' => $restore]);
+
         child_order::where('id', $id)->delete();
+
         return redirect()->back();
     }
 }

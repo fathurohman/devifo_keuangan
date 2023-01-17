@@ -28,6 +28,7 @@
                                     <tr>
                                         <th scope="col">Kode</th>
                                         <th scope="col">Nama</th>
+                                        <th scope="col">Harga</th>
                                         <th scope="col">Stock</th>
                                         <th class="text-center" scope="col">Action</th>
                                         {{-- <th scope="col">Delete</th> --}}
@@ -43,7 +44,10 @@
                                                 {{ $x->nama_barang }}
                                             </td>
                                             <td>
-                                                {{ $x->stock }}
+                                                Rp. {{ number_format((float) $x->harga_barang) }}
+                                            </td>
+                                            <td>
+                                                {{ number_format((float) $x->stock) }}
                                             </td>
                                             <td class="text-center">
                                                 <div class="dropdown">

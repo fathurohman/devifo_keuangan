@@ -46,6 +46,20 @@
                                                 <strong>{{ $errors->first('Nama Barang') }}</strong>
                                             </span> @endif
                                 </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group{{ $errors->has('harga barang') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-harga barang">{{ __('harga barang') }}</label>
+                                    <input type="number" name="harga_barang" id="input-harga barang"
+                                        class="form-control form-control-alternative{{ $errors->has('harga barang') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('harga barang') }}" value="{{$data->harga_barang}}" required>
+                                    @if ($errors->has('harga barang'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('harga barang') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 <div class="form-group{{ $errors->has('stock') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-stock">{{ __('stock') }}</label>
                                     <input type="number" name="stock" id="input-stock"

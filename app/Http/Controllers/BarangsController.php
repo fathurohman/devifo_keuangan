@@ -39,8 +39,10 @@ class BarangsController extends Controller
         $data = new barangs;
         $data->kode_barang = $request->kode_barang;
         $data->nama_barang = $request->nama_barang;
+        $data->harga_barang = $request->harga_barang;
         $data->stock = $request->stock;
         $data->save();
+
         return redirect(route('barangs.index'))->withSuccessMessage(__('global.data_saved_successfully!'));
     }
 
@@ -79,6 +81,7 @@ class BarangsController extends Controller
         $data = barangs::find($id);
         $data->kode_barang = $request->kode_barang;
         $data->nama_barang = $request->nama_barang;
+        $data->harga_barang = $request->harga_barang;
         $data->stock = $request->stock;
         $data->save();
         return redirect(route('barangs.index'));

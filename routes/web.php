@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('items', 'ItemsController');
 	Route::get('search/autocomplete_username', 'RoleUserController@autocomplete_username')->name('autocomplete_username');
 
+
     //laporan offline
     Route::resource('lap_off', 'LapOffController');
     Route::get('/lf_detail/{id}', 'LapOffController@detail');

@@ -37,7 +37,9 @@
                                     <tr>
                                         <th scope="col">Kode</th>
                                         <th scope="col">Nama</th>
+                                        <th scope="col">Harga</th>
                                         <th scope="col">Jumlah</th>
+                                        <th scope="col">Total</th>
                                         <th class="text-center" scope="col">Action</th>
                                         {{-- <th scope="col">Delete</th> --}}
                                     </tr>
@@ -47,7 +49,9 @@
                                         <tr>
                                             <td> {{ $x->barangs->kode_barang }} </td>
                                             <td>{{ $x->barangs->nama_barang }} </td>
+                                            <td> Rp. {{ number_format((float) $x->barangs->harga_barang) }}</td>
                                             <td>{{ $x->jumlah}}</td>
+                                            <td>Rp. {{ number_format((float) $x->total) }}</td>
                                             <td class="text-center">
                                                 <form method="post" id="delete-form-{{ $x->id }}"
                                                     action="{{ route('delete_child', $x->id) }}"
@@ -66,6 +70,14 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    <tr>
+                                        <td colspan="4" style="text-align: center;font-size: 12pt;font-weight: 700">
+                                            TOTAL JUMLAH
+                                        </td>
+                                        <td style="font-size: 15pt;font-weight: 700">
+                                            Rp. {{ number_format((float) $sum) }}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

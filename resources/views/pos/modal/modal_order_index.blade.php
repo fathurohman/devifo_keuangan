@@ -17,7 +17,7 @@
                     <select name="barangs_id" class="selectpicker form-control" data-live-search="true" required>
                         <option value="" selected>- Pilih Barang -</option>
                         @foreach ($barangs as $br)
-                            <option value="{{ $br->id}}">{{$br->nama_barang}}</option>
+                            <option value="{{ $br->id}}">{{$br->nama_barang}} | {{ number_format((float) $br->stock) }}</option>
                         @endforeach
                     </select>
                 </div>

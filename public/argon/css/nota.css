@@ -1,0 +1,28 @@
+@page {
+    margin-top: 20px;
+    margin-left: 70px;
+    margin-right: 70px;
+    font-size: 10pt;
+    font-family: 'Courier New', Courier, monospace;
+}
+.table-header table {
+    width: 100%;
+    /* text-decoration: underline; */
+    border-collapse: collapse;
+    /* border: 1px solid #000; */
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* text-align: center; */
+    margin-top: 10px;
+}
+
+.table-request table {
+    width: 100%;
+    /* text-decoration: underline; */
+    border-collapse: collapse;
+    border: 1px solid #000;
+    /* margin-left: auto;
+    margin-right: auto; */
+    text-align: center;
+    margin-top: 10px;
+}

@@ -15,23 +15,22 @@
         <table style="table-layout:fixed;">
             <thead>
                 <tr>
-                    <th>1</th>
-                    <th>2</th>
-
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                     <tr>
-                        <td style="text-align: left">
-                            <table style="text-align: left">
+                        <td style="text-align: center">
+                            <table style="text-align: center">
                                 <tr>
-                                    <td colspan="3" style="text-align: left;">
+                                    <td colspan="3" style="text-align: center;">
                                         <img style="width: 80%" src="{{ public_path('argon') }}/img/devifo.jpg">
                                     </td>
                                 </tr>
                                 <tbody>
                                     <tr>
-                                        <td colspan="3" style="text-align: left;font-size: 9pt">
+                                        <td colspan="3" style="text-align: center;font-size: 9pt">
                                             Jl. Cibanteng Agathis, Cihideung Ilir, Kec. Ciampea, Kabupaten Bogor, Jawa Barat 16620
                                         </td>
                                     </tr>
@@ -78,10 +77,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 5%;height: 30px;">No</th>
-                                        <th style="width: 20%;">Kode</th>
-                                        <th style="width: 20%;">Nama</th>
+                                        <th style="width: 15%;">Kode</th>
+                                        <th style="width: 35%;">Nama</th>
                                         <th style="width: 20%;">Harga</th>
-                                        <th style="width: 20%;">Jumlah</th>
+                                        <th style="width: 15%;">Jumlah</th>
                                         <th style="width: 50%;">Total</th>
 
                                     </tr>
@@ -109,6 +108,26 @@
                                 </tbody>
                             </table>
                         </div>
+                        <br>
+                        <div  class="table-header">
+                            <table style="table-layout:fixed;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        {{-- <th>2</th> --}}
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td style="text-align: center">Tanda Terima,</td>
+                                            {{-- <td style="font-size: 8pt;"><br>
+                                                <p style="text-align: left">Barang Yang Sudah Di beli tidak dapat di tukar kembali</p></td> --}}
+                                            <td style="text-align: center">Hormat Kami,</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div><br>
 </body>
 
 </html>

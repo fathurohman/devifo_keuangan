@@ -1,3 +1,5 @@
+<a target="_blank" href="{{ route('print.order' , $order->id)}}" class="btn btn-sm btn-success" > <i class="fas fa-print"></i> Print </a>
+<br>
 <div style="color: black">
     <p>
         Nama Pembeli :  {{ $order->nama_pembeli }}

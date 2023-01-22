@@ -43,19 +43,29 @@ class PosController extends Controller
             return $row->kode_nota;
         })->editColumn('nama_pembeli', function ($row) {
                 return $row->nama_pembeli;
-        })->editColumn('created_by', function ($row) {
-            return $row->users->name;
+        // })->editColumn('created_by', function ($row) {
+        //     return $row->users->name;
         })->addColumn('Action', function ($row) {
+            $child = child_order::where('order_id', $row->id)->count();
             $data = [
-                'id' => $row->id
+                'id' => $row->id,
+                'child' => $child
             ];
             return view('pos.act.act_action', compact('data'));
         })->addColumn('More', function ($row) {
+            $child = child_order::where('order_id', $row->id)->count();
             $data = [
-                'id' => $row->id
+                'id' => $row->id,
+                'child' => $child
             ];
             return view('pos.act.act_more', compact('data'));
         })->rawColumns(['Action, More'])->toJson();
+    }
+
+    public function detail($id)
+    {
+        $data = order::where('id', $id)->first();
+        return view('pos.detail', compact('data'));
     }
 
     public function create()
@@ -112,15 +122,32 @@ class PosController extends Controller
             return redirect()->back()->with('success', 'Berhasil di tambahkan');
         }
 
+    }
 
+    public function edit($id)
+    {
+        $data = order::find($id);
+        return view('pos.edit' , compact('data'));
+    }
 
+    public function update(Request $request, $id)
+    {
+        $data = order::find($id);
+        $data->nama_pembeli = $request->nama_pembeli;
+        $data->no_pembeli = $request->no_pembeli;
+        $data->save();
+        return redirect(route('pos.index'));
+    }
 
+    public function delete($id)
+    {
+        order::where('id', $id)->delete();
 
+        return redirect()->back();
     }
 
     public function delete_child($id)
     {
-
 
         $data = child_order::find($id);
         $barang = barangs::find($data->barangs_id);

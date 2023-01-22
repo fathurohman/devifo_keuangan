@@ -31,7 +31,7 @@
                                         <th scope="col">Created</th>
                                         <th scope="col">Kode Nota</th>
                                         <th scope="col">Nama Pembeli</th>
-                                        <th scope="col">Created By</th>
+                                        {{-- <th scope="col">Created By</th> --}}
                                         <th scope="col">Action</th>
                                         <th scope="col">More</th>
 
@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    @include('jurnal.bank.modal.modal_jurnal_bank')
+    @include('pos.modal.modal_details')
 @endsection
 @push('js')
     <script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>
@@ -59,13 +59,13 @@
         $('#myTable').DataTable({
             processing: true,
             serverSide: true,
-            // drawCallback: function(settings) {
-            //     $(".details").click(function(e) {
-            //         $currID = $(this).attr("data-id");
-            //         $.get("jurnal_bank_detail/" + $currID, function(data) {
-            //             $('#data_details').html(data);
-            //         });
-            //     });
+            drawCallback: function(settings) {
+                $(".details").click(function(e) {
+                    $currID = $(this).attr("data-id");
+                    $.get("detail_order/" + $currID, function(data) {
+                        $('#data_details').html(data);
+                    });
+                })
 
             //     $(".child").click(function(e) {
             //         $currID = $(this).attr("data-id");
@@ -74,7 +74,7 @@
             //         });
             //     });
 
-            // },
+             },
             ajax: '{!! route('listorder.order') !!}',
             columns: [{
                     data: 'created_at',
@@ -88,10 +88,10 @@
                     data: 'nama_pembeli',
                     name: 'nama_pembeli'
                 },
-                {
-                    data: 'created_by',
-                    name: 'created_by'
-                },
+                // {
+                //     data: 'created_by',
+                //     name: 'created_by'
+                // },
                 {
                     data: 'Action',
                     name: 'Action',

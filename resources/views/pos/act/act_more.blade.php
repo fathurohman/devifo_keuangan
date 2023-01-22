@@ -5,8 +5,27 @@
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
         <a href="#" data-id="{{ $data['id'] }}" class="dropdown-item details" data-toggle="modal"
             data-target="#details">Details </a>
-        <a href="#" data-id="{{ $data['id'] }}" class="dropdown-item" >Edit </a>
-        <a href="#" data-id="{{ $data['id'] }}" class="dropdown-item" >Hapus </a>
+        <a href="{{ route('edit.order', $data['id'])}}" data-id="{{ $data['id'] }}" class="dropdown-item" >Edit </a>
+
+        @if ($data['child'] > 0)
+
+        @else
+            <form method="post" id="delete-form-{{ $data['id'] }}"
+                action="{{ route('delete.order', $data['id'])}}"
+                style="display: none">
+                {{ csrf_field() }} {{ method_field('DELETE') }}
+            </form>
+            <a class="dropdown-item" href=""
+                onclick="if(confirm('Are you sure?'))
+                {
+                    event.preventDefault();document.getElementById('delete-form-{{ $data['id'] }}').submit();
+                }
+                else{
+                    event.preventDefault();
+                }">Hapus
+            </a>
+        @endif
+
 
 
 

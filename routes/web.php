@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('update_order/{id}', 'PosController@update')->name('update.order');
     Route::delete('order_delete/{id}', 'PosController@delete')->name('delete.order');
     Route::get('/detail_order/{id}', 'PosController@detail');
+    Route::get('/print_order/{id}', 'PosController@print')->name('print.order');
 
     Route::post('store/pos_order/', 'PosController@store_child')->name('store.store_child');
     Route::get('pos_order/{id}', 'PosController@order_index')->name('pos.order_index');

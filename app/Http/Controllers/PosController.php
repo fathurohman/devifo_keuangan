@@ -7,6 +7,7 @@ use App\Model\barangs;
 use App\Model\order;
 use App\Model\child_order;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -64,8 +65,16 @@ class PosController extends Controller
 
     public function detail($id)
     {
-        $data = order::where('id', $id)->first();
-        return view('pos.detail', compact('data'));
+        $order = order::find($id);
+        $data = child_order::where('order_id', $id)->get();
+        $sum = 0;
+        foreach($data as $x){
+            $x->total = $x->barangs->harga_barang * $x->jumlah;
+            $sum += $x->total;
+        }
+        $barangs = barangs::all();
+
+        return view('pos.detail', compact('data','order','barangs','sum'));
     }
 
     public function create()
@@ -158,5 +167,28 @@ class PosController extends Controller
         child_order::where('id', $id)->delete();
 
         return redirect()->back();
+    }
+
+    public function print($id)
+    {
+        $order = order::find($id);
+        $data = child_order::where('order_id', $id)->get();
+        $sum = 0;
+        foreach($data as $x){
+            $x->total = $x->barangs->harga_barang * $x->jumlah;
+            $sum += $x->total;
+        }
+        $barangs = barangs::all();
+        $data = array(
+            'data' => $data,
+            'order' => $order,
+            'barangs' => $barangs,
+            'sum' => $sum
+        );
+
+        $view = View('pdf.order_pdf', ['data' => $data]);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view->render())->setPaper('a4', 'portrait');
+        return $pdf->stream();
     }
 }

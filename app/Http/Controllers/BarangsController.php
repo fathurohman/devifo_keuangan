@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\barangs;
+use App\Model\order;
+use App\Model\child_order;
 use Illuminate\Http\Request;
 
 class BarangsController extends Controller

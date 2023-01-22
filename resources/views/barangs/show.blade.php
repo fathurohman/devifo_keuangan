@@ -58,20 +58,32 @@
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                         <a class="dropdown-item"
                                                             href="{{ route('barangs.edit', $x->id) }}">Edit</a>
-                                                        <form method="post" id="delete-form-{{ $x->id }}"
-                                                            action="{{ route('barangs.destroy', $x->id) }}"
-                                                            style="display: none">
-                                                            {{ csrf_field() }} {{ method_field('DELETE') }}
-                                                        </form>
-                                                        <a class="dropdown-item" href=""
-                                                            onclick="if(confirm('Are you sure?'))
-                                                            {
-                                                                event.preventDefault();document.getElementById('delete-form-{{ $x->id }}').submit();
-                                                            }
-                                                            else{
-                                                                event.preventDefault();
-                                                            }">Hapus
-                                                        </a>
+                                                        @php
+                                                            $data = App\Model\child_order::where('barangs_id', $x->id)->count();
+                                                        @endphp
+
+                                                        @if ($data > 0)
+
+                                                        @else
+                                                            <form method="post" id="delete-form-{{ $x->id }}"
+                                                                action="{{ route('barangs.destroy', $x->id) }}"
+                                                                style="display: none">
+                                                                {{ csrf_field() }} {{ method_field('DELETE') }}
+                                                            </form>
+                                                            <a class="dropdown-item" href=""
+                                                                onclick="if(confirm('Are you sure?'))
+                                                                {
+                                                                    event.preventDefault();document.getElementById('delete-form-{{ $x->id }}').submit();
+                                                                }
+                                                                else{
+                                                                    event.preventDefault();
+                                                                }">Hapus
+                                                            </a>
+
+                                                        @endif
+
+
+
                                                     </div>
                                                 </div>
                                             </td>

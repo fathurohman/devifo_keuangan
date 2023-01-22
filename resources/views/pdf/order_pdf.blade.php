@@ -1,8 +1,26 @@
-@extends('layouts.app', ['activePage' => 'pos']) @push('css')
-    <link href="{{ asset('argon') }}/datatable/datatables.min.css" rel="stylesheet">
-@endpush
-@section('content')
-    @include('users.partials.header', ['class' => 'col-lg-7'])
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {{-- <link type="text/css" href="{{ public_path('argon') }}/css/invoice.css" rel="stylesheet"> --}}
+    <link href="{{ asset('argon') }}/img/brand/favicondevifo.png" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Extra details for Live View on GitHub Pages -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <!-- Icons -->
+    <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <!-- Argon CSS -->
+    <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link type="text/css" href="{{ asset('argon') }}/css/my.css" rel="stylesheet">
+</head>
+
+<body>
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col">
@@ -12,9 +30,9 @@
                             <div class="col-8">
                                 <h3 class="mb-0"> <a href="{{ route('pos.index') }}" type="button"
                                     class="btn btn-sm btn-info">{{ __('Back') }}</a> Order</h3>
-                                <p>Kode : <b>{{ $order->kode_nota}}</b> <br>
-                                    Nama : <b>{{ $order->nama_pembeli}}</b> <br>
-                                    No.HP : <b>{{ $order->no_pembeli}}</b>
+                                <p>Kode : <b>{{ $data['order']->kode_nota}}</b> <br>
+                                    Nama : <b>{{ $data['order']->nama_pembeli}}</b> <br>
+                                    No.HP : <b>{{ $data['order']->no_pembeli}}</b>
                                 </p>
 
                             </div>
@@ -24,12 +42,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 text-right mb-2">
-                        <a target="_blank" href="{{ route('print.order' , $order->id)}}" class="btn btn-sm btn-success" > <i class="fas fa-print"></i> Print </a>
-                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
-                        data-target="#add_barang">Add Barang</a>
 
-                    </div>
                     <div class="mx-3">
                         <div class="table-responsive">
                             <table id="myTable" class="table align-items-center table-flush">
@@ -45,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $x)
+                                    @foreach ($data['data'] as $x)
                                         <tr>
                                             <td> {{ $x->barangs->kode_barang }} </td>
                                             <td>{{ $x->barangs->nama_barang }} </td>
@@ -75,7 +88,7 @@
                                             TOTAL JUMLAH
                                         </td>
                                         <td style="font-size: 15pt;font-weight: 700">
-                                            Rp. {{ number_format((float) $sum) }}
+                                            Rp. {{ number_format((float) $data['sum']) }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -91,11 +104,6 @@
             </div>
         </div>
     </div>
-    @include('pos.modal.modal_order_index')
-@endsection
-@push('js')
-    <script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>
-    {{-- <script type="text/javascript">
-        $('#myTable').DataTable();
-    </script> --}}
-@endpush
+</body>
+
+</html>

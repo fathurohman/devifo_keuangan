@@ -11,7 +11,12 @@
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h3 class="mb-0"> <a href="{{ route('pos.index') }}" type="button"
-                                    class="btn btn-sm btn-info">{{ __('Back') }}</a> Order</h3>
+                                    class="btn btn-sm btn-info">{{ __('Back') }}</a> Order
+                                    @if ($order->selesai == 1)
+                                        <span class="badge badge-success">Selesai</span>
+                                    @else
+                                        <span class="badge badge-danger">Belum Selesai</span>
+                                    @endif </h3>
                                 <p>Kode : <b>{{ $order->kode_nota}}</b> <br>
                                     Nama : <b>{{ $order->nama_pembeli}}</b> <br>
                                     No.HP : <b>{{ $order->no_pembeli}}</b>
@@ -25,6 +30,27 @@
                     </div>
 
                     <div class="col-12 text-right mb-2">
+                        @if ($order->selesai == 0)
+                        <form method="post" id="update-form-{{ $order->id }}"
+                            action="{{ route('update_selesai.order', $order->id) }}"
+                            style="display: none">
+                            {{ csrf_field() }} {{ method_field('PUT') }}
+                        </form>
+                        <a class="btn btn-sm btn-success" href=""
+                            onclick="if(confirm('Transaksi sudah selesai?'))
+                            {
+                                event.preventDefault();document.getElementById('update-form-{{ $order->id }}').submit();
+                            }
+                            else{
+                                event.preventDefault();
+                            }"><i class="fas fa-check"></i> Selesai
+                        </a>
+                        @else
+
+                        @endif
+
+
+
                         <a target="_blank" href="{{ route('print.order' , $order->id)}}" class="btn btn-sm btn-success" > <i class="fas fa-print"></i> Print </a>
                         <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
                         data-target="#add_barang">Add Barang</a>
@@ -53,20 +79,25 @@
                                             <td>{{ $x->jumlah}}</td>
                                             <td>Rp. {{ number_format((float) $x->total) }}</td>
                                             <td class="text-center">
-                                                <form method="post" id="delete-form-{{ $x->id }}"
-                                                    action="{{ route('delete_child', $x->id) }}"
-                                                    style="display: none">
-                                                    {{ csrf_field() }} {{ method_field('DELETE') }}
-                                                </form>
-                                                <a class="btn btn-sm btn-danger" href=""
-                                                    onclick="if(confirm('Are you sure?'))
-                                                    {
-                                                        event.preventDefault();document.getElementById('delete-form-{{ $x->id }}').submit();
-                                                    }
-                                                    else{
-                                                        event.preventDefault();
-                                                    }">Hapus
-                                                </a>
+                                                @if ($order->selesai == 1)
+                                                    <span class="badge badge-success">-</span>
+                                                @else
+                                                    <form method="post" id="delete-form-{{ $x->id }}"
+                                                        action="{{ route('delete_child', $x->id) }}"
+                                                        style="display: none">
+                                                        {{ csrf_field() }} {{ method_field('DELETE') }}
+                                                    </form>
+                                                    <a class="btn btn-sm btn-danger" href=""
+                                                        onclick="if(confirm('Are you sure?'))
+                                                        {
+                                                            event.preventDefault();document.getElementById('delete-form-{{ $x->id }}').submit();
+                                                        }
+                                                        else{
+                                                            event.preventDefault();
+                                                        }">Hapus
+                                                    </a>
+                                                @endif
+
                                             </td>
                                         </tr>
                                     @endforeach

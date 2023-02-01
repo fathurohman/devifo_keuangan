@@ -148,6 +148,14 @@ class PosController extends Controller
         return redirect(route('pos.index'));
     }
 
+    public function update_selesai(Request $request, $id)
+    {
+        $data = order::find($id);
+        $data->selesai = '1';
+        $data->save();
+        return redirect(route('pos.order_index', $id));
+    }
+
     public function delete($id)
     {
         order::where('id', $id)->delete();

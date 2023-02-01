@@ -47,7 +47,7 @@
                                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="{{route('roleuser.edit', $x->id)}}">Edit</a>
                                                 </div>
                                             </div>
                                         </td>

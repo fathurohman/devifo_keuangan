@@ -13,7 +13,7 @@
                         <span class="avatar">
                             @if (empty($data_head['foto']))
                                 <img style="border-radius: 50%;" height="auto" width="60px" alt="Image placeholder"
-                                    src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg">
+                                    src="{{ asset('argon') }}/img/devifologoicon.jpg">
                             @else
                                 <img style="border-radius: 50%;" height="52px" width="60px" alt="Image placeholder"
                                     src="{{ url('storage/foto/' . $data_head['foto']) }}">

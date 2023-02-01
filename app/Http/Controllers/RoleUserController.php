@@ -67,7 +67,10 @@ class RoleUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roleuser = roleuser::find($id);
+        $roles = role::all();
+
+        return view('user_role.edit', compact('roles','roleuser'));
     }
 
     /**
@@ -79,7 +82,11 @@ class RoleUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = roleuser::find($id);
+        $data->user_id = $request->name;
+        $data->role_id = $request->for;
+        $data->save();
+        return redirect(route('roleuser.index'));
     }
 
     /**

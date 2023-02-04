@@ -69,49 +69,37 @@
                         <i class="fas fa-home {{$activePage == 'home' ? 'text-primary' : '' }}"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pos.index') }}">
-                        <i class="ni ni-money-coins {{$activePage == 'pos' ? 'text-primary' : '' }}"></i> {{ __('POS') }}
+                <li class="nav-item {{$activePage == 'transaksi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pos.transaksi_index') }}">
+                        <i class="ni ni-money-coins {{$activePage == 'transaksi' ? 'text-primary' : '' }}"></i> {{ __('Transaksi') }}
                     </a>
                 </li>
 
-                <li class="nav-vc {{ $activePage == 'barangs' ? ' active' : '' }}">
+                <li class="nav-vc {{ $activePage == 'barangs' || $activePage == 'pos' || $activePage == 'laporan offline' ? ' active' : '' }}">
                 <a class="nav-link collapsed" href="#navbar-crud-vendor" data-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="navbar-crud-vendor">
-                    <i class="fas fa-database {{ $activePage == 'barangs' ? 'text-primary' : '' }}"></i>
+                    <i class="fas fa-database {{ $activePage == 'barangs' || $activePage == 'pos' || $activePage == 'laporan offline' ? 'text-primary' : '' }}"></i>
                     <span class="nav-link-text">{{ __('Basis Data') }}</span>
                 </a>
                 <div class="collapse" id="navbar-crud-vendor">
                     <ul class="nav nav-sm flex-column">
-                        <li class="nav-item">
+                        <li class="nav-item {{$activePage == 'pos' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('pos.index') }}">
+                                {{ __('Transaksi Order') }}
+                            </a>
+                        </li>
+                        <li class="nav-item {{ $activePage == 'barangs' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('barangs.index') }}">
                                 {{ __('Barang') }}
                             </a>
                         </li>
+                        <li class="nav-item {{ $activePage == 'laporan offline' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('lap_off.index') }}">
+                                {{ __('Laporan Offline') }}
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                </li>
-
-                <li class="nav-lo {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline'  ? ' active' : '' }}">
-                    <a class="nav-link collapsed" href="#navbar-lo" data-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="navbar-lo">
-                        <i class="fas fa-file {{ $activePage == 'laporan offline' || $activePage == 'reports laporan offline' ? 'text-primary' : '' }}"></i>
-                        <span class="nav-link-text">{{ __('Laporan Offline') }}</span>
-                    </a>
-                    <div class="collapse" id="navbar-lo">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item {{ $activePage == 'laporan offline'  ? ' active' : '' }}">
-                                <a class="nav-link" href="{{ route('lap_off.index') }}">
-                                    {{ __('Laporan') }}
-                                </a>
-                            </li>
-                            <li class="nav-item {{ $activePage == 'reports laporan offline'  ? ' active' : '' }}">
-                                <a class="nav-link" href="{{ route('ReportsLo') }}">
-                                    {{ __('Reports') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
                 @can('admin.hakakses', Auth::user())
@@ -142,6 +130,26 @@
                         </div>
                     </li>
                     @endcan
+                    <li class="nav-reports {{ $activePage == 'reports laporan offline' ? ' active' : '' }}">
+                    <a class="nav-link collapsed" href="#navbar-crud-reports" data-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="navbar-crud-reports">
+                        <i class="ni ni-single-copy-04"></i>
+                        <span class="nav-link-text">{{ __('Reports') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-crud-reports">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item {{ $activePage == 'reports laporan offline' ? ' active' : '' }}">
+                                <a class="nav-link" href="{{ route('ReportsLo') }}">
+                                    {{ __('Reports Lap.Offline') }}
+                                </a>
+
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </li>
                     @can('admin.crud-vendor-client', Auth::user())
                     <li
                         class="nav-vc {{ $activePage == 'vendor' || $activePage == 'client' || $activePage == 'items' || $activePage == 'BOL' || $activePage == 'barang' ? ' active' : '' }}">
@@ -173,7 +181,7 @@
                         </div>
                     </li>
                 @endcan
-                <li
+                {{-- <li
                     class="nav-tr {{ $activePage == 'sales_orders' ||
                     $activePage == 'job_orders' ||
                     $activePage == 'history_job_orders' ||
@@ -213,7 +221,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
                 @can('admin.cetakinv', Auth::user())
                     <li class="nav-inv {{ $activePage == 'invoice' ? ' active' : '' }}">
                         <a class="nav-link collapsed" href="#navbar-crud-cetak" data-toggle="collapse" role="button"
@@ -278,7 +286,7 @@
                     </li>
                 @endcan
 
-                <li
+                {{-- <li
                     class="nav-bank {{ $activePage == 'Jurnal Bank' || $activePage == 'PettyCash' || $activePage == 'Asset' ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-crud-bank" data-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="navbar-crud-bank">
@@ -314,8 +322,8 @@
                         </ul>
 
                     </div>
-                </li>
-                <li class="nav-reports {{ $activePage == 'Profitloss' || $activePage == 'Neraca' || $activePage == 'Report Assets' ? ' active' : '' }}">
+                </li> --}}
+                {{-- <li class="nav-reports {{ $activePage == 'Profitloss' || $activePage == 'Neraca' || $activePage == 'Report Assets' ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-crud-reports" data-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="navbar-crud-reports">
                         <i class="ni ni-single-copy-04"></i>
@@ -348,7 +356,7 @@
                         </ul>
 
                     </div>
-                </li>
+                </li> --}}
             </ul>
             <!-- Divider -->
             <hr class="my-3">

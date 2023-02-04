@@ -1,3 +1,6 @@
-<a class="btn btn-sm btn-success" href="{{ route('pos.order_index', $data['id'] )}}" role="button" data-id="{{ $data['id'] }}">
-    Order | {{ $data['child']}}
-    </a>
+    @if ($data['selesai'] == 1)
+            <span class='badge badge-success'><i class="fas fa-check"></i> Selesai</span>
+
+    @else
+            <span class='badge badge-danger'>X Belum Selesai</span>
+    @endif

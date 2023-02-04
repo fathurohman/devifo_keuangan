@@ -1,3 +1,6 @@
+<a class="btn btn-sm btn-success" href="{{ route('pos.order_index', $data['id'] )}}" role="button" data-id="{{ $data['id'] }}">
+    Order | {{ $data['child']}}
+    </a>
 <div class="dropdown">
     <a class="btn btn-sm btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">More

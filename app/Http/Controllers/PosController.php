@@ -20,6 +20,11 @@ class PosController extends Controller
         return view('pos.index');
     }
 
+    public function transaksi_index()
+    {
+        return view('pos.transaksi_index');
+    }
+
     public function order_index($id)
     {
         $order = order::find($id);
@@ -46,11 +51,9 @@ class PosController extends Controller
                 return $row->nama_pembeli;
         // })->editColumn('created_by', function ($row) {
         //     return $row->users->name;
-        })->addColumn('Action', function ($row) {
-            $child = child_order::where('order_id', $row->id)->count();
+        })->addColumn('Status', function ($row) {
             $data = [
-                'id' => $row->id,
-                'child' => $child
+                'selesai' => $row->selesai,
             ];
             return view('pos.act.act_action', compact('data'));
         })->addColumn('More', function ($row) {
@@ -60,7 +63,7 @@ class PosController extends Controller
                 'child' => $child
             ];
             return view('pos.act.act_more', compact('data'));
-        })->rawColumns(['Action, More'])->toJson();
+        })->rawColumns(['Status, More'])->toJson();
     }
 
     public function detail($id)
@@ -102,6 +105,30 @@ class PosController extends Controller
         $data->created_by = Auth::user()->id;
         $data->save();
         return redirect(route('pos.index'));
+    }
+
+    public function store_transaksi(Request $request)
+    {
+        $now = Carbon::now()->format('Y-m-d');
+        $tahun = Carbon::now()->format('y');
+        $bulan = Carbon::now()->format('m');
+        $hari = Carbon::now()->format('d');
+
+        $query = order::whereMonth('created_at', $bulan)->count();
+        $urutan = $query + 1;
+
+        $nota = "Nota/" . $hari . "/" . $bulan . "/" . $tahun . "/" . $urutan;
+
+        $data = new order;
+        $data->kode_nota = $nota;
+        $data->nama_pembeli = $request->nama_pembeli;
+        $data->no_pembeli = $request->no_pembeli;
+        $data->created_by = Auth::user()->id;
+        $data->save();
+
+        $datas = order::orderBy('id', 'desc')->first();
+
+        return redirect(route('pos.order_index', $datas->id));
     }
 
     public function store_child(Request $request)

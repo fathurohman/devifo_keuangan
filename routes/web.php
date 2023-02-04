@@ -59,6 +59,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::put('update_order_selesai/{id}', 'PosController@update_selesai')->name('update_selesai.order');
 
+    Route::get('transaksi', 'PosController@transaksi_index')->name('pos.transaksi_index');
+    Route::post('store/pos_transaksi/', 'PosController@store_transaksi')->name('store_transaksi');
+
     //job order routes
 	Route::resource('job_order', 'JobOrderController');
 	Route::resource('sales_order', 'SalesOrderController');

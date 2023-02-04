@@ -32,7 +32,7 @@
                                         <th scope="col">Kode Nota</th>
                                         <th scope="col">Nama Pembeli</th>
                                         {{-- <th scope="col">Created By</th> --}}
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">More</th>
 
                                     </tr>
@@ -93,8 +93,8 @@
                 //     name: 'created_by'
                 // },
                 {
-                    data: 'Action',
-                    name: 'Action',
+                    data: 'Status',
+                    name: 'Status',
                     searchable: false,
                     orderable: false
                 },

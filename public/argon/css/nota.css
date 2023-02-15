@@ -3,9 +3,9 @@
     margin-left: 70px;
     margin-right: 70px;
     font-size: 10pt;
-    /* font-family: 'Courier New', Courier, monospace; */
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: #110066;
+    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+    color: #000000;
 }
 .table-header table {
     width: 100%;
@@ -22,7 +22,7 @@
     width: 100%;
     /* text-decoration: underline; */
     border-collapse: collapse;
-    border: 2px solid #110066;
+    border: 2px solid #000000;
     /* margin-left: auto;
     margin-right: auto; */
     text-align: center;

@@ -21,50 +21,47 @@
             </thead>
             <tbody>
                     <tr>
-                        <td style="width: 70%">
+                        <td style="width: 65%">
                             <table>
                                 <tr>
                                     <td colspan="3">
-                                        <img style="width: 60%" src="{{ public_path('argon') }}/img/notalogo.png"><br>
+                                        <img style="width: 55%" src="{{ public_path('argon') }}/img/notalogo.png">
+                                        <div style="font-size: 8pt;margin-top: 8px"><b> Jl. Cibanteng Agathis, Cihideung Ilir, Kec. Ciampea, Kab. Bogor </b></div>
                                     </td>
-                                </tr><br>
-                                <tbody>
+                                </tr>
                                     <tr>
-                                        <td colspan="3" style="font-size: 9pt">
-                                            Jl. Cibanteng Agathis, Cihideung Ilir, Kec. Ciampea, Kab. Bogor
+                                        <td colspan="3" style="font-size: 8pt">
+
                                         </td>
                                     </tr>
-
-
-                                </tbody>
                             </table>
                         </td>
 
-                        <td style="text-align: right"><b>
+                        <td style="text-align: right;font-size: 8pt"><b>
                             <table style="text-align: right">
+                                {{-- <tr>
+                                    <td style="text-align: right;">
+                                        0251-8471300 <img width="6%" src="{{ public_path('argon') }}/img/small/small_tlp.png">
+                                    </td>
+                                </tr> --}}
                                 <tr>
                                     <td style="text-align: right;">
-                                        0251-8471300 <img width="7%" src="{{ public_path('argon') }}/img/small/small_tlp.png">
+                                        0813-7774-7001 <img width="6%" src="{{ public_path('argon') }}/img/small/small_wa.png">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: right;">
-                                        0813-7774-7001 <img width="7%" src="{{ public_path('argon') }}/img/small/small_wa.png">
+                                        devifo.invitation <img width="6%" src="{{ public_path('argon') }}/img/small/small_instagram.png">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: right;">
-                                        devifo.invitation <img width="7%" src="{{ public_path('argon') }}/img/small/small_instagram.png">
+                                        devifo.com <img width="6%" src="{{ public_path('argon') }}/img/small/small_web.png">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: right;">
-                                        devifo.com <img width="7%" src="{{ public_path('argon') }}/img/small/small_web.png">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">
-                                        devifo.official@gmail.com <img width="7%" src="{{ public_path('argon') }}/img/small/small_gmail.png">
+                                        devifo.official@gmail.com <img width="6%" src="{{ public_path('argon') }}/img/small/small_gmail.png">
                                     </td>
                                 </tr>
                                 </tr>
@@ -79,7 +76,7 @@
     <table style="width: 100%;">
         <tr>
             <td>
-               <b> Costumer </b>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  {{ $data['order']->nama_pembeli}}<br>
+               <b> Costumer </b>  &nbsp;&nbsp;:  {{ $data['order']->nama_pembeli}}<br>
     <b>No Whatsapp</b> :  {{ $data['order']->no_pembeli}}<br>
             </td>
             <td></td>
@@ -90,7 +87,7 @@
                         <div class="table-request">
                             <table border="1" style="table-layout:fixed;">
                                 <thead>
-                                    <tr style="background-color: #110066;color: white">
+                                    <tr style="background-color: #000000;color: white">
                                         <th style="width: 15%;height: 30px;">QTY</th>
                                         <th style="width: 35%;">Nama Barang</th>
                                         <th style="width: 20%;">Harga</th>
@@ -166,7 +163,8 @@
                                             {{-- <td style="font-size: 8pt;"><br>
                                                 <p style="text-align: left">Barang Yang Sudah Di beli tidak dapat di tukar kembali</p></td> --}}
                                             <td style="text-align: center"><b>Hormat Kami,</b>
-                                            <br><br><br><br> ( &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )
+                                            <br><br><br><br>
+                                            {{-- ( &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ) --}}
                                             </td>
                                         </tr>
                                 </tbody>

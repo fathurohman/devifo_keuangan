@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="col-12 text-right mb-2">
-                        @if ($order->selesai == 0)
+                        {{-- @if ($order->selesai == 0)
                         <form method="post" id="update-form-{{ $order->id }}"
                             action="{{ route('update_selesai.order', $order->id) }}"
                             style="display: none">
@@ -47,10 +47,14 @@
                         </a>
                         @else
 
+                        @endif --}}
+
+                        @if ($order->selesai == 0)
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal"
+                        data-target="#selesai"><i class="fas fa-check"></i> Selesai</a>
+                        @else
+
                         @endif
-
-
-
                         <a target="_blank" href="{{ route('print.order' , $order->id)}}" class="btn btn-sm btn-success" > <i class="fas fa-print"></i> Print </a>
                         <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
                         data-target="#add_barang">Add Barang</a>
@@ -123,6 +127,7 @@
         </div>
     </div>
     @include('pos.modal.modal_order_index')
+    @include('pos.modal.modal_selesai')
 @endsection
 @push('js')
     <script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>

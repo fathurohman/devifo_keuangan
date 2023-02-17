@@ -57,7 +57,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('pos_order/{id}', 'PosController@order_index')->name('pos.order_index');
     Route::delete('order_child_delete/{id}', 'PosController@delete_child')->name('delete_child');
 
-    Route::put('update_order_selesai/{id}', 'PosController@update_selesai')->name('update_selesai.order');
+    Route::put('update_order_transfer/{id}', 'PosController@update_transfer')->name('update_transfer.order');
+    Route::put('update_order_cash/{id}', 'PosController@update_cash')->name('update_cash.order');
 
     Route::get('transaksi', 'PosController@transaksi_index')->name('pos.transaksi_index');
     Route::post('store/pos_transaksi/', 'PosController@store_transaksi')->name('store_transaksi');

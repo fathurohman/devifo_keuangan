@@ -175,10 +175,20 @@ class PosController extends Controller
         return redirect(route('pos.index'));
     }
 
-    public function update_selesai(Request $request, $id)
+    public function update_transfer(Request $request, $id)
     {
         $data = order::find($id);
         $data->selesai = '1';
+        $data->bayar = 'transfer';
+        $data->save();
+        return redirect(route('pos.order_index', $id));
+    }
+
+    public function update_cash(Request $request, $id)
+    {
+        $data = order::find($id);
+        $data->selesai = '1';
+        $data->bayar = 'cash';
         $data->save();
         return redirect(route('pos.order_index', $id));
     }

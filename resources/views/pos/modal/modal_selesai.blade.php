@@ -15,7 +15,7 @@
                         <form action="{{ route('update_transfer.order', $order->id)}}" method="post">
                             {{ csrf_field() }} {{ method_field('PUT') }}
                             <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Transfer</button>
-                        </form>
+                        </form><br>
                         <form action="{{ route('update_cash.order', $order->id)}}" method="post">
                             {{ csrf_field() }} {{ method_field('PUT') }}
                             <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Cash</button>

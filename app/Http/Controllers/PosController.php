@@ -193,6 +193,15 @@ class PosController extends Controller
         return redirect(route('pos.order_index', $id));
     }
 
+    public function update_batalstatus(Request $request, $id)
+    {
+        $data = order::find($id);
+        $data->selesai = '0';
+        $data->bayar = null;
+        $data->save();
+        return redirect(route('pos.order_index', $id));
+    }
+
     public function delete($id)
     {
         order::where('id', $id)->delete();

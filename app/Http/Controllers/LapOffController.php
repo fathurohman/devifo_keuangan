@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\LapOffExport;
 use App\Model\lap_offline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Image;
@@ -53,6 +54,7 @@ class LapOffController extends Controller
         $data->debit = $request->debit;
         $data->credit = $request->credit;
         $data->created_by = Auth::user()->id;
+        $data->date = Carbon::now()->format('Y-m-d');
 
         $image = $request->file('nota');
         if (empty($image)) {
@@ -174,10 +176,11 @@ class LapOffController extends Controller
 
     public function GetLo(Request $request)
     {
-        $bulan = $request->bulan;
-        $tahun = $request->tahun;
+        $start = $request->start;
+        $end = $request->end;
 
-        $data = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->orderBy('created_at')->get();
+        $data = lap_offline::whereBetween('date', [$start , $end])->get();
+        // dd($data);
         $sum_debit = 0;
         $sum_credit = 0;
         foreach($data as $x){
@@ -186,8 +189,8 @@ class LapOffController extends Controller
             $x->saldo = $sum_debit - $sum_credit;
         }
 
-        $sum_debit2 = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('debit');
-        $sum_credit2 = lap_offline::whereMonth('created_at', $bulan)->whereYear('created_at', $tahun)->sum('credit');
+        $sum_debit2 = lap_offline::whereBetween('date', [$start , $end])->sum('debit');
+        $sum_credit2 = lap_offline::whereBetween('date', [$start , $end])->sum('credit');
 
 
         $html = view('lap_offline.reports.table_reports')->with(compact('data','sum_debit2','sum_credit2'))->render();
@@ -242,12 +245,12 @@ class LapOffController extends Controller
 
     public function export_lo(Request $request)
     {
-        $bulan = $this->namabulan($request->bulan);
-        $bulan2 = $request->bulan;
-        $tahun = $request->tahun;
-        $data = lap_offline::whereMonth('created_at', $bulan2)->whereYear('created_at', $tahun)->get();
-        $sum_debit2 = lap_offline::whereMonth('created_at', $bulan2)->whereYear('created_at', $tahun)->sum('debit');
-        $sum_credit2 = lap_offline::whereMonth('created_at', $bulan2)->whereYear('created_at', $tahun)->sum('credit');
+        // $bulan = $this->namabulan($request->bulan);
+        $start = $request->start;
+        $end = $request->end;
+        $data = lap_offline::whereBetween('date', [$start , $end])->get();
+        $sum_debit2 = lap_offline::whereBetween('date', [$start , $end])->sum('debit');
+        $sum_credit2 = lap_offline::whereBetween('date', [$start , $end])->sum('credit');
 
         $sum_debit = 0;
         $sum_credit = 0;
@@ -259,7 +262,7 @@ class LapOffController extends Controller
 
 
 
-        $download = Excel::download(new LapOffExport($bulan, $tahun, $data, $sum_debit2, $sum_credit2), 'LaporanOffline_'.$bulan.'_'.$tahun.'.xlsx');
+        $download = Excel::download(new LapOffExport($start, $end, $data, $sum_debit2, $sum_credit2), 'LaporanOffline_'.$start.'_'.$end.'.xlsx');
         return $download;
     }
 }

@@ -23,21 +23,23 @@
                         <div class="col-xl-6 mb-5 mb-xl-0">
                             <div class="card shadow">
                                 <div class="card-header border-0">
-                                    <label for="inputState">Bulan</label>
-                                    <select id="bulan" name="bulan" class="form-control" required>
+                                    <label for="inputState">Awal</label>
+                                    {{-- <select id="bulan" name="bulan" class="form-control" required>
                                         <option selected value="">Pilih Bulan...</option>
                                         @foreach ($month as $key => $m)
                                             <option value="{{ $key }}">{{ $m }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
+                                    <input type="date" class="form-control" name="start" id="start">
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-6 mb-5 mb-xl-0">
                             <div class="card shadow">
                                 <div class="card-header border-0">
-                                    <label for="inputState">Tahun</label>
-                                    <input id="tahun" name="tahun" value="{{Carbon\Carbon::now()->format('Y')}}" type="number" class="form-control" required>
+                                    <label for="inputState">Akhir</label>
+                                    {{-- <input id="tahun" name="tahun" value="{{Carbon\Carbon::now()->format('Y')}}" type="number" class="form-control" required> --}}
+                                    <input type="date" class="form-control" name="end" id="end">
                                 </div>
                             </div>
                         </div>
@@ -61,14 +63,14 @@
 
     <script type="text/javascript">
 
-            function narikdata(bulan, tahun){
+            function narikdata(start, end){
                 $.ajax({
                     url: "{{ route('GetLo')}}",
                     method: "GET",
                     dataType: "json",
                     data: {
-                        bulan: bulan,
-                        tahun:tahun
+                        start: start,
+                        end:end
                     },
                     success: function(data){
                         $('#table-lo').html(data.html);
@@ -77,17 +79,17 @@
                 });
             }
 
-            $("#bulan").change(function(){
-                    var bulan = $('#bulan').val();
-                    var tahun = $('#tahun').val();
+            $("#first").change(function(){
+                    var start = $('#start').val();
+                    var end = $('#end').val();
 
-                    narikdata(bulan, tahun);
+                    narikdata(start, end);
             });
-            $("#tahun").change(function(){
-                    var bulan = $('#bulan').val();
-                    var tahun = $('#tahun').val();
+            $("#end").change(function(){
+                    var start = $('#start').val();
+                    var end = $('#end').val();
 
-                    narikdata(bulan, tahun);
+                    narikdata(start, end);
             });
     </script>
 

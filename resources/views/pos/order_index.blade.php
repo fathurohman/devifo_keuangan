@@ -53,11 +53,29 @@
                         <a href="#" class="btn btn-sm btn-success" data-toggle="modal"
                         data-target="#selesai"><i class="fas fa-check"></i> Selesai</a>
                         @else
-
+                        <form method="post" id="update-form-{{ $order->id }}"
+                            action="{{ route('update_batal.order', $order->id) }}"
+                            style="display: none">
+                            {{ csrf_field() }} {{ method_field('PUT') }}
+                        </form>
+                        <a class="btn btn-sm btn-danger" href=""
+                            onclick="if(confirm('Transaksi yg sudah selesai di batalkan ?'))
+                            {
+                                event.preventDefault();document.getElementById('update-form-{{ $order->id }}').submit();
+                            }
+                            else{
+                                event.preventDefault();
+                            }">x Batal
+                        </a>
                         @endif
                         <a target="_blank" href="{{ route('print.order' , $order->id)}}" class="btn btn-sm btn-success" > <i class="fas fa-print"></i> Print </a>
+                        @if ($order->selesai == 0)
                         <a href="#" class="btn btn-sm btn-primary" data-toggle="modal"
                         data-target="#add_barang">Add Barang</a>
+                        @else
+
+                        @endif
+
 
                     </div>
                     <div class="mx-3">

@@ -1,7 +1,12 @@
 <table>
     <thead>
         <tr>
-            <td colspan="6" style="font-size: 15pt;font-weight: 700;text-align: center">LAPORAN {{ $bulan }} {{ $tahun }}</td>
+            <td colspan="6" style="font-size: 15pt;font-weight: 700;text-align: center">LAPORAN</td>
+
+        </tr>
+        <tr>
+            <td colspan="6" style="font-size: 12pt;font-weight: 600;text-align: center">
+                {{ Carbon\Carbon::parse($start)->format('d F Y') }} s/d {{ Carbon\Carbon::parse($end)->format('d F Y') }}</td>
 
         </tr>
         <tr>

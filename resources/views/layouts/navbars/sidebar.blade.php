@@ -130,7 +130,7 @@
                         </div>
                     </li>
                     @endcan
-                    <li class="nav-reports {{ $activePage == 'reports laporan offline' ? ' active' : '' }}">
+                    <li class="nav-reports {{ $activePage == 'reports laporan offline' || $activePage == 'reports transaksi order' ? ' active' : '' }}">
                     <a class="nav-link collapsed" href="#navbar-crud-reports" data-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="navbar-crud-reports">
                         <i class="ni ni-single-copy-04"></i>
@@ -142,6 +142,12 @@
                             <li class="nav-item {{ $activePage == 'reports laporan offline' ? ' active' : '' }}">
                                 <a class="nav-link" href="{{ route('ReportsLo') }}">
                                     {{ __('Reports Lap.Offline') }}
+                                </a>
+
+                            </li>
+                            <li class="nav-item {{ $activePage == 'reports transaksi order' ? ' active' : '' }}">
+                                <a class="nav-link" href="{{ route('report.order') }}">
+                                    {{ __('Reports Transaksi Order') }}
                                 </a>
 
                             </li>

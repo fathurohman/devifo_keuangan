@@ -64,6 +64,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('transaksi', 'PosController@transaksi_index')->name('pos.transaksi_index');
     Route::post('store/pos_transaksi/', 'PosController@store_transaksi')->name('store_transaksi');
 
+    Route::get('report_transaksi_order', 'PosController@reports')->name('report.order');
+    Route::get('get_rto', 'PosController@get_rto')->name('get_rto');
+
+    Route::post('/export_rto', 'PosController@export_excel')->name('excel_rto');
+
     //job order routes
 	Route::resource('job_order', 'JobOrderController');
 	Route::resource('sales_order', 'SalesOrderController');

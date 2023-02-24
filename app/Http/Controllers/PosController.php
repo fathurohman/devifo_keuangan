@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TransaksiExport;
 use Auth;
 use Response;
 
@@ -103,6 +105,7 @@ class PosController extends Controller
         $data->nama_pembeli = $request->nama_pembeli;
         $data->no_pembeli = $request->no_pembeli;
         $data->created_by = Auth::user()->id;
+        $data->order_date = Carbon::now()->format('Y-m-d');
         $data->save();
         return redirect(route('pos.index'));
     }
@@ -140,6 +143,8 @@ class PosController extends Controller
 
         $barang = barangs::find($request->barangs_id);
 
+        $data->total = $barang->harga_barang * $request->jumlah;
+
         if($request->jumlah > $barang->stock){
 
             session()->flash("error", "Stock tidak cukup");
@@ -154,8 +159,8 @@ class PosController extends Controller
 
             $data->save();
 
-            session()->flash("success", "Berhasil di tambahkan");
-            return redirect()->back()->with('success', 'Berhasil di tambahkan');
+
+            return redirect()->back();
         }
 
     }
@@ -244,5 +249,52 @@ class PosController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view->render())->setPaper('a4', 'portrait');
         return $pdf->stream();
+    }
+
+
+
+    public function reports()
+    {
+        return view('pos.reports.order_report');
+    }
+
+    public function get_rto(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+
+        $data = order::whereBetween('order_date', [$start , $end])->get();
+        // $sum = 0;
+        // foreach($data as $c){
+        //     $co = child_order::where('order_id', $c->id)->get();
+
+        //     foreach($co as $x){
+
+        //     $x->totals = $x->barangs->harga_barang * $x->jumlah;
+
+        //     $sum_per_transaksi = $x->totals;
+        //     $sum += $x->totals;
+
+        //     }
+
+        // }
+
+
+        $html = view('pos.reports.table_reports')->with(compact('data'))->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
+
+    public function export_excel(Request $request)
+    {
+
+        $start = $request->start;
+        $end = $request->end;
+        $data = order::whereBetween('order_date', [$start , $end])->get();
+
+
+
+
+        $download = Excel::download(new TransaksiExport($start, $end, $data), 'Transaksi_Order_'.$start.'_'.$end.'.xlsx');
+        return $download;
     }
 }

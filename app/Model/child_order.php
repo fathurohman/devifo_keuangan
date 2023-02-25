@@ -13,4 +13,9 @@ class child_order extends Model
     {
         return $this->belongsTo('App\Model\barangs', 'barangs_id');
     }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Model\order', 'order_id');
+    }
 }

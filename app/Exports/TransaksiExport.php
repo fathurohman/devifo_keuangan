@@ -11,13 +11,15 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 class TransaksiExport implements FromView, ShouldAutoSize, WithStrictNullComparison, WithTitle
 {
-    protected $start, $end, $data;
+    protected $start, $end, $data, $sum;
 
-    function __construct($start, $end, $data)
+    function __construct($start, $end, $data, $sum)
     {
         $this->start = $start;
         $this->end = $end;
         $this->data = $data;
+        $this->sum = $sum;
+
 
     }
 
@@ -26,9 +28,11 @@ class TransaksiExport implements FromView, ShouldAutoSize, WithStrictNullCompari
         $data = $this->data;
         $start = $this->start;
         $end = $this->end;
+        $sum = $this->sum;
 
 
-        return view('pos.reports.table_excel', ['data' => $data, 'start' => $start, 'end' => $end]);
+
+        return view('pos.reports.table_excel', ['data' => $data, 'start' => $start, 'end' => $end, 'sum' => $sum]);
     }
 
     public function title(): string

@@ -140,6 +140,7 @@ class PosController extends Controller
         $data->order_id = $request->order_id;
         $data->barangs_id = $request->barangs_id;
         $data->jumlah = $request->jumlah;
+        $data->date = Carbon::now()->format('Y-m-d');
 
         $barang = barangs::find($request->barangs_id);
 
@@ -289,12 +290,32 @@ class PosController extends Controller
 
         $start = $request->start;
         $end = $request->end;
-        $data = order::whereBetween('order_date', [$start , $end])->get();
+        $data = child_order::whereBetween('date', [$start , $end])->get();
+        $sum = child_order::whereBetween('date', [$start , $end])->sum('total');
+
+        // $sum = 0 ;
+        // foreach ($data as $c) {
+
+        //     $co = child_order::where('order_id', $c->id)->get();
+
+
+        //     foreach ($co as $x) {
+
+        //         $c->total = $x->total;
+        //         $c->sum += $x->total;
+
+        //         $c->nm_barang = $x->barangs->nama_barang;
+        //         $c->hrg_barang = $x->barangs->harga_barang;
+        //         $c->jumlah2 = $x->jumlah;
+
+        //     }
+        //     $c->totals = $c->sum;
+
+        // }
 
 
 
-
-        $download = Excel::download(new TransaksiExport($start, $end, $data), 'Transaksi_Order_'.$start.'_'.$end.'.xlsx');
+        $download = Excel::download(new TransaksiExport($start, $end, $data, $sum), 'Transaksi_Order_'.$start.'_'.$end.'.xlsx');
         return $download;
     }
 }

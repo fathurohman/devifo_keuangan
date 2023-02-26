@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Model\SellingOrder;
+use App\Model\order;
+use App\Model\child_order;
+use App\Model\lap_offline;
 use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
@@ -130,49 +133,22 @@ class HomeController extends BaseController
 
     public function index()
     {
-        $month_list = array_reduce(range(1, 12), function ($rslt, $m) {
-            $rslt[$m] = date('F', mktime(0, 0, 0, $m, 10));
-            return $rslt;
-        });
-        $user_id = Auth::id();
-        $user_dept = Auth::user()->department;
-        if ($user_dept == 'super-admin') {
-            $params = '';
-            $name = "ALL";
-        } else {
-            $name = Auth::user()->name;
-            $params = 'and sales_orders.created_by = ' . $user_id . '';
-        }
-        $year = Carbon::now()->format('Y');
-        $month = Carbon::now()->format('m');
-        $data_selling = $this->data_sum_selling($month, $year, $params);
-        //ambil curr yang lain
-        $count_s = count((array)$data_selling);
-        $lempar_curr_s = $this->lempar_curr($count_s);
-        //end
-        $data_buying = $this->data_sum_buying($month, $year, $params);
-        //ambil curr yang lain
-        $count_b = count((array)$data_buying);
-        $lempar_curr_b = $this->lempar_curr($count_b);
-        //end
-        $data_profits = $this->data_sum_profits($month, $year, $params);
-        //ambil curr yang lain
-        $count_p = count((array)$data_profits);
-        $lempar_curr_p = $this->lempar_curr($count_p);
-        //end
-        //rankings
-        $rankings_idr = $this->rankings($month, $year, "IDR");
-        $data = array(
-            'data_selling' => $data_selling,
-            'data_buying' => $data_buying,
-            'data_profits' => $data_profits,
-            'name' => $name,
-            'rankings' => $rankings_idr,
-            'curr_b' => $lempar_curr_b,
-            'curr_s' => $lempar_curr_s,
-            'curr_p' => $lempar_curr_p,
-            'month_list' => $month_list,
-        );
-        return view('dashboard', compact('data'));
+
+        return view('dashboard');
+    }
+
+    public function get_dashboard(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
+
+        $sum_debit = lap_offline::whereBetween('date', [$start , $end])->sum('debit');
+        $sum_credit = lap_offline::whereBetween('date', [$start , $end])->sum('credit');
+
+        $tor = child_order::whereBetween('date', [$start , $end])->sum('total');
+
+
+        $html = view('home.table_dashboard')->with(compact('tor','sum_debit','sum_credit'))->render();
+        return response()->json(['success' => true, 'html' => $html]);
     }
 }

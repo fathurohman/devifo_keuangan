@@ -5,7 +5,7 @@
         'class' => 'col-lg-7',
     ])
 
-    <div class="container-fluid mt--7">
+    {{-- <div class="container-fluid mt--7">
         <div class="row mt-5">
             <div class="col-xl-6 col-md-6 mb-5 mb-xl-0">
                 <div class="card shadow">
@@ -207,4 +207,73 @@
             narik(bulan, sales_id, _token);
         });
     </script>
+@endpush --}}
+
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+
+                <div class="row">
+                    <div class="col-xl-6 mb-5 mb-xl-0">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <label for="inputState">Awal</label>
+                                <input type="date" class="form-control" name="start" id="start">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 mb-5 mb-xl-0">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <label for="inputState">Akhir</label>
+                                <input type="date" class="form-control" name="end" id="end">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="table-dashboard"></div>
+        </div>
+    </div>
+</div>
+
+@endsection
+@push('js')
+<script src="{{ asset('argon') }}/datatable/datatables.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+        function narikdata(start, end){
+            $.ajax({
+                url: "{{ route('get_dashboard')}}",
+                method: "GET",
+                dataType: "json",
+                data: {
+                    start: start,
+                    end:end
+                },
+                success: function(data){
+                    $('#table-dashboard').html(data.html);
+                    console.log(data);
+                }
+            });
+        }
+
+        $("#first").change(function(){
+                var start = $('#start').val();
+                var end = $('#end').val();
+
+                narikdata(start, end);
+        });
+        $("#end").change(function(){
+                var start = $('#start').val();
+                var end = $('#end').val();
+
+                narikdata(start, end);
+        });
+</script>
+
+
 @endpush

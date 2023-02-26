@@ -220,3 +220,4 @@ Route::group(['middleware' => 'auth'], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/get_dashboard', 'HomeController@get_dashboard')->name('get_dashboard');

@@ -24,16 +24,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Gate::define('admin.job-order', 'App\Policies\UserPolicy@Job_Order');
-        Gate::define('admin.crud-vendor-client', 'App\Policies\UserPolicy@CRUD_Vendor_Client');
-        Gate::define('admin.cetakinv', 'App\Policies\UserPolicy@Cetak_INV');
-        Gate::define('admin.hakakses', 'App\Policies\UserPolicy@Hak_Akses');
-        Gate::define('admin.history', 'App\Policies\UserPolicy@History');
-        Gate::define('admin.report', 'App\Policies\UserPolicy@Report');
-        Gate::define('admin.sales-order-data', 'App\Policies\UserPolicy@Sales_Order_Data');
-        Gate::define('admin.history-sales-data', 'App\Policies\UserPolicy@History_Sales_Data');
-        Gate::define('admin.pickup-job', 'App\Policies\UserPolicy@Pickup_Job');
-        Gate::define('admin.report-profit', 'App\Policies\UserPolicy@Report_Profit');
+        Gate::define('admin.transaksi', 'App\Policies\UserPolicy@Transaksi');
+        Gate::define('admin.transaksi-order', 'App\Policies\UserPolicy@Transaksi_Order');
+        Gate::define('admin.barang', 'App\Policies\UserPolicy@Barang');
+        // Gate::define('admin.hakakses', 'App\Policies\UserPolicy@Hak_Akses');
+        Gate::define('admin.laporan-offline', 'App\Policies\UserPolicy@Laporan_Offline');
+        Gate::define('admin.report-lapoff', 'App\Policies\UserPolicy@Report_lapoff');
+        Gate::define('admin.report-transaksiorder', 'App\Policies\UserPolicy@Report_TransaksiOrder');
+        // Gate::define('admin.history-sales-data', 'App\Policies\UserPolicy@History_Sales_Data');
+        // Gate::define('admin.pickup-job', 'App\Policies\UserPolicy@Pickup_Job');
+        // Gate::define('admin.report-profit', 'App\Policies\UserPolicy@Report_Profit');
         //
     }
 }

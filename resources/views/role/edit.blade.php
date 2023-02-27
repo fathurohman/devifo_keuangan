@@ -32,7 +32,7 @@
                                         <label class="form-control-label" for="input-name">{{ __('name') }}</label>
                                         <input type="text" name="name" id="input-name"
                                             class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                            placeholder="{{ __('name') }}" value="{{ $role->name }}" required>
+                                            placeholder="{{ __('name') }}" value="{{ $role->name }}" readonly required>
 
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
@@ -41,102 +41,51 @@
                                         @endif
                                     </div>
                                 </div>
+                                @if (Auth::user()->department == 'owner')
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group{{ $errors->has('for') ? ' has-danger' : '' }}">
                                         <div class="row">
                                             <label class="form-control-label"
-                                                for="input-for">{{ __('Untuk Transaksi') }}</label>
+                                                for="input-for">{{ __('Akses') }}</label>
                                             <div class="col-sm-7">
-                                                @foreach ($permissions as $permission)
-                                                    @if ($permission->for == 'Transaction')
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input class="form-check-input" name="permission[]"
-                                                                    type="checkbox" value="{{ $permission->id }}"
-                                                                    @foreach ($role->permissions as $role_permit) @if ($role_permit->id == $permission->id)
-                                                                         checked @endif
-                                                                    @endforeach>
-                                                                {{ $permission->name }}
-                                                                <span class="form-check-sign">
-                                                                    <span class="check"></span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
+                                               <p>Semua akses bisa di lakukan dengan user owner</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <label class="form-control-label"
-                                                for="input-for">{{ __('Untuk Vendor & Clients') }}</label>
-                                            <div class="col-sm-7">
-                                                @foreach ($permissions as $permission)
-                                                    @if ($permission->for == 'Vendor & Clients')
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input class="form-check-input" name="permission[]"
-                                                                    type="checkbox" value="{{ $permission->id }}"
-                                                                    @foreach ($role->permissions as $role_permit) @if ($role_permit->id == $permission->id)
-                                                                         checked @endif
-                                                                    @endforeach>
-                                                                {{ $permission->name }}
-                                                                <span class="form-check-sign">
-                                                                    <span class="check"></span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="form-control-label"
-                                                for="input-for">{{ __('Untuk Hak-Akses') }}</label>
-                                            <div class="col-sm-7">
-                                                @foreach ($permissions as $permission)
-                                                    @if ($permission->for == 'Hak-Akses')
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input class="form-check-input" name="permission[]"
-                                                                    type="checkbox" value="{{ $permission->id }}"
-                                                                    @foreach ($role->permissions as $role_permit) @if ($role_permit->id == $permission->id)
-                                                                          checked @endif
-                                                                    @endforeach>
-                                                                {{ $permission->name }}
-                                                                <span class="form-check-sign">
-                                                                    <span class="check"></span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="form-control-label"
-                                                for="input-for">{{ __('Untuk Lainnya:') }}</label>
-                                            <div class="col-sm-7">
-                                                @foreach ($permissions as $permission)
-                                                    @if ($permission->for == 'Other')
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input class="form-check-input" name="permission[]"
-                                                                    type="checkbox" value="{{ $permission->id }}"
-                                                                    @foreach ($role->permissions as $role_permit) @if ($role_permit->id == $permission->id)
-                                                                         checked @endif
-                                                                    @endforeach>
-                                                                {{ $permission->name }}
-                                                                <span class="form-check-sign">
-                                                                    <span class="check"></span>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
+                                @else
+
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group{{ $errors->has('for') ? ' has-danger' : '' }}">
+                                        <div class="row">
+                                            <label class="form-control-label"
+                                                for="input-for">{{ __('Akses') }}</label>
+                                            <div class="col-sm-7">
+                                                @foreach ($permissions as $permission)
+                                                    @if ($permission->for == 'Akses')
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" name="permission[]"
+                                                                    type="checkbox" value="{{ $permission->id }}"
+                                                                    @foreach ($role->permissions as $role_permit) @if ($role_permit->id == $permission->id)
+                                                                         checked @endif
+                                                                    @endforeach>
+                                                                {{ $permission->name }}
+                                                                <span class="form-check-sign">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif
+
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

@@ -49,13 +49,13 @@
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                     <a class="dropdown-item"
                                                         href="{{ route('role.edit', $x->id) }}">Edit</a>
-                                                    <form method="post" id="delete-form-{{ $x->id }}"
+                                                    {{-- <form method="post" id="delete-form-{{ $x->id }}"
                                                         action="{{ route('role.destroy', $x->id) }}"
                                                         style="display: none">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
-                                                    </form>
-                                                    <a class="dropdown-item" href=""
+                                                    </form> --}}
+                                                    {{-- <a class="dropdown-item" href=""
                                                         onclick="if(confirm('Are you sure?'))
                                                         {
                                                             event.preventDefault();document.getElementById('delete-form-{{ $x->id }}').submit();
@@ -63,7 +63,7 @@
                                                         else{
                                                             event.preventDefault();
                                                         }">Hapus
-                                                    </a>
+                                                    </a> --}}
                                                 </div>
                                             </div>
                                         </td>

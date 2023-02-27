@@ -48,10 +48,10 @@
                                             class="form-control form-control-alternative{{ $errors->has('for') ? ' is-invalid' : '' }}"
                                             aria-label="Permission For:">
                                             <option selected>Open this select menu</option>
-                                            <option>Transaction</option>
-                                            <option>Hak-Akses</option>
+                                            <option>Akses</option>
+                                            {{-- <option>Hak-Akses</option>
                                             <option>Reports</option>
-                                            <option>Other</option>
+                                            <option>Other</option> --}}
                                         </select>
                                     </div>
                                 </div>

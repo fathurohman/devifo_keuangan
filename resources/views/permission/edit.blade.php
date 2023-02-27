@@ -50,9 +50,9 @@
                                             aria-label="Permission For:">
                                             <option value="{{ $permission->for }}" selected>{{ $permission->for }}
                                             </option>
-                                            <option>Vendor & Clients</option>
-                                            <option>Transaction</option>
-                                            <option>Other</option>
+                                            <option>Akses</option>
+                                            {{-- <option>Akses</option>
+                                            <option>Other</option> --}}
                                         </select>
                                     </div>
                                 </div>

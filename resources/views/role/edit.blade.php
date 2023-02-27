@@ -41,7 +41,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if (Auth::user()->department == 'owner')
+                                {{-- @if (Auth::user()->department == 'owner')
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group{{ $errors->has('for') ? ' has-danger' : '' }}">
                                         <div class="row">
@@ -54,7 +54,7 @@
 
                                     </div>
                                 </div>
-                                @else
+                                @else --}}
 
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group{{ $errors->has('for') ? ' has-danger' : '' }}">
@@ -84,7 +84,7 @@
 
                                     </div>
                                 </div>
-                                @endif
+                                {{-- @endif --}}
 
                             </div>
                             <div class="text-center">

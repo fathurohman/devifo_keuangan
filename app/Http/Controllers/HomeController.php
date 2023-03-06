@@ -148,7 +148,28 @@ class HomeController extends BaseController
         $tor = child_order::whereBetween('date', [$start , $end])->sum('total');
 
 
-        $html = view('home.table_dashboard')->with(compact('tor','sum_debit','sum_credit'))->render();
+        $cash = order::where('bayar', 'cash')->get();
+        $bayar_cash = 0;
+        foreach ($cash as $c) {
+
+            $sum_cash = child_order::where('order_id', $c->id)->sum('total');
+
+            $bayar_cash += $sum_cash;
+
+        }
+
+        $transfer = order::where('bayar', 'transfer')->get();
+        $bayar_transfer = 0;
+        foreach ($transfer as $t) {
+
+            $sum_transfer = child_order::where('order_id', $t->id)->sum('total');
+
+            $bayar_transfer += $sum_transfer;
+
+        }
+
+
+        $html = view('home.table_dashboard')->with(compact('tor','sum_debit','sum_credit','bayar_cash', 'bayar_transfer'))->render();
         return response()->json(['success' => true, 'html' => $html]);
     }
 }

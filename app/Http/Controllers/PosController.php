@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\barangs;
 use App\Model\order;
 use App\Model\child_order;
+use App\Model\lap_offline;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Yajra\Datatables\Datatables;
@@ -196,6 +197,27 @@ class PosController extends Controller
         $data->selesai = '1';
         $data->bayar = 'cash';
         $data->save();
+
+        $co = child_order::where('order_id', $id)->get();
+
+        foreach ($co as $i => $x) {
+            $details = array(
+                'name' => $request->name[$i],
+                'keterangan' => 'transaksi order',
+                'debit' => $request->debit[$i],
+                'created_by' => Auth::user()->id,
+                'order_id' => $request->order_id[$i],
+                'date' => Carbon::now()->format('Y-m-d'),
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+
+            );
+            lap_offline::insert($details);
+        }
+
+
+
+
         return redirect(route('pos.order_index', $id));
     }
 
@@ -205,6 +227,9 @@ class PosController extends Controller
         $data->selesai = '0';
         $data->bayar = null;
         $data->save();
+
+        lap_offline::where('order_id', $id)->delete();
+
         return redirect(route('pos.order_index', $id));
     }
 

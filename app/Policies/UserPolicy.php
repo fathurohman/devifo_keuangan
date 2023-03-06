@@ -42,6 +42,10 @@ class UserPolicy
     {
         return $this->getPermission($user, 7);
     }
+    public function Bahan_Baku(User $user)
+    {
+        return $this->getPermission($user, 8);
+    }
     // public function History_Sales_Data(User $user)
     // {
     //     return $this->getPermission($user, 8);

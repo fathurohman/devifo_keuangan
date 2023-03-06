@@ -39,11 +39,11 @@
 
                         <td style="text-align: right;font-size: 8pt"><b>
                             <table style="text-align: right">
-                                {{-- <tr>
+                                <tr>
                                     <td style="text-align: right;">
-                                        0251-8471300 <img width="6%" src="{{ public_path('argon') }}/img/small/small_tlp.png">
+                                      {{ $data['order']->kode_nota}}
                                     </td>
-                                </tr> --}}
+                                </tr><br>
                                 <tr>
                                     <td style="text-align: right;">
                                         0813-7774-7001 <img width="6%" src="{{ public_path('argon') }}/img/small/small_wa.png">

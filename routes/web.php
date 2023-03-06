@@ -41,6 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
     //barang
     Route::resource('barangs', 'BarangsController');
 
+    //bahan baku
+    Route::resource('bahan_baku', 'BahanbakuController');
+
     //pos
     Route::get('pos', 'PosController@index')->name('pos.index');
 

@@ -34,6 +34,9 @@
                 <div class="col">
                     <div class="card mb-3 border-0">
                       <p style="font-size: 18pt;font-weight: 600">  Rp. {{ number_format((float) $tor) }} </p>
+                      <hr>
+                      <p style="font-size: 18pt;font-weight: 600"> Cash : Rp. {{ number_format((float) $bayar_cash) }} </p>
+                      <p style="font-size: 18pt;font-weight: 600"> Transfer : Rp. {{ number_format((float) $bayar_transfer) }} </p>
                     </div>
                 </div>
             </div>

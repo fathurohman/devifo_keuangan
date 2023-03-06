@@ -18,6 +18,12 @@
                         </form><br>
                         <form action="{{ route('update_cash.order', $order->id)}}" method="post">
                             {{ csrf_field() }} {{ method_field('PUT') }}
+                            @foreach($data as $x)
+                                <input type="hidden" name="name[]" value="{{$x->barangs->nama_barang}}" />
+                                <input type="hidden" name="debit[]" value="{{$x->total}}" />
+                                <input type="hidden" name="order_id[]" value="{{$x->order_id}}" />
+                            @endforeach
+
                             <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Cash</button>
                         </form>
                     </div>

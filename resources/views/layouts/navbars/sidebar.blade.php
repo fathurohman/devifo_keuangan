@@ -76,7 +76,7 @@
                     </a>
                 </li>
 
-                <li class="nav-vc {{ $activePage == 'barangs' || $activePage == 'pos' || $activePage == 'laporan offline' ? ' active' : '' }}">
+                <li class="nav-vc {{ $activePage == 'barangs' || $activePage == 'pos' || $activePage == 'laporan offline' || $activePage == 'bahan baku' ? ' active' : '' }}">
                 <a class="nav-link collapsed" href="#navbar-crud-vendor" data-toggle="collapse" role="button"
                     aria-expanded="false" aria-controls="navbar-crud-vendor">
                     <i class="fas fa-database {{ $activePage == 'barangs' || $activePage == 'pos' || $activePage == 'laporan offline' ? 'text-primary' : '' }}"></i>
@@ -92,6 +92,11 @@
                         <li class="nav-item {{ $activePage == 'barangs' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('barangs.index') }}">
                                 {{ __('Barang') }}
+                            </a>
+                        </li>
+                        <li class="nav-item {{ $activePage == 'bahan baku' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('bahan_baku.index') }}">
+                                {{ __('Bahan Baku') }}
                             </a>
                         </li>
                         <li class="nav-item {{ $activePage == 'laporan offline' ? ' active' : '' }}">
@@ -180,6 +185,13 @@
                 <li class="nav-item {{$activePage == 'barangs' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('barangs.index') }}">
                         <i class="fas fa-database {{$activePage == 'barangs' ? 'text-primary' : '' }}"></i> {{ __('Barang') }}
+                    </a>
+                </li>
+                @endcan
+                @can('admin.bahan-baku', Auth::user())
+                <li class="nav-item {{$activePage == 'bahan baku' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('bahan_baku.index') }}">
+                        <i class="fas fa-database {{$activePage == 'bahan baku' ? 'text-primary' : '' }}"></i> {{ __('Bahan Baku') }}
                     </a>
                 </li>
                 @endcan
